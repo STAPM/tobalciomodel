@@ -82,6 +82,20 @@ multipliers <- function() {
                 coe.multipliers.type1,coe.multipliers.type2,
                 gos.multipliers.type1,gos.multipliers.type2)
 
+  data <- data.frame(data)
+
+
+  data$output.multipliers.type1 <- as.numeric(as.character(data$output.multipliers.type1))
+  data$output.multipliers.type2 <- as.numeric(as.character(data$output.multipliers.type2))
+  data$gva.multipliers.type1 <- as.numeric(as.character(data$gva.multipliers.type1))
+  data$gva.multipliers.type2 <- as.numeric(as.character(data$gva.multipliers.type2))
+  data$tax.multipliers.type1 <- as.numeric(as.character(data$tax.multipliers.type1))
+  data$tax.multipliers.type2 <- as.numeric(as.character(data$tax.multipliers.type2))
+  data$coe.multipliers.type1 <- as.numeric(as.character(data$coe.multipliers.type1))
+  data$coe.multipliers.type2 <- as.numeric(as.character(data$coe.multipliers.type2))
+  data$gos.multipliers.type1 <- as.numeric(as.character(data$gos.multipliers.type1))
+  data$gos.multipliers.type2 <- as.numeric(as.character(data$gos.multipliers.type2))
+
   return(data)
 
 }
