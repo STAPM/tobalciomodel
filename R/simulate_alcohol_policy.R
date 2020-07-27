@@ -17,7 +17,8 @@ simulate_alcohol_policy <- function(data = NULL,
                                 alc.policy = "exog",
                                 on.trade.ch = c(0,0,0,0,0),
                                 off.trade.ch = c(0,0,0,0,0),
-                                reallocate = FALSE) {
+                                reallocate = FALSE,
+                                prob = FALSE) {
 
 ## Initialise a vector to store the changes in final demand
 
@@ -64,8 +65,14 @@ final.demand[62] <- data2[2]
 
 # on-trade changes equally split between 70 - Accommodation (Alcohol) and 72 - Food and Beverage (Alcohol)
 
+if (prob == FALSE) {
 final.demand[70] <- data2[1]*0.5
 final.demand[72] <- data2[1]*0.5
+} else if (prob == TRUE) {
+  split <- runif(1)
+final.demand[70] <- data2[1]*split
+final.demand[72] <- data2[1]*(1-split)
+}
 
 return(final.demand)
 }
