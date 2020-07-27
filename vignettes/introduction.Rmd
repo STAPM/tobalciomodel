@@ -1,0 +1,44 @@
+---
+title: "Using `tobalciomodel` to Calculate Economic Impacts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using 'tobalciomodel' to Calculate Economic Impacts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tobalciomodel)
+```
+
+## Recover the Multipliers
+
+- Draw on the package IO table data to construct output and other multipliers 
+- Create the Leontief inverse matrices - Type I and Type II.
+- Calculate sectoral output multipliers. 
+- Calculate sectoral GVA coefficients (to adjust output multipliers into GVA multipliers)
+- Caclulate sectoral GVA multipliers using the coefficients. 
+- Repeat the GVA steps for employment __(not yet included, to be added)__
+
+## Defining Input Parameters and Data
+
+- Select the year of data to use.
+- The choice of price elasticities to use.
+- Whether the analysis is for Scotland or England & Wales
+
+## Simulate the Policy 
+
+- Use the selected data from the previous stage
+- Set alcohol policy parameters - exogenous change/MUP/tax change - and select how these vary across the 10 alcohol products. - choose whether or not to allow households to re-allocate spending. 
+- choose whether or not government simultaneously changes its spending __(not yet included, to be added)__
+
+- function generates the change in final demand vector. 
+
+## 

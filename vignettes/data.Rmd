@@ -1,0 +1,27 @@
+---
+title: "Description of Data Inputs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Description of Data Inputs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tobalciomodel)
+```
+
+### Input-Output Tables
+
+### MESAS
+
+### Elasticities
+
+### Employment
