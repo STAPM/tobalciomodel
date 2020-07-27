@@ -3,7 +3,6 @@
 #' Calculate the Leontief inverse Type I and Type II matrices from the package data and calculate
 #' the sector by sector multipliers for output, GVA, and employment.
 #'
-#'
 #' @export
 multipliers <- function() {
 
