@@ -9,7 +9,8 @@ simulate_alcohol_policy(
   alc.policy = "exog",
   on.trade.ch = c(0, 0, 0, 0, 0),
   off.trade.ch = c(0, 0, 0, 0, 0),
-  reallocate = FALSE
+  reallocate = FALSE,
+  prob = FALSE
 )
 }
 \arguments{
