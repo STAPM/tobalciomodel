@@ -61,17 +61,17 @@ if (alc.policy == "MUP") {
 
 # off-trade changes go into sector 62 - Wholesale Trade (Alcohol)
 
-final.demand[62] <- data2[2]
+final.demand[61] <- data2[2]
 
 # on-trade changes equally split between 70 - Accommodation (Alcohol) and 72 - Food and Beverage (Alcohol)
 
 if (prob == FALSE) {
-final.demand[70] <- data2[1]*0.5
-final.demand[72] <- data2[1]*0.5
+final.demand[69] <- data2[1]*0.5
+final.demand[71] <- data2[1]*0.5
 } else if (prob == TRUE) {
   split <- runif(1)
-final.demand[70] <- data2[1]*split
-final.demand[72] <- data2[1]*(1-split)
+final.demand[69] <- data2[1]*split
+final.demand[71] <- data2[1]*(1-split)
 }
 
 return(final.demand)
