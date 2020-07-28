@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=6, fig.height=4.5
 )
 ```
 
@@ -20,6 +21,7 @@ knitr::opts_chunk$set(
 library(tobalciomodel)
 library(data.table)
 library(dplyr)
+library(tidyverse)
 ```
 
 ## __Step (1) Recover the Multipliers__
@@ -133,7 +135,57 @@ policy_sim <- simulate_alcohol_policy(data = inputs,
 names(policy_sim)
 
 head(policy_sim)
+
+policy_sim[61] # Wholesale/Retail (Alcohol)
+policy_sim[69] # Accommodation (Alcohol)
+policy_sim[71] # Food and Beverage (Alcohol)
+
 ```
+
+The above code equally splits the fall in demand for on-trade alcohol across the two on-trade sectors. Instead of a 0.5/0.5 split, we can simulate a distribution of changes in output by drawing a random proportion to allocate from a uniform distribution. 
+
+
+```{r simulation,include=FALSE}
+### calculate the total change in output
+
+output.effects <- sum(policy_sim*multipliers[,"output.multipliers.type1"])
+
+### see the effect of the random splitting of the on-trade
+set.seed(2020)
+reps <- 1000
+effects.vector <- rep(NA,reps)
+
+for (i in 1:reps) {
+  print(paste0("Simulation Iteration: ",i))
+  policy_sim <- simulate_alcohol_policy(data = inputs,
+                                        alc.policy = "exog",
+                                        on.trade.ch = rep(-0.1,5),
+                                        off.trade.ch = c(0,0,0,0,0),
+                                        reallocate = FALSE,
+                                        prob = TRUE)
+
+  effects.vector[i] <- sum(policy_sim*multipliers[,"output.multipliers.type1"])
+}
+```
+
+```{r sim_plot,echo=FALSE}
+
+library(tidyverse)
+data <- data.frame(effects.vector)
+
+ggplot(data=data) +
+  aes(x = effects.vector) +
+  geom_density(fill="navy",alpha=0.4) +
+  geom_vline(xintercept = output.effects) +
+  theme_minimal() +
+  labs(y = "Density",
+       x = "Effect on Output (£bn)",
+       title = "Effect of a 10% Fall in Consumption of On-Trade Alcohol Products",
+       subtitle = "Distribution of Effects when Varying Split Across Two On-Trade Sectors") +
+  scale_x_continuous(breaks = seq(-5.0,-3.0,0.1), minor_breaks = NULL)
+
+```
+
 ## __Step (3) Calculate the Policy Impact__
 
 Multiply the change in final demand vector calculated in step 2b by the appropriate column of multipliers obtained in step 1. 
