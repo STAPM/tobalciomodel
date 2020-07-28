@@ -14,11 +14,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+## __Step (0) Load Required Packages__
+
+```{r setup, warning=FALSE, message=FALSE}
 library(tobalciomodel)
+library(data.table)
+library(dplyr)
 ```
 
-## Recover the Multipliers
+## __Step (1) Recover the Multipliers__
 
 - Draw on the package IO table data to construct output and other multipliers 
 - Create the Leontief inverse matrices - Type I and Type II.
@@ -27,18 +31,109 @@ library(tobalciomodel)
 - Caclulate sectoral GVA multipliers using the coefficients. 
 - Repeat the GVA steps for employment __(not yet included, to be added)__
 
-## Defining Input Parameters and Data
+### *The Output Multiplier*
+
+The multipliers are the coefficients which are used to translate changes in inputs into changes in output. Taking the IO equation:
+
+$$
+\Delta y = (I-A)^{-1} \Delta x
+$$
+
+An illustrative example using a simple three sector model shows the derivation of the sectoral output multipliers: 
+
+$$
+\left(\begin{array}{c} 
+\Delta y_1 \\ 
+\Delta y_2 \\
+\Delta y_3
+\end{array}\right)
+=
+\left(\begin{array}{ccc} 
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} 
+\end{array}\right)
+\left(\begin{array}{c} 
+\Delta x_1 \\ 
+\Delta x_2 \\
+\Delta x_3
+\end{array}\right)
+$$ 
+
+The $a_{ij}$ are the Leontief matrix elements for industry $j$ purchases from industry $i$. $x_{j}$ are the changes in industry $j$ final demand - this can come from export demand, household demand, or government purchases.  We can express this as a system of linear equations:
+
+$$
+\Delta y_1 = (a_{11}*\Delta x_1) + (a_{12}*\Delta x_2) + (a_{13}*\Delta x_3) \\
+\Delta y_2 = (a_{21}*\Delta x_1) + (a_{32}*\Delta x_2) + (a_{23}*\Delta x_3) \\
+\Delta y_3 = (a_{31}*\Delta x_1) + (a_{32}*\Delta x_2) + (a_{33}*\Delta x_3)
+$$
+
+The total change in output is the sum of the $\Delta y$ vector. Summing up the three equations and collecting like terms gives:
+
+$$
+\Delta y = \Delta x_1(a_{11} + a_{21} + a_{31}) + \\ \Delta x_2(a_{12}+a_{22}+a_{32}) + \\\ \Delta x_3(a_{13}+a_{23}+a_{33})
+$$
+Defining $M_j = \sum^3_{n=1}a_{nj}$ i.e. $M_j$ for the $j$th sector is the sum of column $j$ in the leontief matrix, and represents the output multiplier - the change in total economy output for a one unit change in final demand for sector $j$:
+
+$$
+\Delta y = \Delta x_1M_1 + \Delta x_2M_2 + \Delta x_3M_3
+$$
+
+Which generalises simply to an input-output analysis with any number, $N$, of sectors:
+
+$$
+\Delta y = \sum^N_{n=1}\Delta x_nM_n 
+$$
+
+### *GVA and Employment Multipliers*
+
+### *Implementation in R*
+
+In R, recovery of the multipliers simply involves using the `multipliers()` function, which takes no arguments. The output is a data frame with 106 observations - 1 per sector - and 11 variables. The variables are the sector names and 5 multipliers (output,gross value added (total),tax,compensation of employees, and gross operating surplus), each calculated in the Type 1 and Type II scenarios.
+
+```{r multipliers}
+multipliers <- multipliers()
+dim(multipliers)
+names(multipliers)
+head(multipliers[,c(2,3)])
+```
+
+## __Step (2a) Defining Input Parameters and Data__
 
 - Select the year of data to use.
 - The choice of price elasticities to use.
 - Whether the analysis is for Scotland or England & Wales
 
-## Simulate the Policy 
+```{r inputs}
+inputs <- final_demand_inputs(yr = 2010,
+                              scotland = FALSE,
+                              elasticity = "meng14")
+
+names(inputs)
+
+head(inputs)
+```
+## __Step (2b) Simulate the Policy __
 
 - Use the selected data from the previous stage
 - Set alcohol policy parameters - exogenous change/MUP/tax change - and select how these vary across the 10 alcohol products. - choose whether or not to allow households to re-allocate spending. 
 - choose whether or not government simultaneously changes its spending __(not yet included, to be added)__
-
 - function generates the change in final demand vector. 
 
-## 
+Simulate an exogenous change in demand - where consumption of each product of on-trade alcohol falls by 10%.
+
+```{r policy}
+policy_sim <- simulate_alcohol_policy(data = inputs,
+                                      alc.policy = "exog",
+                                      on.trade.ch = rep(-0.1,5),
+                                      off.trade.ch = c(0,0,0,0,0),
+                                      reallocate = FALSE,
+                                      prob = FALSE)
+
+names(policy_sim)
+
+head(policy_sim)
+```
+## __Step (3) Calculate the Policy Impact__
+
+Multiply the change in final demand vector calculated in step 2b by the appropriate column of multipliers obtained in step 1. 
