@@ -113,6 +113,8 @@ multipliers <- function(yr = 2010,
   data$coe.multipliers.type2 <- as.numeric(as.character(data$coe.multipliers.type2))
   data$gos.multipliers.type1 <- as.numeric(as.character(data$gos.multipliers.type1))
   data$gos.multipliers.type2 <- as.numeric(as.character(data$gos.multipliers.type2))
+  data$emp.multipliers.type1 <- as.numeric(as.character(data$emp.multipliers.type1))
+  data$emp.multipliers.type2 <- as.numeric(as.character(data$emp.multipliers.type2))
 
   return(data)
 
