@@ -66,11 +66,12 @@ multipliers <- function(yr = 2010,
   ### (proportion of output comprised of each GVA measure)
 
   # extract employment from the employment data. IO table is in millions and employment
-  # is in units, so convert employment into millions to obtain a 1:1 multiplier
+  # is in units, so convert employment into millions to obtain a 1:1 multiplier. Then
+  # scale up to billions, as demand changes in the model are measured in billions
   if (empl == "fte") {
-  employment <- tobalciomodel::employment[,paste0("fte_",yr)]/1000000
+  employment <- tobalciomodel::employment[,paste0("fte_",yr)]*(1000000000/1000000)
   } else if (empl == "employment") {
-  employment <- tobalciomodel::employment[,paste0("empl_",yr)]/1000000
+  employment <- tobalciomodel::employment[,paste0("empl_",yr)]*(1000000000/1000000)
   }
 
   coef.gva <- tobalciomodel::iotable$gva.total / tobalciomodel::iotable$total.output
