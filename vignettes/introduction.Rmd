@@ -91,10 +91,11 @@ $$
 
 ### *Implementation in R*
 
-In R, recovery of the multipliers simply involves using the `multipliers()` function, which takes no arguments. The output is a data frame with 106 observations - 1 per sector - and 11 variables. The variables are the sector names and 5 multipliers (output,gross value added (total),tax,compensation of employees, and gross operating surplus), each calculated in the Type 1 and Type II scenarios.
+In R, recovery of the multipliers simply involves using the `multipliers()` function. The year to use for employment data and the choice between using number of jobs or FTEs as the employment measure must be selected     . The output is a data frame with 106 observations - 1 per sector - and 11 variables. The variables are the sector names and 5 multipliers (output,gross value added (total),tax,compensation of employees, and gross operating surplus), each calculated in the Type 1 and Type II scenarios.
 
 ```{r multipliers}
-multipliers <- multipliers()
+multipliers <- multipliers(yr = 2010,
+                           empl = "fte")
 dim(multipliers)
 names(multipliers)
 head(multipliers[,c(2,3)])
@@ -181,7 +182,8 @@ ggplot(data=data) +
   labs(y = "Density",
        x = "Effect on Output (£bn)",
        title = "Effect of a 10% Fall in Consumption of On-Trade Alcohol Products",
-       subtitle = "Distribution of Effects when Varying Split Across Two On-Trade Sectors") +
+       subtitle = "Distribution of Effects when Varying Split Across Two On-Trade Sectors",
+       caption = "1000 simulation replications" ) +
   scale_x_continuous(breaks = seq(-5.0,-3.0,0.1), minor_breaks = NULL)
 
 ```
