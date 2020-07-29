@@ -4,9 +4,7 @@
 \name{employment}
 \alias{employment}
 \title{LFS Employment Data for 106 Sectors.}
-\format{
-A data frame with 106 observations and 23 variables.
-}
+\format{A data frame with 106 observations and 23 variables.}
 \usage{
 employment
 }

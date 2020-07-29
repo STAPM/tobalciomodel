@@ -4,8 +4,7 @@
 \name{iotable}
 \alias{iotable}
 \title{Input-Output Table.}
-\format{
-A data frame with 106 observations and 116 variables.
+\format{A data frame with 106 observations and 116 variables.
 \describe{
     \item{name}{Name of the SIC07-based sector of economic activity.}
     \item{sec1-sec106}{For each sector, a variable capturing inter-industry sales/purchases.}
@@ -18,8 +17,7 @@ A data frame with 106 observations and 116 variables.
     \item{gva.wages}{gross value added - employee compensation component}
     \item{gva.gos}{gross value added - gross operating surplus component}
     \item{gva.total}{gross value added total - sum of employee compensation, gross operating surplus, and taxes on production}
-    }
-}
+    }}
 \usage{
 iotable
 }

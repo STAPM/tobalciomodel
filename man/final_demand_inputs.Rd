@@ -4,7 +4,8 @@
 \alias{final_demand_inputs}
 \title{Preparation to Model Change in Final Demand}
 \usage{
-final_demand_inputs(yr = 2010, scotland = FALSE, elasticity = "meng14")
+final_demand_inputs(yr = 2010, scotland = FALSE,
+  elasticity = "meng14")
 }
 \arguments{
 \item{yr}{which years data to use?.}

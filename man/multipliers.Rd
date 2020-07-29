@@ -4,7 +4,13 @@
 \alias{multipliers}
 \title{Produce Sectoral Output Multipliers}
 \usage{
-multipliers()
+multipliers(yr = 2010, empl = "fte")
+}
+\arguments{
+\item{yr}{year of employment data to use}
+
+\item{empl}{measure of employment to use - "employed" for number of individuals in employment
+"fte" for full time equivalents (default).}
 }
 \description{
 Calculate the Leontief inverse Type I and Type II matrices from the package data and calculate
