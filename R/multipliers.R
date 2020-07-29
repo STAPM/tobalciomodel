@@ -3,8 +3,13 @@
 #' Calculate the Leontief inverse Type I and Type II matrices from the package data and calculate
 #' the sector by sector multipliers for output, GVA, and employment.
 #'
+#' @param yr year of employment data to use
+#' @param empl measure of employment to use - "employed" for number of individuals in employment
+#' "fte" for full time equivalents (default).
+#'
 #' @export
-multipliers <- function() {
+multipliers <- function(yr = 2010,
+                        empl = "fte") {
 
   ## extract flow table and output/demand vectors
 
@@ -53,26 +58,38 @@ multipliers <- function() {
   output.multipliers.type1 <- rep(NA,106)
   output.multipliers.type2 <- rep(NA,106)
   for (i in 1:106) {
-  output.multipliers.type1[i] <- sum(L[1:106,i])
-  output.multipliers.type2[i] <- sum(L2[1:107,i])
+  output.multipliers.type1[i] <- sum(L[,i])
+  output.multipliers.type2[i] <- sum(L2[,i])
   }
 
-  ### Calculate Output to GVA coefficients (proportion of output comprised of each GVA measure)
+  ### Calculate Output to GVA and employment coefficients
+  ### (proportion of output comprised of each GVA measure)
+
+  # extract employment from the employment data. IO table is in millions and employment
+  # is in units, so convert employment into millions to obtain a 1:1 multiplier
+  if (empl == "fte") {
+  employment <- tobalciomodel::employment[,paste0("fte_",yr)]/1000000
+  } else if (empl == "employment") {
+  employment <- tobalciomodel::employment[,paste0("empl_",yr)]/1000000
+  }
 
   coef.gva <- tobalciomodel::iotable$gva.total / tobalciomodel::iotable$total.output
   coef.tax <- tobalciomodel::iotable$gva.taxes / tobalciomodel::iotable$total.output
   coef.coe <- tobalciomodel::iotable$gva.wages / tobalciomodel::iotable$total.output
   coef.gos <- tobalciomodel::iotable$gva.gos   / tobalciomodel::iotable$total.output
+  coef.emp <- employment   / tobalciomodel::iotable$total.output
 
   gva.multipliers.type1 <- coef.gva*output.multipliers.type1
   tax.multipliers.type1 <- coef.tax*output.multipliers.type1
-  coe.multipliers.type1 <- coef.gva*output.multipliers.type1
-  gos.multipliers.type1 <- coef.gva*output.multipliers.type1
+  coe.multipliers.type1 <- coef.coe*output.multipliers.type1
+  gos.multipliers.type1 <- coef.gos*output.multipliers.type1
+  emp.multipliers.type1 <- coef.emp*output.multipliers.type1
 
   gva.multipliers.type2 <- coef.gva*output.multipliers.type2
   tax.multipliers.type2 <- coef.tax*output.multipliers.type2
-  coe.multipliers.type2 <- coef.gva*output.multipliers.type2
-  gos.multipliers.type2 <- coef.gva*output.multipliers.type2
+  coe.multipliers.type2 <- coef.coe*output.multipliers.type2
+  gos.multipliers.type2 <- coef.gos*output.multipliers.type2
+  emp.multipliers.type2 <- coef.emp*output.multipliers.type2
 
   name <- as.character(tobalciomodel::iotable$name)
   data <- cbind(name,
@@ -80,7 +97,8 @@ multipliers <- function() {
                 gva.multipliers.type1,gva.multipliers.type2,
                 tax.multipliers.type1,tax.multipliers.type2,
                 coe.multipliers.type1,coe.multipliers.type2,
-                gos.multipliers.type1,gos.multipliers.type2)
+                gos.multipliers.type1,gos.multipliers.type2,
+                emp.multipliers.type1,emp.multipliers.type2)
 
   data <- data.frame(data)
 
