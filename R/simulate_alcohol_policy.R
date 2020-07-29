@@ -74,5 +74,18 @@ final.demand[69] <- data2[1]*split
 final.demand[71] <- data2[1]*(1-split)
 }
 
+direct.effect <- sum(final.demand)
+
+if (reallocate == FALSE) {
 return(final.demand)
+} else if (reallocate == TRUE) {
+
+  # calculate each sectors proportion of total household spending
+  hhold.prop <- tobalciomodel::iotable$hhold.demand / sum(tobalciomodel::iotable$hhold.demand)
+  # allocate the fall in consumer expenditure according to the distribution of spending
+  reallocated.demand <- -1*(direct.effect*hhold.prop)
+  # add to the "raw" change in final demand to produce a new vector of demand changes
+  adjusted.final.demand <- reallocated.demand + final.demand
+
+}
 }
