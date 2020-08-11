@@ -22,6 +22,7 @@ multipliers <- function(yr = 2010,
 
   ## Calculate coefficient matrix:
   A <- flowtable %*% ((total.output )^-1 * diag(length(total.output)))
+  A <- round(A,5)
   # Show A
 
   # Identity matrix minus A
@@ -29,6 +30,7 @@ multipliers <- function(yr = 2010,
 
   # Calculate the Leontief Inverse matrix
   L <- solve(IminusA)
+  L <- round(L,5)
 
 
   ## Create the type 2 matrix - endoegenous households
@@ -36,9 +38,9 @@ multipliers <- function(yr = 2010,
   # the household-household transfer on the lead diagonal should be zero (households do not supply/demand from/to each other directly)
 
   # in calculating A, the household consumption column is a fraction of total household
-  # income - total employee compensation plus total gross operating surplus
+  # spending
 
-  total.hhold.income <- 801796 + 504498
+  total.hhold.income <- 840117+80917
 
 
   flow.table2 <- rbind(flowtable,hhold.output)        # add employment earnings as an extra row
@@ -46,12 +48,13 @@ multipliers <- function(yr = 2010,
 
   ## Calculate coefficient matrix:
   A2 <- flow.table2 %*% (( c(total.output,total.hhold.income) )^-1 * diag(length( c(total.output,total.hhold.income)  ) ) )
-
+  A2 <- round(A2,5)
   # Identity matrix minus A
   IminusA2 <- diag(length(c(total.output,sum(total.output)))) - A2
 
   # Calculate the Leontief Inverse matrix
   L2 <- solve(IminusA2)
+  L2 <- round(L2,5)
 
   ### Calculate Sectoral Multipliers
 
