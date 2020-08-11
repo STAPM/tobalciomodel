@@ -80,8 +80,8 @@ if (reallocate == FALSE) {
 return(final.demand)
 } else if (reallocate == TRUE) {
 
-  # calculate each sectors proportion of total household spending
-  hhold.prop <- tobalciomodel::iotable$hhold.demand / sum(tobalciomodel::iotable$hhold.demand)
+  # calculate each sectors proportion of total household spending in the flowtable
+  hhold.prop <- tobalciomodel::iotable$hhold.demand / sum(840117,80917)
   # allocate the fall in consumer expenditure according to the distribution of spending
   reallocated.demand <- -1*(direct.effect*hhold.prop)
   # add to the "raw" change in final demand to produce a new vector of demand changes
