@@ -4,13 +4,15 @@
 \name{elasticities}
 \alias{elasticities}
 \title{Price elasticities}
-\format{A data frame with 10 observations and 4 variables.
+\format{
+A data frame with 10 observations and 4 variables.
 \describe{
     \item{Product}{Beer, Cider, Wine, Spirits, RTDs}
     \item{On.Trade}{On-trade alcohol price elasticities}
     \item{Off.Trade}{Off-trade alcohol price elasticities }
     \item{Source}{Source for the elasticities. Collis et al. (2010) or Meng et al. (2014)}
-}}
+}
+}
 \usage{
 elasticities
 }

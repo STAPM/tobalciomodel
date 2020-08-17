@@ -4,7 +4,8 @@
 \name{mesas}
 \alias{mesas}
 \title{Alcohol Consumption Data for England, Wales, and Scotland 2000-2019.}
-\format{A data frame with 320 observations and 12 variables.
+\format{
+A data frame with 320 observations and 12 variables.
 \describe{
     \item{year}{Demands of Sector A from the row sector.}
     \item{product}{Total alcohol, and 7 types of alcohol; spirits, RTDs, fortifies wines, wine, cider, perry, and beer.}
@@ -18,7 +19,8 @@
     \item{consumption.ontrade}{total estimated on-trade consumption - units per person X price per unit X population.}
     \item{consumption.offtrade}{total estimated off-trade consumption - units per person X price per unit X population.}
     \item{country}{indicator. England and Wales, or Scotland}
-}}
+}
+}
 \usage{
 mesas
 }
