@@ -1,0 +1,83 @@
+---
+title: "Sensitivity to Distribution Across On-Trade Sectors"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sensitivity to Distribution Across On-Trade Sectors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=7.5, fig.height=6
+)
+```
+
+```{r setup, warning = FALSE, message = FALSE}
+library(tobalciomodel)
+library(tidyverse)
+library(data.table)
+```
+
+
+
+
+```{r inputs}
+
+### Select data and parameters
+inputs <- final_demand_inputs(yr = 2018,
+                              scotland = FALSE,
+                              elasticity = "meng14")
+
+### Extract the multipliers
+multipliers <- multipliers(yr = 2018,
+                           empl = "fte")
+```
+
+```{r base}
+### Simulate a policy with the 0.5 allocation
+policy_sim <- simulate_alcohol_policy(data = inputs,
+                                      alc.policy = "exog",
+                                      on.trade.ch = rep(-0.1,5),
+                                      off.trade.ch = rep(0,5),
+                                      prob = FALSE)
+
+### Output effects
+
+output.effects <- round(sum(policy_sim*multipliers[,"output.multipliers.type1"]),3)
+```
+
+```{r simulation, message = FALSE}
+### Simulate the policy for randomly drawn proportions
+set.seed(2020)
+reps <- 100
+effects.vector <- rep(NA,reps)
+
+for (i in 1:reps) {
+  #print(paste0("Simulation Iteration: ",i))
+  policy_sim <- simulate_alcohol_policy(data = inputs,
+                                        alc.policy = "exog",
+                                        on.trade.ch = rep(-0.1,5),
+                                        off.trade.ch = c(0,0,0,0,0),
+                                        prob = TRUE)
+
+  effects.vector[i] <- sum(policy_sim*multipliers[,"output.multipliers.type1"])
+}
+
+library(tidyverse)
+data <- data.frame(effects.vector)
+
+ggplot(data=data) +
+  aes(x = effects.vector) +
+  geom_density(fill="navy",alpha=0.4) +
+  geom_vline(xintercept = output.effects) +
+  theme_minimal() +
+  labs(y = "Density",
+       x = "Effect on Output (£bn)",
+       title = "Effect of a 10% Fall in Consumption of On-Trade Alcohol Products",
+       subtitle = "Distribution of Effects when Varying Split Across Two On-Trade Sectors") +
+  scale_x_continuous(breaks = seq(-5.8,-4.4,0.1), minor_breaks = NULL)
+```
+
