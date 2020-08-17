@@ -7,7 +7,7 @@
 #' @param alc.policy alcohol policy type to be modelled - c("exog","MUP","tax")
 #' @param on.trade.ch a vector of proportionate consumption changes to be modelled for Beer, Cider, RTDs, Spirits, Wine
 #' @param off.trade.ch a vector of proportionate consumption changes to be modelled for Beer, Cider, RTDs, Spirits, Wine
-#' @param reallocate logical; if TRUE then saved expenditures are reallocated to other sectors.
+#' @param prob logical; if TRUE then randomly draw a proportion to use to split on/off trade.
 #'
 #' @return A vector of changes in final demand measured in £bn
 #'
@@ -17,7 +17,6 @@ simulate_alcohol_policy <- function(data = NULL,
                                 alc.policy = "exog",
                                 on.trade.ch = c(0,0,0,0,0),
                                 off.trade.ch = c(0,0,0,0,0),
-                                reallocate = FALSE,
                                 prob = FALSE) {
 
 ## Initialise a vector to store the changes in final demand
@@ -66,26 +65,18 @@ final.demand[61] <- data2[2]
 # on-trade changes equally split between 69 - Accommodation (Alcohol) and 71 - Food and Beverage (Alcohol)
 
 if (prob == FALSE) {
-final.demand[69] <- data2[1]*0.5
-final.demand[71] <- data2[1]*0.5
+  split <- 0.5
 } else if (prob == TRUE) {
   split <- runif(1)
+}
 final.demand[69] <- data2[1]*split
 final.demand[71] <- data2[1]*(1-split)
-}
 
 direct.effect <- sum(final.demand)
 
-if (reallocate == FALSE) {
-return(final.demand)
-} else if (reallocate == TRUE) {
 
-  # calculate each sectors proportion of total household spending in the flowtable
-  hhold.prop <- tobalciomodel::iotable$hhold.demand / sum(840117,80917)
-  # allocate the fall in consumer expenditure according to the distribution of spending
-  reallocated.demand <- -1*(direct.effect*hhold.prop)
-  # add to the "raw" change in final demand to produce a new vector of demand changes
-  adjusted.final.demand <- reallocated.demand + final.demand
 
-}
+return(list(final.demand = final.demand,
+            split = split)
+       )
 }
