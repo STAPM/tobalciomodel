@@ -9,7 +9,8 @@
 #'
 #' @export
 
-impact_calculate <- function(demand.change = NULL) {
+impact_calculate <- function(demand.change = NULL,
+                             multipliers = NULL) {
 
   output.effects.1 <- round(sum(demand.change$final.demand*multipliers[,"output.multipliers.type1"]),3)
   output.effects.2 <- round(sum(demand.change$final.demand*multipliers[,"output.multipliers.type2"]),3)

@@ -2,6 +2,7 @@
 
 export(final_demand_inputs)
 export(hhold_reallocate)
+export(impact_calculate)
 export(multipliers)
 export(sectors)
 export(simulate_alcohol_policy)

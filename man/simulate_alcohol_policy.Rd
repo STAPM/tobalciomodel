@@ -9,7 +9,6 @@ simulate_alcohol_policy(
   alc.policy = "exog",
   on.trade.ch = c(0, 0, 0, 0, 0),
   off.trade.ch = c(0, 0, 0, 0, 0),
-  reallocate = FALSE,
   prob = FALSE
 )
 }
@@ -22,7 +21,7 @@ simulate_alcohol_policy(
 
 \item{off.trade.ch}{a vector of proportionate consumption changes to be modelled for Beer, Cider, RTDs, Spirits, Wine}
 
-\item{reallocate}{logical; if TRUE then saved expenditures are reallocated to other sectors.}
+\item{prob}{logical; if TRUE then randomly draw a proportion to use to split on/off trade.}
 }
 \value{
 A vector of changes in final demand measured in £bn

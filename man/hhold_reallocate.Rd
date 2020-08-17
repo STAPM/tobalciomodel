@@ -4,7 +4,7 @@
 \alias{hhold_reallocate}
 \title{Allow Households to Adjust Expenditure}
 \usage{
-hhold_reallocate(data = NULL, pro.rata = TRUE)
+hhold_reallocate(data = NULL, pro.rata = TRUE, sectors = NULL, prop = NULL)
 }
 \arguments{
 \item{data}{dataset created by `final_demand_inputs()`}
