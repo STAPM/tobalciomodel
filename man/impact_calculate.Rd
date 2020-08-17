@@ -4,10 +4,21 @@
 \alias{impact_calculate}
 \title{Calculate Economic Impacts}
 \usage{
-impact_calculate(demand.change = NULL, multipliers = NULL)
+impact_calculate(
+  demand.change = NULL,
+  multipliers = NULL,
+  export = FALSE,
+  path = "output/"
+)
 }
 \arguments{
 \item{demand.change}{list object created by `simulate_alcohol_policy()`}
+
+\item{multipliers}{data frame of multipliers used to calculate the impacts.}
+
+\item{export}{logical; if TRUE saves a csv file of results.}
+
+\item{path}{filepath for exporting results.}
 }
 \value{
 A table of model outputs
