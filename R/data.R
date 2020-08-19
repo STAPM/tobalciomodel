@@ -70,3 +70,20 @@
 #'     \item{gva.total}{gross value added total - sum of employee compensation, gross operating surplus, and taxes on production}
 #'     }
 "iotable"
+
+
+
+#' Scenarios
+#'
+#' A data frame containing pre-specified input parameters for scenario analyses.
+#'
+#' @format A data frame with 10 observations and 4 variables.
+#' \describe{
+#'     \item{year}{year of data to use}
+#'     \item{scotland}{TRUE if applying scenario to Scotland}
+#'     \item{elasticity}{source of elasticity information}
+#'     \item{emp.measure}{measure of employment - fte, employment, or hours}
+#'     \item{alc.policy}{alcohol policy scenario - exog, MUP, tax, or NULL for no policy}
+#'     \item{tob.policy}{tobacco policy scenario - exog, MUP, tax, or NULL for no policy}
+#' }
+"scenarios"
