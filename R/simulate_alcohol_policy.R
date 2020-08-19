@@ -51,7 +51,7 @@ if (alc.policy == "MUP") {
 
 ## Model a tax change -------
 
-if (alc.policy == "MUP") {
+if (alc.policy == "tax") {
 
 }
 
