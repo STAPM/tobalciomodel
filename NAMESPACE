@@ -3,6 +3,8 @@
 export(final_demand_inputs)
 export(hhold_reallocate)
 export(impact_calculate)
+export(io.analysis)
 export(multipliers)
 export(sectors)
+export(select_scenario)
 export(simulate_alcohol_policy)
