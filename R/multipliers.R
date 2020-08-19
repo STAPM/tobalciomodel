@@ -75,6 +75,8 @@ multipliers <- function(yr = 2010,
   employment <- tobalciomodel::employment[,paste0("fte_",yr)]*(1000000000/1000000)
   } else if (empl == "employment") {
   employment <- tobalciomodel::employment[,paste0("empl_",yr)]*(1000000000/1000000)
+  } else if (empl == "hours") {
+    employment <- tobalciomodel::hours[,paste0("hours_",yr)]*(1000000000/1000000)
   }
 
   coef.gva <- tobalciomodel::iotable$gva.total / tobalciomodel::iotable$total.output
