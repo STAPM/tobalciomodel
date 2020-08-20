@@ -1,4 +1,4 @@
-#' Preparation to Model Change in Final Demand
+#' Preparation to Model Change in Alcohol Final Demand
 #'
 #' This function filters the package data by chosen input parameters and merges the elasticity and MESAS information
 #' into a single dataset ready to be used to analyse the effects of policy changes on final demand.
@@ -12,15 +12,15 @@
 #'
 #' @export
 
-final_demand_inputs <- function(yr = 2010,
-                                scotland = FALSE,
-                                elasticity = "meng14") {
+final_demand_inputs_alc <- function(yr = 2010,
+                                    scotland = FALSE,
+                                    elasticity = "meng14") {
 
 #### (1) Create Data Table of Data/Parameter Inputs
 
 ## Filter the elasticities data based on chosen source
 
-elasticity_data <- as.data.table(tobalciomodel::elasticities)
+elasticity_data <- as.data.table(tobalciomodel::elasticities_alc)
 
 if (elasticity == "meng14") {
 elasticity_data <- elasticity_data[1:5,]
