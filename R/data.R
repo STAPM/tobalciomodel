@@ -1,18 +1,3 @@
-#' Price elasticities
-#'
-#' A data frame containing the price elasticity of demand for five types of alcohol; beer, cider,
-#' wine, spirits, and RTDs split by off and on trade sales. Elasticities are obtained from multiple sources.
-#'
-#' @format A data frame with 10 observations and 4 variables.
-#' \describe{
-#'     \item{Product}{Beer, Cider, Wine, Spirits, RTDs}
-#'     \item{On.Trade}{On-trade alcohol price elasticities}
-#'     \item{Off.Trade}{Off-trade alcohol price elasticities }
-#'     \item{Source}{Source for the elasticities. Collis et al. (2010) or Meng et al. (2014)}
-#' }
-"elasticities"
-
-
 #' Alcohol Consumption Data for England, Wales, and Scotland 2000-2019.
 #'
 #' A data frame containing alcohol consumption data separately for Scotland, and for England and Wales.
@@ -35,7 +20,34 @@
 #'     \item{consumption.offtrade}{total estimated off-trade consumption - units per person X price per unit X population.}
 #'     \item{country}{indicator. England and Wales, or Scotland}
 #' }
-"mesas"
+"alcohol_data"
+
+#' Price elasticities for Alcohol
+#'
+#' A data frame containing the price elasticity of demand for five types of alcohol; beer, cider,
+#' wine, spirits, and RTDs split by off and on trade sales. Elasticities are obtained from multiple sources.
+#'
+#' @format A data frame with 10 observations and 4 variables.
+#' \describe{
+#'     \item{Product}{Beer, Cider, Wine, Spirits, RTDs}
+#'     \item{On.Trade}{On-trade alcohol price elasticities}
+#'     \item{Off.Trade}{Off-trade alcohol price elasticities }
+#'     \item{Source}{Source for the elasticities. Collis et al. (2010) or Meng et al. (2014)}
+#' }
+"elasticities_alc"
+
+#' Price elasticities for Tobacco
+#'
+#' A data frame containing the price elasticity of demand for five types of alcohol; beer, cider,
+#' wine, spirits, and RTDs split by off and on trade sales. Elasticities are obtained from multiple sources.
+#'
+#' @format A data frame with 10 observations and 4 variables.
+#' \describe{
+#'     \item{product}{cigarettes (need to add RYO vs FM to the data)}
+#'     \item{Elasticity}{price elasticities}
+#'     \item{Source}{Source for the elasticities}
+#' }
+"elasticities_tob"
 
 #' LFS Employment Data for 106 Sectors.
 #'
