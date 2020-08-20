@@ -26,9 +26,37 @@ elasticities_collis10 <- matrix(c("Beer","Cider","Wine","Spirits","RTDs",
 )
 
 
-elasticities <- data.frame(rbind(elasticities_meng14,elasticities_collis10))
+elasticities_alc <- data.frame(rbind(elasticities_meng14,elasticities_collis10))
 
-elasticities$On.Trade  <- as.numeric(as.character(elasticities$On.Trade))
-elasticities$Off.Trade <- as.numeric(as.character(elasticities$Off.Trade))
+elasticities_alc$On.Trade  <- as.numeric(as.character(elasticities_alc$On.Trade))
+elasticities_alc$Off.Trade <- as.numeric(as.character(elasticities_alc$Off.Trade))
 
-usethis::use_data(elasticities,overwrite=TRUE)
+usethis::use_data(elasticities_alc,overwrite=TRUE)
+
+######## TOBACCO ELASTICITIES
+
+#Gallus S, Schiaffino A, La Vecchia C, et al
+#Price and cigarette consumption in Europe
+#Tobacco Control 2006;15:114-119.
+
+gallus06 <- -0.46
+
+## An HMRC study - select their preferred model
+## http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.307.8455&rep=rep1&type=pdf
+
+czubeck10 <- -1.05
+
+elasticity <- c(gallus06,czubeck10)
+product <- c("Cigarettes","Cigarettes")
+source <- c("Gallus et al. 2006","Czubeck & Johal 2010")
+
+elasticities_tob <- matrix(c(product,elasticity,source),
+                                ncol=3,
+                                byrow=FALSE,
+                                dimnames = list(NULL,
+                                                c("product","Elasticity","Source"))
+)
+elasticities_tob <- data.frame(elasticities_tob)
+elasticities_tob$Elasticity <- as.numeric(as.character(elasticities_tob$Elasticity))
+
+usethis::use_data(elasticities_tob,overwrite=TRUE)
