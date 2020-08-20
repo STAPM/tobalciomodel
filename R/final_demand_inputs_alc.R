@@ -30,7 +30,7 @@ elasticity_data <- elasticity_data[6:10,]
 
 ## Filter the MESAS data by year and country
 
- mesas_data <- as.data.table(tobalciomodel::mesas)
+ mesas_data <- as.data.table(tobalciomodel::alcohol_data)
  mesas_data$year <- as.numeric(as.character(mesas_data$year))
 if (scotland == FALSE) {
 mesas_data <- mesas_data %>%
