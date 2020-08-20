@@ -87,3 +87,21 @@
 #'     \item{tob.policy}{tobacco policy scenario - exog, MUP, tax, or NULL for no policy}
 #' }
 "scenarios"
+
+#' Tobacco Price and Consumption Data
+#'
+#' A data frame containing expenditure, quantity, and price time series data
+#' for tobacco consumption.
+#'
+#' @format A data frame with 10 observations and 4 variables.
+#' \describe{
+#'     \item{year}{year of data to use}
+#'     \item{population}{source of elasticity information}
+#'     \item{expenditure}{measure of employment - fte, employment, or hours}
+#'     \item{prevalance}{alcohol policy scenario - exog, MUP, tax, or NULL for no policy}
+#'     \item{ncigs}{average number of cigs smoked per day}
+#'     \item{price}{RRP of a pack of 20 cigarettes}
+#'     \item{price.per.cig}{price per cigarette}
+#'     \item{consumption}{expenditure divided by price}
+#' }
+"tobacco_data"
