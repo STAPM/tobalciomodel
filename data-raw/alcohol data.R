@@ -300,6 +300,6 @@ rm(year,data,population,imp.values,litres.data,litres.offtrade,litres.ontrade,
 
 ####### COMBINE ENGLAND AND WALES WITH SCOTLAND
 
-mesas <- rbind(data_mesas_englandwales,data_mesas_scotland)
+alcohol_data <- rbind(data_mesas_englandwales,data_mesas_scotland)
 
-usethis::use_data(mesas,overwrite=TRUE)
+usethis::use_data(alcohol_data,overwrite=TRUE)
