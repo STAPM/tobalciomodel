@@ -12,10 +12,11 @@ select_scenario <- function(num.scenario = NULL) {
 
   year <-        as.vector(as.matrix(data[,"year"]))
   scotland <-    as.logical(data[,"scotland"])
-  elasticity <-  as.character(data[,"elasticity"])
+  alc.elasticity <-  as.character(data[,"alc.elasticity"])
+  tob.elasticity <-  as.character(data[,"tob.elasticity"])
   emp.measure <- as.character(data[,"emp.measure"])
   alc.policy <-  as.vector(as.matrix(ifelse(is.na(data[,"alc.policy"]),NA,as.character(data[,"alc.policy"])) ))
-  if (alc.policy == "NA") {
+  if (is.na(alc.policy)) {
     alc.policy <- NULL
   }
   tob.policy <-  as.vector(as.matrix(ifelse(is.na(data[,"tob.policy"]),NA,as.character(data[,"tob.policy"])) ))
@@ -24,7 +25,7 @@ select_scenario <- function(num.scenario = NULL) {
   }
 
   #### alcohol specific policy parameters
-  alc.mup <- c(data[,"alc.mup"])
+  alc.mup <-  as.numeric(data[,"alc.mup"])
   alc.tax <- as.vector(as.matrix(c(
                as.numeric(data[,"beer.tax"]),
                as.numeric(data[,"cider.tax"]),
@@ -47,12 +48,14 @@ select_scenario <- function(num.scenario = NULL) {
     as.numeric(data[,"off.rtd.ex"])
   )))
   #### tobacco specific policy parameters
-  tob.mup <- c(data[,"tob.mup"])
-
+  tob.mup <- as.numeric(data[,"tob.mup"])
+  tob.ex  <- as.numeric(data[,"tob.ex"])
+  tob.tax <- as.numeric(data[,"tob.tax"])
 
   return(list(year = year,
               scotland = scotland,
-              elasticity = elasticity,
+              alc.elasticity = alc.elasticity,
+              tob.elasticity = tob.elasticity,
               emp.measure = emp.measure,
               alc.policy = alc.policy,
               alc.mup = alc.mup,
@@ -60,5 +63,7 @@ select_scenario <- function(num.scenario = NULL) {
               alc.on.ex = alc.on,
               alc.off.ex = alc.off,
               tob.policy = tob.policy,
-              tob.mup = tob.mup))
+              tob.mup = tob.mup,
+              tob.tax = tob.tax,
+              tob.ex = tob.ex))
 }
