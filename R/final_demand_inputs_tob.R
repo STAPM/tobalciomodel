@@ -13,7 +13,33 @@
 #' @export
 
 final_demand_inputs_tob <- function(yr = 2010,
-                                    elasticity = "meng14") {
+                                    elasticity = "czubeck10") {
+
+  #### (1) Create Data Table of Data/Parameter Inputs
+
+  ## Filter the elasticities data based on chosen source
+
+  elasticity_data <- as.data.table(tobalciomodel::elasticities_tob)
+
+  if (elasticity == "gallus06") {
+    elasticity_data <- elasticity_data[1,]
+  } else if (elasticity == "czubeck10") {
+    elasticity_data <- elasticity_data[2,]
+  }
+
+  ## Filter the Tobacco data by year
+
+  tobacco <- as.data.table(tobalciomodel::tobacco_data) %>%
+      dplyr::filter(year == yr)
+
+  ## merge elasticities and tobacco data
+
+  data <- cbind(tobacco,elasticity_data) %>%
+    dplyr::mutate(Expenditure = expenditure/1000000000) %>%
+    dplyr::mutate(Consumption = consumption/1000000000) %>%
+    dplyr::rename(Price = price.per.cig) %>%
+    dplyr::select(year,Expenditure,Consumption,Price,Elasticity)
 
 
+  return(data)
 }
