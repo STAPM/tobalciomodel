@@ -16,6 +16,6 @@ household spending. If FALSE, manually select sectors to re-allocate to.}
 A vector of changes in final demand measured in £bn
 }
 \description{
-Using the vector of changes in final demand computed using the  `final_demand_inputs()` function, allow households
+Using the vector of changes in final demand computed using the simulation functions, allow households
 to keep their real consumption constant by increasing/decreasing consumption on goods not directly modelled.
 }

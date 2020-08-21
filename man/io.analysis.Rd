@@ -4,9 +4,23 @@
 \alias{io.analysis}
 \title{Wrapper Function to Produce a Full IO Analysis}
 \usage{
-io.analysis(scenario = NULL)
+io.analysis(
+  scenario.num = NULL,
+  hhold = FALSE,
+  hhold.pro.rata = TRUE,
+  hhold.sectors = NULL,
+  hhold.prop = NULL
+)
 }
 \arguments{
+\item{hhold}{allow households to re-allocate spending}
+
+\item{hhold.pro.rata}{arguments to pass to `hhold_reallocate()` - pro rata redistribute}
+
+\item{hhold.sectors}{arguments to pass to `hhold_reallocate()` - specific sectors to re-allocate to}
+
+\item{hhold.prop}{arguments to pass to `hhold_reallocate()` - proportions to re-allocate by sector}
+
 \item{scenario}{the row number of the data frame `tobalciomodel::scenarios` corresponding to the chosen scenario to model.}
 }
 \description{

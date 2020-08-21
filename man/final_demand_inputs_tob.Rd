@@ -4,7 +4,7 @@
 \alias{final_demand_inputs_tob}
 \title{Preparation to Model Change in Tobacco Final Demand}
 \usage{
-final_demand_inputs_tob(yr = 2010, elasticity = "meng14")
+final_demand_inputs_tob(yr = 2010, elasticity = "czubeck10")
 }
 \arguments{
 \item{yr}{which years data to use?.}
