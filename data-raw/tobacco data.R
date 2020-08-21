@@ -138,7 +138,7 @@ price.per.cig <- price/20
 prices.data <- data.frame(year,price,price.per.cig)
 
 ############################################
-####### Merge into one data frame
+####### Merge into one data frame ##########
 
 tobacco <- merge(merge5,prices.data,by="year",all=TRUE)
 
