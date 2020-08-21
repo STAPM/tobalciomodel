@@ -17,14 +17,14 @@ impact_calculate <- function(demand.change = NULL,
                              export = FALSE,
                              path = "output/") {
 
-  output.effects.1 <- round(sum(demand.change$final.demand*multipliers[,"output.multipliers.type1"]),3)
-  output.effects.2 <- round(sum(demand.change$final.demand*multipliers[,"output.multipliers.type2"]),3)
+  output.effects.1 <- round(sum(demand.change*multipliers[,"output.multipliers.type1"]),3)
+  output.effects.2 <- round(sum(demand.change*multipliers[,"output.multipliers.type2"]),3)
 
-  empl.effects.1 <- round(sum(demand.change$final.demand*multipliers[,"emp.multipliers.type1"])/1000)
-  empl.effects.2 <- round(sum(demand.change$final.demand*multipliers[,"emp.multipliers.type2"])/1000)
+  empl.effects.1 <- round(sum(demand.change*multipliers[,"emp.multipliers.type1"])/1000)
+  empl.effects.2 <- round(sum(demand.change*multipliers[,"emp.multipliers.type2"])/1000)
 
-  gva.effects.1 <- round(sum(demand.change$final.demand*multipliers[,"gva.multipliers.type1"]),3)
-  gva.effects.2 <- round(sum(demand.change$final.demand*multipliers[,"gva.multipliers.type2"]),3)
+  gva.effects.1 <- round(sum(demand.change*multipliers[,"gva.multipliers.type1"]),3)
+  gva.effects.2 <- round(sum(demand.change*multipliers[,"gva.multipliers.type2"]),3)
 
 
   # combine into a matrix - Type I and II effects for output, GVA, and employment
