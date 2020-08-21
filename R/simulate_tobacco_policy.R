@@ -16,8 +16,13 @@ simulate_tobacco_policy <- function(data = NULL,
                                     cigs.ch = 0) {
 
   ## Initialise a vector to store the changes in final demand
+  ## Initialise scalars of change in tobacco spending by policy type
 
   final.demand <- rep(0,106)
+
+  data.exog <- 0
+  data.mup <- 0
+  data.tax <- 0
 
   ## Model an Exogenous change to consumption -------
 
@@ -26,34 +31,30 @@ simulate_tobacco_policy <- function(data = NULL,
     # add modelled changes into the dataset
     data <- data.frame(data,cigs.ch)
 
-    data2 <- data %>%
-      dplyr::mutate(Q.Change.on = Consumption.On*on.trade.ch) %>%
-      dplyr::mutate(Q.Change.off = Consumption.Off*off.trade.ch) %>%
-      dplyr::mutate(C.Change.on = Q.Change.on*Price.On) %>%
-      dplyr::mutate(C.Change.off = Q.Change.off*Price.Off) %>%
-      dplyr::select(C.Change.on,C.Change.off) %>%
-      dplyr::mutate(tot.change.on = sum(C.Change.on)) %>%
-      dplyr::mutate(tot.change.off = sum(C.Change.off)) %>%
-      dplyr::select(tot.change.on,tot.change.off) %>%
+    data.exog <- data %>%
+      dplyr::mutate(E.Change = Expenditure*cigs.ch) %>%
+      dplyr::select(E.Change) %>%
+      dplyr::mutate(tot.change = sum(E.Change)) %>%
+      dplyr::select(tot.change) %>%
       dplyr::distinct()
-    data2 <- as.vector(as.matrix(data2))
+    data.exog <- as.vector(as.matrix(data.exog))
   }
 
   ## Model a minimum unit price (MUP) -------
 
-  if (alc.policy == "MUP") {
+  if (tob.policy == "MUP") {
 
   }
 
   ## Model a tax change -------
 
-  if (alc.policy == "tax") {
+  if (tob.policy == "tax") {
 
   }
 
   ## Save out results -------
 
-  final.demand[18] <- data2[2]
+  final.demand[18] <- data.exog + data.mup + data.tax
 
   direct.effect <- sum(final.demand)
 
