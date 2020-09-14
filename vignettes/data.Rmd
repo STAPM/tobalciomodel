@@ -54,19 +54,23 @@ names(tobalciomodel::alcohol_data)
 
 To model the change in demand which occurs due to an induced price change (through an increase in alcohol duty, or a minimum unit price) requires price elasticity of demand data for alcohol products. Elasticities for beer, cider, wine, spirits, and RTDs separately by on and off trade are obtained from Meng et al. (2014) and Collis et al. (2010). 
 
-These elasticities are coded into `tobalciomodel` as package data in `tobalciomodel::elasticities_alc`:
+These elasticities are coded into `tobalciomodel` as package data in `tobalciomodel::elasticities_alc` for alcohol-related elasticities and `tobalciomodel::elasticities__alc_tob` tobacco:
 
-```{r elasticities_names}
+```{r elasticities_alc_names}
 tobalciomodel::elasticities_alc
+```
+
+```{r elasticities_tob_names}
+tobalciomodel::elasticities_tob
 ```
 
 ## Employment
 
-Employment data is not typically included with IO tables, so in order to model the impacts of policy on employment this information must be obtained externally and matched to the sectors in the IO table. 
+Employment data are not included with IO tables, so in order to model the impacts of policy on employment this information must be obtained externally and matched to the sectors in the 106-sector IO table. 
 
-### Obtaining and Cleaning Employment Data
+### Obtaining and Cleaning Employment Data from the Labour Force Survey
 
-Employment data is sourced from the quarterly Labour Force Survey (LFS) and processed using `lfsclean` version 0.6.2. Employment data coded according to SIC-2007 industries has been available since 2008. We create annual employment figures by 4-digit industry to then map to the 106 industries used in the FAI input-output table. Employment is measured as total number of full-time equivalents (FTEs), with a part-time employee counted as 0.5.  
+Employment data is obtained from the quarterly Labour Force Survey (LFS) and processed using the `lfsclean` version 0.6.2 package. Employment data coded according to SIC-2007 industries has been available since 2008. Annual employment figures by 4-digit industry to then map to the 106 industries used in the FAI input-output table. Employment is measured as total number of full-time equivalents (FTEs), with a part-time employee counted as 0.5 FTE. Employment can also be measured in hours, using the total hours usually worked per week.   
 
 Firstly, we total the number of employees (excluding self-employed) by 4-digit industry within each quarterly dataset, using the LFS person weights to aggregate to the employment count into an estimate for the whole population. To obtain annual figures, we then average employment in each industry across the four quarters. Employment in 2020 is currently based only on quarter 1 data. This produces a panel of 4-digit industry employment over the period 2010-2020.  
 
@@ -76,11 +80,16 @@ An issue with the FAI table is that the industry codes do not align with the ind
 
 In this way we match the SIC-2007 4-digit industries onto the 103 industries in the IO table used by FAI. In order to allocate employment in the sectors which are disaggregated into alcohol and non-alcohol, we use the output data in the IO table and assume employment is split according to the same proportion as output. e.g. if output in Wholesale and Retail Trade is split 80/20 between the non-alcohol and alcohol sectors, this same split is applied to employment. 
 
-This produces employment figures for the 106 sectors in the FAI IO table and is found in the dataset `employment`, sorted in order of sector in the FAI tables and so can be easily matched to `iotable` on a one-to-one basis. Both headcount and FTE measures of employment are produced for each year 2010-2020 inclusive.  
+This produces employment figures for the 106 sectors in the FAI IO table and is found in the dataset `tobalciomodel::employment`, sorted in order of sector in the FAI tables and so can be easily matched to `tobalciomodel::iotable` on a one-to-one basis. Both headcount and FTE measures of employment are produced for each year 2010-2020 inclusive.  
 
 ```{r employment_names}
 names(tobalciomodel::employment)
 ```
+
+## Macroeconomic Data 
+
+In order to compare estimated effects to the size of the economy as a whole, the package includes a yearly time series of macroeconomic variables. [Annual figures for Gross Value Added are obtained from the Office for National Statistics](https://www.ons.gov.uk/economy/grossvalueaddedgva/timeseries/abml/pn2) valued in £m in a time series from 1955-2019. GDP and GVA figures in £millions [also available from the ONS](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/uksecondestimateofgdpdatatables). In order to adjust figures for inflation, [the CPIH index 1988-2019 is also obtained from the ONS](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23). 
+
 
 ## References
 
