@@ -44,17 +44,20 @@ This section describes and summarises the Scottish and English/Welsh alcohol con
 The variables included in the data are:
 
 ```{r mesas_names,echo=FALSE}
-names(tobalciomodel::mesas)
+names(tobalciomodel::alcohol_data)
 ```
+
+## Tobacco Data
+
 
 ## Elasticities
 
 To model the change in demand which occurs due to an induced price change (through an increase in alcohol duty, or a minimum unit price) requires price elasticity of demand data for alcohol products. Elasticities for beer, cider, wine, spirits, and RTDs separately by on and off trade are obtained from Meng et al. (2014) and Collis et al. (2010). 
 
-These elasticities are coded into `tobalciomodel` as package data in `tobalciomodel::elasticities`:
+These elasticities are coded into `tobalciomodel` as package data in `tobalciomodel::elasticities_alc`:
 
 ```{r elasticities_names}
-tobalciomodel::elasticities
+tobalciomodel::elasticities_alc
 ```
 
 ## Employment
