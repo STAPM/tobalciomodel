@@ -88,7 +88,7 @@ names(tobalciomodel::employment)
 
 ## Macroeconomic Data 
 
-In order to compare estimated effects to the size of the economy as a whole, the package includes a yearly time series of macroeconomic variables. [Annual figures for Gross Value Added are obtained from the Office for National Statistics](https://www.ons.gov.uk/economy/grossvalueaddedgva/timeseries/abml/pn2) valued in £m in a time series from 1955-2019. GDP and GVA figures in £millions [also available from the ONS](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/uksecondestimateofgdpdatatables). In order to adjust figures for inflation, [the CPIH index 1988-2019 is also obtained from the ONS](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23). 
+In order to compare estimated effects to the size of the economy as a whole, the package includes a yearly time series of macroeconomic variables. [Annual figures for Gross Value Added are obtained from the Office for National Statistics](https://www.ons.gov.uk/economy/grossvalueaddedgva/timeseries/abml/pn2) valued in £m in a time series from 1955-2019. GDP and GVA figures in £millions [also available from the ONS](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/uksecondestimateofgdpdatatables). In order to adjust figures for inflation, [the CPIH index 1988-2019 is also obtained from the ONS](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23). Aggregate employment is added to the macroeconomic variables dataset by summing up the sector-level employment created from the LFS described above. 
 
 
 ## References
