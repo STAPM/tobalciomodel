@@ -149,7 +149,7 @@ The next stage is to model the change in final demand to be analysed in the IO f
 
 The function `tobalciomodel::final_demand_inputs()` creates a dataset from the package data according to three specified options; year of data to use (default is 2010), whether Scottish data is to be used, or English/Welsh combined data (default is England and Wales), and the source to use for elasticities (default is Meng et al. (2014)). This latter option is only required to model tax and MUP policy changes. 
 
-```{r inputs}
+```{r inputs, eval=FALSE}
 inputs <- final_demand_inputs(yr = 2010,
                               scotland = FALSE,
                               elasticity = "meng14")
@@ -173,7 +173,7 @@ The next step is to set the policy parameters and apply these to the data create
 
 The output of the function is the vector containing changes in final demand. An example of the function; simulate an exogenous change in demand - where consumption of each product of on-trade alcohol falls by 10%.
 
-```{r policy}
+```{r policy, eval=FALSE}
 policy_sim <- simulate_alcohol_policy(data = inputs,
                                       alc.policy = "exog",
                                       on.trade.ch = rep(-0.1,5),
@@ -194,7 +194,7 @@ policy_sim[71] # Food and Beverage (Alcohol)
 The above code equally splits the fall in demand for on-trade alcohol across the two on-trade sectors. Instead of a 0.5/0.5 split, we can simulate a distribution of changes in output by drawing a random proportion to allocate from a uniform distribution. 
 
 
-```{r simulation,include=FALSE}
+```{r simulation,eval=FALSE}
 ### calculate the total change in output
 
 output.effects <- sum(policy_sim*multipliers[,"output.multipliers.type1"])
@@ -217,7 +217,7 @@ for (i in 1:reps) {
 }
 ```
 
-```{r sim_plot,echo=FALSE}
+```{r sim_plot,eval=FALSE}
 
 library(tidyverse)
 data <- data.frame(effects.vector)

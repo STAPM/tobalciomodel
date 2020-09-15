@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, eval = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -24,7 +24,7 @@ library(data.table)
 
 
 
-```{r inputs}
+```{r inputs, eval=FALSE}
 
 ### Select data and parameters
 inputs <- final_demand_inputs(yr = 2018,
@@ -36,7 +36,7 @@ multipliers <- multipliers(yr = 2018,
                            empl = "fte")
 ```
 
-```{r base}
+```{r base, eval=FALSE}
 ### Simulate a policy with the 0.5 allocation
 policy_sim <- simulate_alcohol_policy(data = inputs,
                                       alc.policy = "exog",
@@ -49,7 +49,7 @@ policy_sim <- simulate_alcohol_policy(data = inputs,
 output.effects <- round(sum(policy_sim*multipliers[,"output.multipliers.type1"]),3)
 ```
 
-```{r simulation, message = FALSE}
+```{r simulation, message = FALSE, eval=FALSE}
 ### Simulate the policy for randomly drawn proportions
 set.seed(2020)
 reps <- 100
