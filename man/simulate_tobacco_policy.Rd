@@ -4,7 +4,8 @@
 \alias{simulate_tobacco_policy}
 \title{Model Change in Final Demand due to Tobacco Policy}
 \usage{
-simulate_tobacco_policy(data = NULL, tob.policy = "exog", cigs.ch = 0)
+simulate_tobacco_policy(data = NULL, tob.policy = "exog",
+  cigs.ch = 0)
 }
 \arguments{
 \item{data}{dataset created by `final_demand_inputs()`}

@@ -4,13 +4,8 @@
 \alias{io.analysis}
 \title{Wrapper Function to Produce a Full IO Analysis}
 \usage{
-io.analysis(
-  scenario.num = NULL,
-  hhold = FALSE,
-  hhold.pro.rata = TRUE,
-  hhold.sectors = NULL,
-  hhold.prop = NULL
-)
+io.analysis(scenario.num = NULL, hhold = FALSE,
+  hhold.pro.rata = TRUE, hhold.sectors = NULL, hhold.prop = NULL)
 }
 \arguments{
 \item{hhold}{allow households to re-allocate spending}
