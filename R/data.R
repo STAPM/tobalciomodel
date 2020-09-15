@@ -56,7 +56,7 @@
 #' Employment for the disaggregated sectors is split from the parent sector proportionately by total sectoral
 #' output measured in 2010 in the IO table.
 #'
-#' For each year from 2010 to 2020, total employment and total employment measured in full-time equivalents (FTE)
+#' For each year from 2010 to 2019, total employment and total employment measured in full-time equivalents (FTE)
 #' is available (individuals who report being part-time are considered 0.5 FTE)
 #'
 #' @format A data frame with 106 observations and 23 variables.
@@ -83,9 +83,27 @@
 #'     }
 "iotable"
 
+#' Macroeconomic Data.
+#'
+#' Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
+#' is then collapsed into the 106 sectors (including 3 alcohol disaggregated sectors) used in the FAI IO table.
+#' Employment for the disaggregated sectors is split from the parent sector proportionately by total sectoral
+#' output measured in 2010 in the IO table.
+#'
+#' For each year from 2010 to 2019, total employment and total employment measured in full-time equivalents (FTE)
+#' is available (individuals who report being part-time are considered 0.5 FTE)
+#'
+#' @format A data frame with 10 observations and 5 variables.
+#' \describe{
+#'     \item{year}{}
+#'     \item{cpih_index}{inflation index (base year 2015)}
+#'     \item{gdp}{nominal Gross Domestic Product (£millions)}
+#'     \item{gva}{nominal Gross Value Added (£millions)}
+#'     \item{emp}{aggregate employment (full-time equivalents)}
+#' }
+"macro"
 
-
-#' Scenarios
+#' Analysis Scenarios
 #'
 #' A data frame containing pre-specified input parameters for scenario analyses.
 #'
@@ -100,20 +118,4 @@
 #' }
 "scenarios"
 
-#' Tobacco Price and Consumption Data
-#'
-#' A data frame containing expenditure, quantity, and price time series data
-#' for tobacco consumption.
-#'
-#' @format A data frame with 10 observations and 4 variables.
-#' \describe{
-#'     \item{year}{year of data to use}
-#'     \item{population}{source of elasticity information}
-#'     \item{expenditure}{measure of employment - fte, employment, or hours}
-#'     \item{prevalance}{alcohol policy scenario - exog, MUP, tax, or NULL for no policy}
-#'     \item{ncigs}{average number of cigs smoked per day}
-#'     \item{price}{RRP of a pack of 20 cigarettes}
-#'     \item{price.per.cig}{price per cigarette}
-#'     \item{consumption}{expenditure divided by price}
-#' }
-"tobacco_data"
+
