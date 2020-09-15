@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `iomodeltobalc`
+# tobalciomodel
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
