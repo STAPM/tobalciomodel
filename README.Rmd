@@ -62,3 +62,4 @@ devtools::install_git(
 Then load the package, and some other packages that are useful. 
 
 ## Basic Functionality
+
