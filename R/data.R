@@ -100,6 +100,8 @@
 #'     \item{gdp}{nominal Gross Domestic Product (£millions)}
 #'     \item{gva}{nominal Gross Value Added (£millions)}
 #'     \item{emp}{aggregate employment (full-time equivalents)}
+#'     \item{gdp_real}{Real Gross Domestic Product in 2010 prices (£millions)}
+#'     \item{gva_real}{Real Gross Value Added in 2010 prices (£millions)}
 #' }
 "macro"
 

@@ -1,5 +1,6 @@
 
 library(readxl)
+library(data.table)
 
 ### Inflation
 
@@ -11,6 +12,9 @@ names(inflation)[names(inflation) == "CPIH.INDEX.00..ALL.ITEMS.2015.100"] <- "cp
 
 inflation$year <- as.numeric(as.character(inflation$year))
 inflation$cpih_index <- as.numeric(as.character(inflation$cpih_index))
+
+#rebase to 2010 prices
+inflation$cpih_index <- 100*(inflation$cpih_index/inflation[inflation$year==2010,"cpih_index"])
 
 ### GDP and GVA
 
@@ -50,7 +54,12 @@ empl <- as.data.frame(empl)
 merge1 <- merge(inflation,inc,by="year")
 merge2 <- merge(merge1,empl,by="year")
 
-macro <- merge2
+macro <- data.table(merge2)
+
+#### real GDP/GVA
+
+macro[,real_gdp := gdp*(100/cpih_index)]
+macro[,real_gva := gva*(100/cpih_index)]
 
 usethis::use_data(macro,overwrite=TRUE)
 
