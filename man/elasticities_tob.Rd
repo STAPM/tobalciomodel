@@ -4,12 +4,14 @@
 \name{elasticities_tob}
 \alias{elasticities_tob}
 \title{Price elasticities for Tobacco}
-\format{A data frame with 10 observations and 4 variables.
+\format{
+A data frame with 10 observations and 4 variables.
 \describe{
     \item{product}{cigarettes (need to add RYO vs FM to the data)}
     \item{Elasticity}{price elasticities}
     \item{Source}{Source for the elasticities}
-}}
+}
+}
 \usage{
 elasticities_tob
 }

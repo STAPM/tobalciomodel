@@ -4,14 +4,18 @@
 \name{macro}
 \alias{macro}
 \title{Macroeconomic Data.}
-\format{A data frame with 10 observations and 5 variables.
+\format{
+A data frame with 10 observations and 5 variables.
 \describe{
     \item{year}{}
     \item{cpih_index}{inflation index (base year 2015)}
     \item{gdp}{nominal Gross Domestic Product (£millions)}
     \item{gva}{nominal Gross Value Added (£millions)}
     \item{emp}{aggregate employment (full-time equivalents)}
-}}
+    \item{gdp_real}{Real Gross Domestic Product in 2010 prices (£millions)}
+    \item{gva_real}{Real Gross Value Added in 2010 prices (£millions)}
+}
+}
 \usage{
 macro
 }

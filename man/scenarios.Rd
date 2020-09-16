@@ -4,7 +4,8 @@
 \name{scenarios}
 \alias{scenarios}
 \title{Analysis Scenarios}
-\format{A data frame with 10 observations and 4 variables.
+\format{
+A data frame with 10 observations and 4 variables.
 \describe{
     \item{year}{year of data to use}
     \item{scotland}{TRUE if applying scenario to Scotland}
@@ -12,7 +13,8 @@
     \item{emp.measure}{measure of employment - fte, employment, or hours}
     \item{alc.policy}{alcohol policy scenario - exog, MUP, tax, or NULL for no policy}
     \item{tob.policy}{tobacco policy scenario - exog, MUP, tax, or NULL for no policy}
-}}
+}
+}
 \usage{
 scenarios
 }

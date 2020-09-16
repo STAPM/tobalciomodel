@@ -4,9 +4,13 @@
 \alias{simulate_alcohol_policy}
 \title{Model Change in Final Demand due to Alcohol Policy}
 \usage{
-simulate_alcohol_policy(data = NULL, alc.policy = "exog",
-  on.trade.ch = c(0, 0, 0, 0, 0), off.trade.ch = c(0, 0, 0, 0, 0),
-  prob = FALSE)
+simulate_alcohol_policy(
+  data = NULL,
+  alc.policy = "exog",
+  on.trade.ch = c(0, 0, 0, 0, 0),
+  off.trade.ch = c(0, 0, 0, 0, 0),
+  prob = FALSE
+)
 }
 \arguments{
 \item{data}{dataset created by `final_demand_inputs()`}
