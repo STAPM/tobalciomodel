@@ -8,11 +8,13 @@
 
 <title>Allow Households to Adjust Expenditure — hhold_reallocate • tobalciomodel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,11 +38,10 @@
 
 
 
-<meta property="og:title" content="Allow Households to Adjust Expenditure — hhold_reallocate" />
 
+<meta property="og:title" content="Allow Households to Adjust Expenditure — hhold_reallocate" />
 <meta property="og:description" content="Using the vector of changes in final demand computed using the simulation functions, allow households
 to keep their real consumption constant by increasing/decreasing consumption on goods not directly modelled." />
-
 
 
 
@@ -106,7 +107,6 @@ to keep their real consumption constant by increasing/decreasing consumption on 
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -128,15 +128,12 @@ to keep their real consumption constant by increasing/decreasing consumption on 
     </div>
 
     <div class="ref-description">
-    
     <p>Using the vector of changes in final demand computed using the simulation functions, allow households
 to keep their real consumption constant by increasing/decreasing consumption on goods not directly modelled.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>hhold_reallocate</span>(data = <span class='kw'>NULL</span>, pro.rata = <span class='fl'>TRUE</span>, sectors = <span class='kw'>NULL</span>,
-  prop = <span class='kw'>NULL</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>hhold_reallocate</span>(data = <span class='kw'>NULL</span>, pro.rata = <span class='fl'>TRUE</span>, sectors = <span class='kw'>NULL</span>, prop = <span class='kw'>NULL</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -150,11 +147,10 @@ to keep their real consumption constant by increasing/decreasing consumption on 
 household spending. If FALSE, manually select sectors to re-allocate to.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of changes in final demand measured in £bn</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

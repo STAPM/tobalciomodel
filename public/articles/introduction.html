@@ -157,7 +157,7 @@ a_{31} &amp; a_{32} &amp; a_{33}
 <p>The total change in output is the sum of the <span class="math inline">\(\Delta y\)</span> vector. Summing up the three equations and collecting like terms gives:</p>
 <p><span class="math display">\[
 \Delta y = \Delta x_1(a_{11} + a_{21} + a_{31}) + \\ \Delta x_2(a_{12}+a_{22}+a_{32}) + \\\ \Delta x_3(a_{13}+a_{23}+a_{33})
-\]</span> Defining <span class="math inline">\(M_j = \sum^3_{n=1}a_{nj}\)</span> i.e. <span class="math inline">\(M_j\)</span> for the <span class="math inline">\(j\)</span>th sector is the sum of column <span class="math inline">\(j\)</span> in the leontief matrix, and represents the output multiplier - the change in total economy output for a one unit change in final demand for sector <span class="math inline">\(j\)</span>:</p>
+\]</span> Defining <span class="math inline">\(M_j = \sum^3_{n=1}a_{nj}\)</span> i.e. <span class="math inline">\(M_j\)</span> for the <span class="math inline">\(j\)</span>th sector is the sum of column <span class="math inline">\(j\)</span> in the leontief matrix, and represents the output multiplier - the change in total economy output for a one unit change in final demand for sector <span class="math inline">\(j\)</span>:</p>
 <p><span class="math display">\[
 \Delta y = \Delta x_1M_1 + \Delta x_2M_2 + \Delta x_3M_3
 \]</span></p>
@@ -222,7 +222,7 @@ GVA_n = k_n y_n \\
 <li>The choice of price elasticities to use.</li>
 <li>Whether the analysis is for Scotland or England &amp; Wales</li>
 </ul>
-<p>The function <code>tobalciomodel::final_demand_inputs()</code> creates a dataset from the package data according to three specified options; year of data to use (default is 2010), whether Scottish data is to be used, or English/Welsh combined data (default is England and Wales), and the source to use for elasticities (default is Meng et al. (2014)). This latter option is only required to model tax and MUP policy changes.</p>
+<p>The function <code>tobalciomodel::final_demand_inputs()</code> creates a dataset from the package data according to three specified options; year of data to use (default is 2010), whether Scottish data is to be used, or English/Welsh combined data (default is England and Wales), and the source to use for elasticities (default is Meng et al. (2014)). This latter option is only required to model tax and MUP policy changes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">inputs</span> <span class="op">&lt;-</span> <span class="fu">final_demand_inputs</span>(yr = <span class="fl">2010</span>,
                               scotland = <span class="fl">FALSE</span>,
@@ -305,7 +305,7 @@ GVA_n = k_n y_n \\
   <span class="fu">geom_vline</span>(xintercept = <span class="kw">output.effects</span>) <span class="op">+</span>
   <span class="fu">theme_minimal</span>() <span class="op">+</span>
   <span class="fu">labs</span>(y = <span class="st">"Density"</span>,
-       x = <span class="st">"Effect on Output (£bn)"</span>,
+       x = <span class="st">"Effect on Output (£bn)"</span>",
        title = <span class="st">"Effect of a 10% Fall in Consumption of On-Trade Alcohol Products"</span>,
        subtitle = <span class="st">"Distribution of Effects when Varying Split Across Two On-Trade Sectors"</span>,
        caption = <span class="st">"1000 simulation replications"</span> ) <span class="op">+</span>
@@ -321,6 +321,7 @@ GVA_n = k_n y_n \\
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
         <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
     </nav>
 </div>

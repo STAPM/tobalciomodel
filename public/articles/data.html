@@ -90,11 +90,12 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">tobalciomodel</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
 </pre></div>
 <div id="input-output-tables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#input-output-tables" class="anchor"></a>Input-Output Tables</h2>
-<p>The input-output table is that used by <a href="https://strathprints.strath.ac.uk/63723/">Connolly et al. (2018)</a> (FAI hereafter). It used a table containing 106 sectors, 3 of which are alcohol specific sectors disaggregated from the larger Standard Industrial Classification (SIC) industries they belong to. <a href="https://pureportal.strath.ac.uk/en/datasets/2010-uk-alcohol-consumption-disaggregated-ixi-table">The Dataset produced for the study has been made available publicly here.</a> and is incorporated into the <code>tobalciomodel</code> package.</p>
+<p>The input-output table is that used by <a href="https://strathprints.strath.ac.uk/63723/">Connolly et al. (2018)</a> (FAI hereafter). It used a table containing 106 sectors, 3 of which are alcohol specific sectors disaggregated from the larger Standard Industrial Classification (SIC) industries they belong to. <a href="https://pureportal.strath.ac.uk/en/datasets/2010-uk-alcohol-consumption-disaggregated-ixi-table">The Dataset produced for the study has been made available publicly here.</a> and is incorporated into the <code>tobalciomodel</code> package.</p>
 <p>The dataset includes the flow table (which describes intermediate consumption between industries) as well as other demand and production vectors needed for the IO model to function. Below shows a subset of the IO flow table - the first four sectors.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw">tobalciomodel</span>::<span class="kw"><a href="../reference/iotable.html">iotable</a></span>[<span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">5</span>]
@@ -115,7 +116,7 @@
 <div id="alcohol-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#alcohol-data" class="anchor"></a>Alcohol Data</h2>
-<p>This section describes and summarises the Scottish and English/Welsh alcohol consumption data that is included in the package. The data were originally compiled by MESAS from Nielsen retail sales data and were used by FAI and Connolly et al. (2019) in their study of the wider economic impacts of alcohol policy.</p>
+<p>This section describes and summarises the Scottish and English/Welsh alcohol consumption data that is included in the package. The data were originally compiled by MESAS from Nielsen retail sales data and were used by FAI and Connolly et al. (2019) in their study of the wider economic impacts of alcohol policy.</p>
 <p>The variables included in the data are:</p>
 <pre><code>#&gt;  [1] "year"                 "product"              "litres.ontrade"      
 #&gt;  [4] "litres.offtrade"      "units.pp.ontrade"     "units.pp.offtrade"   
@@ -129,7 +130,7 @@
 <div id="elasticities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#elasticities" class="anchor"></a>Elasticities</h2>
-<p>To model the change in demand which occurs due to an induced price change (through an increase in alcohol duty, or a minimum unit price) requires price elasticity of demand data for alcohol products. Elasticities for beer, cider, wine, spirits, and RTDs separately by on and off trade are obtained from Meng et al. (2014) and Collis et al. (2010).</p>
+<p>To model the change in demand which occurs due to an induced price change (through an increase in alcohol duty, or a minimum unit price) requires price elasticity of demand data for alcohol products. Elasticities for beer, cider, wine, spirits, and RTDs separately by on and off trade are obtained from Meng et al. (2014) and Collis et al. (2010).</p>
 <p>These elasticities are coded into <code>tobalciomodel</code> as package data in <code><a href="../reference/elasticities_alc.html">tobalciomodel::elasticities_alc</a></code> for alcohol-related elasticities and <code>tobalciomodel::elasticities__alc_tob</code> tobacco:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">tobalciomodel</span>::<span class="kw"><a href="../reference/elasticities_alc.html">elasticities_alc</a></span>
@@ -195,6 +196,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
         <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
     </nav>
 </div>

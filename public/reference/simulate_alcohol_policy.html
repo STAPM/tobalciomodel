@@ -8,11 +8,13 @@
 
 <title>Model Change in Final Demand due to Alcohol Policy — simulate_alcohol_policy • tobalciomodel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,11 +38,10 @@
 
 
 
-<meta property="og:title" content="Model Change in Final Demand due to Alcohol Policy — simulate_alcohol_policy" />
 
+<meta property="og:title" content="Model Change in Final Demand due to Alcohol Policy — simulate_alcohol_policy" />
 <meta property="og:description" content="Using selected data from the `final_demand_inputs()` function, model the policy-induced change in
 final demand for alcohol and tobacco consumption." />
-
 
 
 
@@ -106,7 +107,6 @@ final demand for alcohol and tobacco consumption." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -128,16 +128,18 @@ final demand for alcohol and tobacco consumption." />
     </div>
 
     <div class="ref-description">
-    
     <p>Using selected data from the `final_demand_inputs()` function, model the policy-induced change in
 final demand for alcohol and tobacco consumption.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>simulate_alcohol_policy</span>(data = <span class='kw'>NULL</span>, alc.policy = <span class='st'>"exog"</span>,
-  on.trade.ch = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), off.trade.ch = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  prob = <span class='fl'>FALSE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>simulate_alcohol_policy</span>(
+  data = <span class='kw'>NULL</span>,
+  alc.policy = <span class='st'>"exog"</span>,
+  on.trade.ch = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  off.trade.ch = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  prob = <span class='fl'>FALSE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -162,11 +164,10 @@ final demand for alcohol and tobacco consumption.</p>
       <td><p>logical; if TRUE then randomly draw a proportion to use to split on/off trade.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of changes in final demand measured in £bn</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

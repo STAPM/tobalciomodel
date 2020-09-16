@@ -1,9 +1,9 @@
-pandoc: 2.3.1
+pandoc: 2.7.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   data: data.html
   introduction: introduction.html
   ontrade: ontrade.html
-last_built: 2020-09-15T17:31Z
+last_built: 2020-09-16T11:32Z
 

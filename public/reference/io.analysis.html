@@ -8,11 +8,13 @@
 
 <title>Wrapper Function to Produce a Full IO Analysis — io.analysis • tobalciomodel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,11 +38,10 @@
 
 
 
-<meta property="og:title" content="Wrapper Function to Produce a Full IO Analysis — io.analysis" />
 
+<meta property="og:title" content="Wrapper Function to Produce a Full IO Analysis — io.analysis" />
 <meta property="og:description" content="Run all functions to model a policy scenario and produce output of an IO analysis, for a given
 pre-loaded scenario option." />
-
 
 
 
@@ -106,7 +107,6 @@ pre-loaded scenario option." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -128,15 +128,18 @@ pre-loaded scenario option." />
     </div>
 
     <div class="ref-description">
-    
     <p>Run all functions to model a policy scenario and produce output of an IO analysis, for a given
 pre-loaded scenario option.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>io.analysis</span>(scenario.num = <span class='kw'>NULL</span>, hhold = <span class='fl'>FALSE</span>,
-  hhold.pro.rata = <span class='fl'>TRUE</span>, hhold.sectors = <span class='kw'>NULL</span>, hhold.prop = <span class='kw'>NULL</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>io.analysis</span>(
+  scenario.num = <span class='kw'>NULL</span>,
+  hhold = <span class='fl'>FALSE</span>,
+  hhold.pro.rata = <span class='fl'>TRUE</span>,
+  hhold.sectors = <span class='kw'>NULL</span>,
+  hhold.prop = <span class='kw'>NULL</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -161,7 +164,7 @@ pre-loaded scenario option.</p>
       <td><p>the row number of the data frame `tobalciomodel::scenarios` corresponding to the chosen scenario to model.</p></td>
     </tr>
     </table>
-    
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -14,8 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE,warning=FALSE}
 library(tobalciomodel)
+library(tidyverse)
 ```
 
 ## Input-Output Tables

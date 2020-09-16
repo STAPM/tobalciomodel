@@ -8,11 +8,13 @@
 
 <title>Macroeconomic Data. — macro • tobalciomodel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,13 +38,12 @@
 
 
 
-<meta property="og:title" content="Macroeconomic Data. — macro" />
 
+<meta property="og:title" content="Macroeconomic Data. — macro" />
 <meta property="og:description" content="Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 is then collapsed into the 106 sectors (including 3 alcohol disaggregated sectors) used in the FAI IO table.
 Employment for the disaggregated sectors is split from the parent sector proportionately by total sectoral
 output measured in 2010 in the IO table." />
-
 
 
 
@@ -108,7 +109,6 @@ output measured in 2010 in the IO table." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -130,16 +130,15 @@ output measured in 2010 in the IO table." />
     </div>
 
     <div class="ref-description">
-    
     <p>Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 is then collapsed into the 106 sectors (including 3 alcohol disaggregated sectors) used in the FAI IO table.
 Employment for the disaggregated sectors is split from the parent sector proportionately by total sectoral
 output measured in 2010 in the IO table.</p>
-    
     </div>
 
     <pre class="usage"><span class='kw'>macro</span></pre>
-        
+
+
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>A data frame with 10 observations and 5 variables.</p><dl>
@@ -148,14 +147,15 @@ output measured in 2010 in the IO table.</p>
     <dt>gdp</dt><dd><p>nominal Gross Domestic Product (£millions)</p></dd>
     <dt>gva</dt><dd><p>nominal Gross Value Added (£millions)</p></dd>
     <dt>emp</dt><dd><p>aggregate employment (full-time equivalents)</p></dd>
+    <dt>gdp_real</dt><dd><p>Real Gross Domestic Product in 2010 prices (£millions)</p></dd>
+    <dt>gva_real</dt><dd><p>Real Gross Value Added in 2010 prices (£millions)</p></dd>
 
 </dl>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For each year from 2010 to 2019, total employment and total employment measured in full-time equivalents (FTE)
 is available (individuals who report being part-time are considered 0.5 FTE)</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
