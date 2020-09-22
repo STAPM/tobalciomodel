@@ -138,8 +138,9 @@ data <- data %>%
 
 
 data_mesas_englandwales <- merge(data,population) %>%
-  mutate(consumption.ontrade = (price.ontrade*units.pp.ontrade*population)/1000000 ) %>%
-  mutate(consumption.offtrade = (price.offtrade*units.pp.offtrade*population)/1000000 )
+  mutate(units.ontrade = (units.pp.ontrade*population) ) %>%
+  mutate(units.offtrade = (units.pp.offtrade*population) ) %>%
+  select(year,product,units.ontrade,units.offtrade,price.ontrade,price.offtrade)
 
 data_mesas_englandwales$country <- "England & Wales"
 
@@ -289,8 +290,9 @@ data <- data %>%
 
 
 data_mesas_scotland <- merge(data,population) %>%
-  mutate(consumption.ontrade = (price.ontrade*units.pp.ontrade*population)/1000000 ) %>%
-  mutate(consumption.offtrade = (price.offtrade*units.pp.offtrade*population)/1000000 )
+  mutate(units.ontrade = (units.pp.ontrade*population) ) %>%
+  mutate(units.offtrade = (units.pp.offtrade*population) ) %>%
+  select(year,product,units.ontrade,units.offtrade,price.ontrade,price.offtrade)
 
 data_mesas_scotland$country <- "Scotland"
 
@@ -301,5 +303,44 @@ rm(year,data,population,imp.values,litres.data,litres.offtrade,litres.ontrade,
 ####### COMBINE ENGLAND AND WALES WITH SCOTLAND
 
 alcohol_data <- rbind(data_mesas_englandwales,data_mesas_scotland)
+
+####### extract 2010 and 2019 prices for real-terms calculations
+
+real.2010 <- alcohol_data %>%
+  filter(year == 2010) %>%
+  rename(price.ontrade_2010 = price.ontrade,
+         price.offtrade_2010 = price.offtrade) %>%
+  select(product,country,price.ontrade_2010,price.offtrade_2010)
+
+real.2019 <- alcohol_data %>%
+  filter(year == 2019) %>%
+  rename(price.ontrade_2019 = price.ontrade,
+         price.offtrade_2019 = price.offtrade) %>%
+  select(product,country,price.ontrade_2019,price.offtrade_2019)
+
+alcohol_data <- merge(alcohol_data,real.2010,
+                      by=c("country","product"),
+                      all=TRUE,
+                      sort=TRUE)
+
+alcohol_data <- merge(alcohol_data,real.2019,
+                      by=c("country","product"),
+                      all=TRUE,
+                      sort=TRUE)
+
+####### calculate consumption figures in nominal and real terms
+
+alcohol_data <- alcohol_data %>%
+  mutate(cons.on.nom =  (price.ontrade*units.ontrade)  /1000000) %>%
+  mutate(cons.off.nom = (price.offtrade*units.offtrade)/1000000) %>%
+  mutate(cons.on.2010 =  (price.ontrade_2010*units.ontrade)  /1000000) %>%
+  mutate(cons.off.2010 = (price.offtrade_2010*units.offtrade)/1000000) %>%
+  mutate(cons.on.2019 =  (price.ontrade_2019*units.ontrade)  /1000000) %>%
+  mutate(cons.off.2019 = (price.offtrade_2019*units.offtrade)/1000000) %>%
+  select(-c(price.ontrade_2010,price.ontrade_2019,price.offtrade_2010,price.offtrade_2019))
+
+
+
+rm(real.2010,real.2019)
 
 usethis::use_data(alcohol_data,overwrite=TRUE)

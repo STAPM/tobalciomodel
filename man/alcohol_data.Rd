@@ -5,20 +5,21 @@
 \alias{alcohol_data}
 \title{Alcohol Consumption Data for England, Wales, and Scotland 2000-2019.}
 \format{
-A data frame with 320 observations and 12 variables.
+A data frame with 320 observations and 13 variables.
 \describe{
-    \item{year}{Demands of Sector A from the row sector.}
+    \item{country}{indicator. England and Wales, or Scotland}
     \item{product}{Total alcohol, and 7 types of alcohol; spirits, RTDs, fortifies wines, wine, cider, perry, and beer.}
-    \item{litres.ontrade}{total volume of on-trade alcohol sales (1000 litres)}
-    \item{litres.offtrade}{total volume of off-trade alcohol sales (1000 litres)}
-    \item{units.pp.ontrade}{total volume of on-trade alcohol sales (units) per adult (aged 16+ years)}
-    \item{units.pp.offtrade}{total volume of off-trade alcohol sales (units) per adult (aged 16+ years)}
+    \item{year}{calendar year.}
+    \item{units.ontrade}{total volume of on-trade alcohol sales (units) }
+    \item{units.offtrade}{total volume of off-trade alcohol sales (units) }
     \item{price.ontrade}{average price per unit of alcohol sold through the on-trade.}
     \item{price.offtrade}{average price per unit of alcohol sold through the off-trade.}
-    \item{population}{total adult population mid-year.}
-    \item{consumption.ontrade}{total estimated on-trade consumption - units per person X price per unit X population.}
-    \item{consumption.offtrade}{total estimated off-trade consumption - units per person X price per unit X population.}
-    \item{country}{indicator. England and Wales, or Scotland}
+    \item{cons.on.nom}{total estimated on-trade consumption in current year prices.}
+    \item{cons.off.nom}{total estimated off-trade consumption in current year prices.}
+    \item{cons.on.2010}{total estimated on-trade consumption in 2010 prices.}
+    \item{cons.off.2010}{total estimated off-trade consumption in 2010 prices.}
+    \item{cons.on.2019}{total estimated on-trade consumption in 2019 prices.}
+    \item{cons.off.2019}{total estimated off-trade consumption in 2019 prices.}
 }
 }
 \usage{
