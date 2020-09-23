@@ -57,7 +57,11 @@ multipliers <- function(yr = 2010,
   L2 <- round(L2,5)
 
   ### Calculate Sectoral Multipliers
+  # type 0 - direct effect (i.e. no multiplier, just equal to demand change)
+  # type 1 - direct + indirect effect
+  # type 2 - direct + indirect + induced effect
 
+  output.multipliers.type0 <- rep(1,106)
   output.multipliers.type1 <- rep(NA,106)
   output.multipliers.type2 <- rep(NA,106)
   for (i in 1:106) {
@@ -85,6 +89,12 @@ multipliers <- function(yr = 2010,
   coef.gos <- tobalciomodel::iotable$gva.gos   / tobalciomodel::iotable$total.output
   coef.emp <- employment   / tobalciomodel::iotable$total.output
 
+  gva.multipliers.type0 <- coef.gva*output.multipliers.type0
+  tax.multipliers.type0 <- coef.tax*output.multipliers.type0
+  coe.multipliers.type0 <- coef.coe*output.multipliers.type0
+  gos.multipliers.type0 <- coef.gos*output.multipliers.type0
+  emp.multipliers.type0 <- coef.emp*output.multipliers.type0
+
   gva.multipliers.type1 <- coef.gva*output.multipliers.type1
   tax.multipliers.type1 <- coef.tax*output.multipliers.type1
   coe.multipliers.type1 <- coef.coe*output.multipliers.type1
@@ -99,26 +109,36 @@ multipliers <- function(yr = 2010,
 
   name <- as.character(tobalciomodel::iotable$name)
   data <- cbind(name,
-                output.multipliers.type1,output.multipliers.type2,
-                gva.multipliers.type1,gva.multipliers.type2,
-                tax.multipliers.type1,tax.multipliers.type2,
-                coe.multipliers.type1,coe.multipliers.type2,
-                gos.multipliers.type1,gos.multipliers.type2,
-                emp.multipliers.type1,emp.multipliers.type2)
+                output.multipliers.type0,output.multipliers.type1,output.multipliers.type2,
+                gva.multipliers.type0,gva.multipliers.type1,gva.multipliers.type2,
+                tax.multipliers.type1,tax.multipliers.type1,tax.multipliers.type2,
+                coe.multipliers.type1,coe.multipliers.type1,coe.multipliers.type2,
+                gos.multipliers.type1,gos.multipliers.type1,gos.multipliers.type2,
+                emp.multipliers.type1,emp.multipliers.type1,emp.multipliers.type2)
 
   data <- data.frame(data)
 
-
+  data$output.multipliers.type0 <- as.numeric(as.character(data$output.multipliers.type0))
   data$output.multipliers.type1 <- as.numeric(as.character(data$output.multipliers.type1))
   data$output.multipliers.type2 <- as.numeric(as.character(data$output.multipliers.type2))
+
+  data$gva.multipliers.type0 <- as.numeric(as.character(data$gva.multipliers.type0))
   data$gva.multipliers.type1 <- as.numeric(as.character(data$gva.multipliers.type1))
   data$gva.multipliers.type2 <- as.numeric(as.character(data$gva.multipliers.type2))
+
+  data$tax.multipliers.type0 <- as.numeric(as.character(data$tax.multipliers.type0))
   data$tax.multipliers.type1 <- as.numeric(as.character(data$tax.multipliers.type1))
   data$tax.multipliers.type2 <- as.numeric(as.character(data$tax.multipliers.type2))
+
+  data$coe.multipliers.type0 <- as.numeric(as.character(data$coe.multipliers.type0))
   data$coe.multipliers.type1 <- as.numeric(as.character(data$coe.multipliers.type1))
   data$coe.multipliers.type2 <- as.numeric(as.character(data$coe.multipliers.type2))
+
+  data$gos.multipliers.type0 <- as.numeric(as.character(data$gos.multipliers.type0))
   data$gos.multipliers.type1 <- as.numeric(as.character(data$gos.multipliers.type1))
   data$gos.multipliers.type2 <- as.numeric(as.character(data$gos.multipliers.type2))
+
+  data$emp.multipliers.type0 <- as.numeric(as.character(data$emp.multipliers.type0))
   data$emp.multipliers.type1 <- as.numeric(as.character(data$emp.multipliers.type1))
   data$emp.multipliers.type2 <- as.numeric(as.character(data$emp.multipliers.type2))
 
