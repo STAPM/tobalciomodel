@@ -57,8 +57,10 @@ impact_calculate <- function(demand.change = NULL,
                    dimnames = list(c("Direct Effect","Indirect Effect","Induced Effect"),
                                    c("Output (£bn)","GVA (£bn)","Employment")))
 
+  print(effects)
+
 if (export == TRUE) {
   write.csv(effects,paste0(path,name,".csv"))
 }
-  return(output)
+  return(effects)
 }
