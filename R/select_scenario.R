@@ -21,24 +21,14 @@ select_scenario <- function(num.scenario = NULL) {
   change.off <- sum(c(data$off.beer,data$off.cider,data$off.wine,data$off.spirit,data$off.rtd))
   change.tob <- sum(c(data$tob.fm,data$tob.ryo))
 
-  ## Initialise a vector to store the changes in final demand to put into the IO model
-
-  final.demand <- rep(0,106)
-
-  # off-trade changes go into sector 61 - Wholesale Trade (Alcohol)
-
-  final.demand[61] <- change.off
-
-  # on-trade changes equally split between 69 - Accommodation (Alcohol) and 71 - Food and Beverage (Alcohol)
-
-  split <- 0.5
-  final.demand[69] <- change.on[1]*split
-  final.demand[71] <- change.on[1]*(1-split)
-
-  # tobacco changes go into sector 18 - manufacture of tobacco products
-
-  final.demand[18] <- change.tob
-
-
-  return(final.demand)
+return(list(
+  year = year,
+  base = base,
+  emp.measure = emp.measure,
+  alc.policy = alc.policy,
+  tob.policy = tob.policy,
+  change.on = change.on,
+  change.off = change.off,
+  change.tob = change.tob
+))
 }
