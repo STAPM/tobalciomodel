@@ -23,33 +23,6 @@
 #' }
 "alcohol_data"
 
-#' Price elasticities for Alcohol
-#'
-#' A data frame containing the price elasticity of demand for five types of alcohol; beer, cider,
-#' wine, spirits, and RTDs split by off and on trade sales. Elasticities are obtained from multiple sources.
-#'
-#' @format A data frame with 10 observations and 4 variables.
-#' \describe{
-#'     \item{Product}{Beer, Cider, Wine, Spirits, RTDs}
-#'     \item{On.Trade}{On-trade alcohol price elasticities}
-#'     \item{Off.Trade}{Off-trade alcohol price elasticities }
-#'     \item{Source}{Source for the elasticities. Collis et al. (2010) or Meng et al. (2014)}
-#' }
-"elasticities_alc"
-
-#' Price elasticities for Tobacco
-#'
-#' A data frame containing the price elasticity of demand for five types of alcohol; beer, cider,
-#' wine, spirits, and RTDs split by off and on trade sales. Elasticities are obtained from multiple sources.
-#'
-#' @format A data frame with 10 observations and 4 variables.
-#' \describe{
-#'     \item{product}{cigarettes (need to add RYO vs FM to the data)}
-#'     \item{Elasticity}{price elasticities}
-#'     \item{Source}{Source for the elasticities}
-#' }
-"elasticities_tob"
-
 #' LFS Employment Data for 106 Sectors.
 #'
 #' Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
