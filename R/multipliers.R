@@ -111,10 +111,10 @@ multipliers <- function(yr = 2010,
   data <- cbind(name,
                 output.multipliers.type0,output.multipliers.type1,output.multipliers.type2,
                 gva.multipliers.type0,gva.multipliers.type1,gva.multipliers.type2,
-                tax.multipliers.type1,tax.multipliers.type1,tax.multipliers.type2,
-                coe.multipliers.type1,coe.multipliers.type1,coe.multipliers.type2,
-                gos.multipliers.type1,gos.multipliers.type1,gos.multipliers.type2,
-                emp.multipliers.type1,emp.multipliers.type1,emp.multipliers.type2)
+                tax.multipliers.type0,tax.multipliers.type1,tax.multipliers.type2,
+                coe.multipliers.type0,coe.multipliers.type1,coe.multipliers.type2,
+                gos.multipliers.type0,gos.multipliers.type1,gos.multipliers.type2,
+                emp.multipliers.type0,emp.multipliers.type1,emp.multipliers.type2)
 
   data <- data.frame(data)
 
