@@ -11,5 +11,6 @@ select_scenario(num.scenario = NULL)
 }
 \description{
 Choose the scenario from the pre-loaded data frame of scenarios in `tobalciomodel::scenarios`
-and extract the relevant parameters to put into the IO model.
+and extract the relevant parameters to put into the IO model. Output is a vector of changes in
+demand (measured in £m) by sector.
 }
