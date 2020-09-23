@@ -8,7 +8,8 @@ impact_calculate(
   demand.change = NULL,
   multipliers = NULL,
   export = FALSE,
-  path = "output/"
+  path = "output/",
+  name = "example"
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ impact_calculate(
 \item{export}{logical; if TRUE saves a csv file of results.}
 
 \item{path}{filepath for exporting results.}
+
+\item{name}{name for results file.}
 }
 \value{
 A table of model outputs

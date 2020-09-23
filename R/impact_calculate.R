@@ -7,6 +7,7 @@
 #' @param multipliers data frame of multipliers used to calculate the impacts.
 #' @param export logical; if TRUE saves a csv file of results.
 #' @param path filepath for exporting results.
+#' @param name name for results file.
 #'
 #' @return A table of model outputs
 #'
