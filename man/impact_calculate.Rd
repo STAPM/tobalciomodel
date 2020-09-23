@@ -7,15 +7,21 @@
 impact_calculate(
   demand.change = NULL,
   multipliers = NULL,
+  yr = NULL,
+  base = 2010,
   export = FALSE,
   path = "output/",
   name = "example"
 )
 }
 \arguments{
-\item{demand.change}{list object created by `simulate_alcohol_policy()`}
+\item{demand.change}{vector of changes in final demand created by `demand_changes()`}
 
 \item{multipliers}{data frame of multipliers used to calculate the impacts.}
+
+\item{yr}{year of analysis.}
+
+\item{base}{base year for real terms comparisons.}
 
 \item{export}{logical; if TRUE saves a csv file of results.}
 
