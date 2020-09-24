@@ -83,8 +83,26 @@ impact_calculate <- function(demand.change = NULL,
 
   ### calculate results as percentages
 
-  effects <- as.data.frame(effects)
+  effects_perc <- matrix(c(
+                       100*output.effects.0/tot.gdp,
+                       100*(output.effects.1 - output.effects.0)/tot.gdp,
+                       100*(output.effects.2 - output.effects.1)/tot.gdp,
+                       100*output.effects.2/tot.gdp,
+                       100*gva.effects.0/tot.gva,
+                       100*(gva.effects.1 - gva.effects.0)/tot.gva,
+                       100*(gva.effects.2 - gva.effects.1)/tot.gva,
+                       100*gva.effects.2/tot.gva,
+                       100*empl.effects.0/tot.emp,
+                       100*(empl.effects.1 - empl.effects.0)/tot.emp,
+                       100*(empl.effects.2 - empl.effects.1)/tot.emp,
+                       100*empl.effects.2/tot.emp),
+                    byrow=FALSE,
+                    ncol = 3,
+                    dimnames = list(c("Direct Effect","Indirect Effect","Induced Effect","Total Effect"),
+                                    c("Output (%)","GVA (%)","Employment (%)")))
+
+  return <- as.data.frame(effects)
 
 
-  return(effects)
+  return(return)
 }
