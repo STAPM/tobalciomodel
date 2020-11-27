@@ -1,7 +1,7 @@
 Package: tobalciomodel
 Type: Package
 Title: Modelling Economic Impacts of Tobacco/Alcohol Policy
-Version: 0.2
+Version: 0.5.0
 Author: Damon Morris
 Maintainer: Damon Morris <d.j.morris@sheffield.ac.uk>
 Description: Input-Output modelling is used to estimate the wider economic
