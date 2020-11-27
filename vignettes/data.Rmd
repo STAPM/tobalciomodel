@@ -65,7 +65,7 @@ tobalciomodel::elasticities_alc
 tobalciomodel::elasticities_tob
 ```
 
-## Employment
+### Employment
 
 Employment data are not included with IO tables, so in order to model the impacts of policy on employment this information must be obtained externally and matched to the sectors in the 106-sector IO table. 
 

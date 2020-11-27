@@ -82,7 +82,9 @@ The $a_{ij}$ are the Leontief matrix elements for industry $j$ purchases from in
 
 $$
 \Delta y_1 = (a_{11}*\Delta x_1) + (a_{12}*\Delta x_2) + (a_{13}*\Delta x_3) \\
+
 \Delta y_2 = (a_{21}*\Delta x_1) + (a_{32}*\Delta x_2) + (a_{23}*\Delta x_3) \\
+
 \Delta y_3 = (a_{31}*\Delta x_1) + (a_{32}*\Delta x_2) + (a_{33}*\Delta x_3)
 $$
 
