@@ -1,27 +1,3 @@
-#' Alcohol Consumption Data for England, Wales, and Scotland 2000-2019.
-#'
-#' A data frame containing alcohol consumption data separately for Scotland, and for England and Wales.
-#' Data was compiled by Monitoring and Evaluating Scotlands Alcohol Strategy (MESAS) from Nielsen and CGA Strategy.
-#' Off-trade alcohol sales have been adjusted to account for the exclusion of discount retailers.
-#' Raw data was obtained from \href{http://www.healthscotland.scot/publications/mesas-monitoring-report-2020}{the MESAS monitoring report 2020.}
-#'
-#' @format A data frame with 320 observations and 13 variables.
-#' \describe{
-#'     \item{country}{indicator. England and Wales, or Scotland}
-#'     \item{product}{Total alcohol, and 7 types of alcohol; spirits, RTDs, fortifies wines, wine, cider, perry, and beer.}
-#'     \item{year}{calendar year.}
-#'     \item{units.ontrade}{total volume of on-trade alcohol sales (units) }
-#'     \item{units.offtrade}{total volume of off-trade alcohol sales (units) }
-#'     \item{price.ontrade}{average price per unit of alcohol sold through the on-trade.}
-#'     \item{price.offtrade}{average price per unit of alcohol sold through the off-trade.}
-#'     \item{cons.on.nom}{total estimated on-trade consumption in current year prices.}
-#'     \item{cons.off.nom}{total estimated off-trade consumption in current year prices.}
-#'     \item{cons.on.2010}{total estimated on-trade consumption in 2010 prices.}
-#'     \item{cons.off.2010}{total estimated off-trade consumption in 2010 prices.}
-#'     \item{cons.on.2019}{total estimated on-trade consumption in 2019 prices.}
-#'     \item{cons.off.2019}{total estimated off-trade consumption in 2019 prices.}
-#' }
-"alcohol_data"
 
 #' Alcohol Consumption Data for England and Wales 2000-2019.
 #'
