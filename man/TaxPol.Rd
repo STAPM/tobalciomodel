@@ -7,8 +7,12 @@
 TaxPol(
   alcohol_data = tobalciomodel::data_mesas_englandwales,
   elasticities_data = tobalciomodel::elasticities,
-  duties_data = "tax_policy_input1",
-  duties_data_path = "package development/inputs/",
+  duties_data = tobalciomodel::data_alcohol_duty,
+  beer_duty = c(1, 1, 1),
+  cider_duty = c(1, 1, 1, 1, 1),
+  wine_duty = c(1, 1, 1, 1, 1, 1, 1),
+  spirit_duty = c(1),
+  rtd_duty = c(1),
   select_year = 2019
 )
 }
