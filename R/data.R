@@ -1,15 +1,19 @@
+#' Alcohol duties as of September 2020.
+#'
+"data_alcohol_duty"
 
 #' Alcohol Consumption Data for England and Wales 2000-2019.
 #'
 "data_mesas_englandwales"
 
+#' Fraser of Allender Institute (FAI) Input-Output Table.
+#'
+"data_iotable_fai"
+
 #' Office for National Statistics (ONS) Input-Output Tables.
 #'
 "data_iotables_ons"
 
-#' Fraser of Allender Institute (FAI) Input-Output Table.
-#'
-"data_iotable_fai"
 
 #' Alcohol own-price elasticities.
 #'
