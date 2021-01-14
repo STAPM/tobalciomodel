@@ -221,6 +221,18 @@ merge3[, weight := litres/total]
 
 merge3[, year := as.numeric(year)]
 
-data_mesas_englandwales <- merge3
+##### collapse to 5-product level
+
+data_mesas_englandwales <- merge3 %>%
+  filter(year >= 2000) %>%
+  group_by(product,year) %>%
+  mutate(units_total = sum(units,na.rm = TRUE)) %>%
+  mutate(litres_total = sum(total,na.rm = TRUE)) %>%
+  mutate(price = weighted.mean(price_pu,w=weight)) %>%
+  select(product,year,units_total,litres_total,price,population,trade) %>%
+  distinct()
+
+setDT(data_mesas_englandwales)
+
 
 usethis::use_data(data_mesas_englandwales,overwrite=TRUE)
