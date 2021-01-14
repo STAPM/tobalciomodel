@@ -1,4 +1,4 @@
-#' Model a Change in Alcohol Duties
+#' Model a Change in Final Demand due to Alcohol Duty
 #'
 #' Apply a change in the duties on alcohol and calculate the effect on price, consumption,
 #' and total change in demand for each alcohol product.

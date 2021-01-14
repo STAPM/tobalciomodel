@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaxPol.R
 \name{TaxPol}
 \alias{TaxPol}
-\title{Model a Change in Alcohol Duties}
+\title{Model a Change in Final Demand due to Alcohol Duty}
 \usage{
 TaxPol(
   alcohol_data = tobalciomodel::data_mesas_englandwales,
