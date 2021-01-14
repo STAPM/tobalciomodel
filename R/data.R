@@ -23,6 +23,24 @@
 #' }
 "alcohol_data"
 
+#' Alcohol Consumption Data for England and Wales 2000-2019.
+#'
+"data_mesas_englandwales"
+
+#' Office for National Statistics (ONS) Input-Output Tables.
+#'
+"data_iotables_ons"
+
+#' Fraser of Allender Institute (FAI) Input-Output Table.
+#'
+"data_iotable_fai"
+
+#' Alcohol own-price elasticities.
+#'
+#' Price elasticity of demand for 10 alcohol products, taken from Meng et al. (2014)
+#'
+"elasticities"
+
 #' LFS Employment Data for 106 Sectors.
 #'
 #' Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
