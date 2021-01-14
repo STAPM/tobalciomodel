@@ -82,6 +82,14 @@ select_year       = 2019
 
   merge2[, ch_demand := (ch_cons*price)/1000000]
 
+  ## round figures
+  merge2[, duty_per_unit <- round(duty_per_unit,4)]
+  merge2[, new_duty_per_unit <- round(new_duty_per_unit,4)]
+  merge2[, ch_duty_per_unit <- round(ch_duty_per_unit,4)]
+  merge2[, duty_prop <- round(duty_prop,4)]
+  merge2[, prop_ch_price <- round(prop_ch_price,3)]
+  merge2[, prop_ch_cons <- round(prop_ch_cons,3)]
+  merge2[, ch_demand <- round(ch_demand,3)]
 
 ## return the dataset
 
