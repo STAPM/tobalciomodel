@@ -77,5 +77,4 @@ setnames(data_iotable_fai, old = names(data_iotable_fai), new = c("name",paste0(
                                                                   "hhold.output","total.output","total.demand",
                                                                   "gva.taxes","gva.wages","gva.gos","gva.total"))
 
-iotable <- data_iotable_fai
-usethis::use_data(iotable,overwrite=TRUE)
+usethis::use_data(data_iotable_fai,overwrite=TRUE)

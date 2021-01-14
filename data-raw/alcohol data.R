@@ -1,364 +1,226 @@
 ### Read in the MESAS population, consumption, and price data
 
+filepath <- "data-raw/"
+
+
 library(readxl)
 library(dplyr)
+library(data.table)
 
 #### England and Wales Data ------------------------
 
-## YEAR AND PRODUCT IDENTIFIERS
+#### POPULATION DATA
 
-year <- rep(seq(1994,2019,1),each=9)
+population <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+                         sheet = "Population data",
+                         range = "B4:D26",
+                         col_names = TRUE)
 
-product <- rep(c("Total","Spirits","RTDs","Fortified Wines","Wine","Other","Cider","Perry","Beer"),2019-1994+1)
+population <- population[,c("...1","England & Wales")]
+
+setnames(population,
+         old = c("...1","England & Wales"),
+         new = c("year","population"))
+setDT(population)
+population$year <- as.character(population$year)
 
 ## TOTAL CONSUMED IN LITRES
-# consumption data - volume of pure alcohol (L) per adult. (on trade)
+# consumption data - volume of pure alcohol (L)
 
-litres.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "England & Wales data",
-                          range = "C18:AB26",
-                          col_names = FALSE)
 
-litres.data <- as.matrix(litres.data)
-litres.data <- round(as.numeric(litres.data),2)
-
-litres.pp.ontrade <- as.vector(matrix(litres.data,ncol=1))
-rm(litres.data)
-
-# consumption data - volume of pure alcohol (L) per adult. (off trade)
-
-litres.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "England & Wales data",
-                          range = "AE18:BD26",
-                          col_names = FALSE)
-
-litres.data <- as.matrix(litres.data)
-litres.data <- round(as.numeric(litres.data),2)
-
-litres.pp.offtrade <- as.vector(matrix(litres.data,ncol=1))
-rm(litres.data)
-
-### UNITS CONSUMED PER PERSON
-
-# consumption data - units per person. (on trade)
-
-units.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+litres_on  <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
                          sheet = "England & Wales data",
-                         range = "C31:AB39",
-                         col_names = FALSE)
+                         range = "B4:AB13",
+                         col_names = TRUE)
+setDT(litres_on)
+setnames(litres_on, "(000 litres)", "product_name")
 
-units.data <- as.matrix(units.data)
-units.data <- round(as.numeric(units.data),2)
+litres_on <- litres_on[ product_name != 'Total' & product_name != "Other"]
+litres_on <- melt.data.table(litres_on,id.vars = "product_name",variable.name = "year")
 
-units.pp.ontrade <- as.vector(matrix(units.data,ncol=1))
-rm(units.data)
+litres_on[product_name == "Spirits", product := "on_spirits"]
+litres_on[product_name == "RTDs", product := "on_rtds"]
+litres_on[product_name == "Fortified Wines", product := "on_wine"]
+litres_on[product_name == "Wine", product := "on_wine"]
+litres_on[product_name == "Cider", product := "on_cider"]
+litres_on[product_name == "Perry", product := "on_cider"]
+litres_on[product_name == "Beer", product := "on_beer"]
+litres_on[, trade := "on"]
 
-# consumption data - units per person. (off trade)
+litres_on$value <- as.numeric(litres_on$value)
 
-units.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+
+
+litres_off <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
                          sheet = "England & Wales data",
-                         range = "AE31:BD39",
-                         col_names = FALSE)
+                         range = "AD4:BD13",
+                         col_names = TRUE)
 
-units.data <- as.matrix(units.data)
-units.data <- round(as.numeric(units.data),2)
+setDT(litres_off)
+setnames(litres_off, "(000 litres)", "product_name")
 
-units.pp.offtrade <- as.vector(matrix(units.data,ncol=1))
-rm(units.data)
+litres_off <- litres_off[ product_name != 'Total' & product_name != "Other"]
+litres_off <- melt.data.table(litres_off,id.vars = "product_name",variable.name = "year")
 
-### PRICES PER UNIT
+litres_off[product_name == "Spirits", product := "off_spirits"]
+litres_off[product_name == "RTDs", product := "off_rtds"]
+litres_off[product_name == "Fortified Wines", product := "off_wine"]
+litres_off[product_name == "Wine", product := "off_wine"]
+litres_off[product_name == "Cider", product := "off_cider"]
+litres_off[product_name == "Perry", product := "off_cider"]
+litres_off[product_name == "Beer", product := "off_beer"]
+litres_off[, trade := "off"]
 
-# price data - average price per unit sold (on trade)
+litres_off$value <- as.numeric(litres_off$value)
 
-prices.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "England & Wales data",
-                          range = "C44:AB52",
-                          col_names = FALSE)
 
-prices.data <- as.matrix(prices.data)
-prices.data <- round(as.numeric(prices.data),2)
+litres <- rbind(litres_on,litres_off)
 
-price.ontrade <- as.vector(matrix(prices.data,ncol=1))
-rm(prices.data)
+litres[,value := round(value*1000)]
 
-# price data - average price per unit sold (off trade)
+setnames(litres,
+         old = c("value"),
+         new = c("litres"))
+rm(litres_on,litres_off)
 
-prices.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "England & Wales data",
-                          range = "AE44:BD52",
-                          col_names = FALSE)
+## TOTAL CONSUMED IN UNITS PER ADULT
+# consumption data - need to keep "other" here in on trade - these are RTDS after 2015
 
-prices.data <- as.matrix(prices.data)
-prices.data <- round(as.numeric(prices.data),2)
 
-price.offtrade <- as.vector(matrix(prices.data,ncol=1))
-rm(prices.data)
+units_on <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+                       sheet = "England & Wales data",
+                       range = "B30:AB39",
+                       col_names = TRUE)
 
-###POPULATION DATA
+setDT(units_on)
+setnames(units_on, "Units per adult", "product_name")
 
-population <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                         sheet = "Population data",
-                         range = "B5:D26",
-                         col_names = FALSE)
+units_on <- units_on[ product_name != 'Total' & product_name != "Other"]
+units_on <- melt.data.table(units_on,id.vars = "product_name",variable.name = "year")
 
-population <- data.frame(population) %>%
-  rename(year = ...1,
-         population = ...3) %>%
-  select(year,population)
+units_on[product_name == "Spirits", product := "on_spirits"]
+units_on[product_name == "RTDs", product := "on_rtds"]
+units_on[product_name == "Other", product := "on_rtds"]
+units_on[product_name == "Fortified Wines", product := "on_wine"]
+units_on[product_name == "Wine", product := "on_wine"]
+units_on[product_name == "Cider", product := "on_cider"]
+units_on[product_name == "Perry", product := "on_cider"]
+units_on[product_name == "Beer", product := "on_beer"]
+units_on[, trade := "on"]
 
-### COMBINE DATA INTO ONE FRAME
+units_on$value <- as.numeric(units_on$value)
 
-data <- data.frame(year,product,
-                   litres.pp.ontrade,litres.pp.offtrade,
-                   units.pp.ontrade,units.pp.offtrade,
-                   price.ontrade,price.offtrade)
+units_off <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+                        sheet = "England & Wales data",
+                        range = "Ad30:BD39",
+                        col_names = TRUE)
 
-## from 2015 impute RTD units per person in the on-trade as equal to the entire "other category"
-## (RTD is merged into other with fortified wines and perry from this year onwards. Assume these other 2 = 0)
+setDT(units_off)
+setnames(units_off, "Units per adult", "product_name")
 
-imp.values.units <- c(data[year==2015 & product == "Other","units.pp.ontrade"],
-                      data[year==2016 & product == "Other","units.pp.ontrade"],
-                      data[year==2017 & product == "Other","units.pp.ontrade"],
-                      data[year==2018 & product == "Other","units.pp.ontrade"],
-                      data[year==2019 & product == "Other","units.pp.ontrade"]
-)
-imp.values.litres <- c(data[year==2015 & product == "Other","litres.pp.ontrade"],
-                       data[year==2016 & product == "Other","litres.pp.ontrade"],
-                       data[year==2017 & product == "Other","litres.pp.ontrade"],
-                       data[year==2018 & product == "Other","litres.pp.ontrade"],
-                       data[year==2019 & product == "Other","litres.pp.ontrade"]
-)
+units_off <- units_off[ product_name != 'Total' & product_name != "Other"]
+units_off <- melt.data.table(units_off,id.vars = "product_name",variable.name = "year")
 
-library(data.table)
+units_off[product_name == "Spirits", product := "off_spirits"]
+units_off[product_name == "RTDs", product := "off_rtds"]
+units_off[product_name == "Fortified Wines", product := "off_wine"]
+units_off[product_name == "Wine", product := "off_wine"]
+units_off[product_name == "Cider", product := "off_cider"]
+units_off[product_name == "Perry", product := "off_cider"]
+units_off[product_name == "Beer", product := "off_beer"]
+units_off[, trade := "off"]
 
-data <- data.table(data)
+units_off$value <- as.numeric(units_off$value)
 
-data[year==2015 & product == "RTDs",units.pp.ontrade :=  imp.values.units[1]]
-data[year==2016 & product == "RTDs",units.pp.ontrade :=  imp.values.units[2]]
-data[year==2017 & product == "RTDs",units.pp.ontrade :=  imp.values.units[3]]
-data[year==2018 & product == "RTDs",units.pp.ontrade :=  imp.values.units[4]]
-data[year==2019 & product == "RTDs",units.pp.ontrade :=  imp.values.units[5]]
+units <- rbind(units_on,units_off)
 
-data[year==2015 & product == "RTDs",litres.pp.ontrade :=  imp.values.litres[1]]
-data[year==2016 & product == "RTDs",litres.pp.ontrade :=  imp.values.litres[2]]
-data[year==2017 & product == "RTDs",litres.pp.ontrade :=  imp.values.litres[3]]
-data[year==2018 & product == "RTDs",litres.pp.ontrade :=  imp.values.litres[4]]
-data[year==2019 & product == "RTDs",litres.pp.ontrade :=  imp.values.litres[5]]
+setnames(units,
+         old = c("value"),
+         new = c("units_pp"))
+rm(units_on,units_off)
 
-data <- data %>%
-  filter(year >= 2000) %>%
-  filter(product != "Other")
 
 
+## PRICE PER UNIT
 
-data_mesas_englandwales <- merge(data,population) %>%
-  dplyr::mutate(units.ontrade   = (units.pp.ontrade  *population) ) %>%
-  dplyr::mutate(units.offtrade  = (units.pp.offtrade *population) ) %>%
-  dplyr::mutate(litres.ontrade  = (litres.pp.ontrade *population) ) %>%
-  dplyr::mutate(litres.offtrade = (litres.pp.offtrade*population) ) %>%
-  dplyr::mutate(litres.pu.ontrade  = (litres.ontrade /units.ontrade) ) %>%
-  dplyr::mutate(litres.pu.offtrade = (litres.offtrade/units.offtrade) ) %>%
-  dplyr::mutate(cons.ontrade = price.ontrade*(litres.ontrade/litres.pu.ontrade) ) %>%
-  dplyr::mutate(cons.offtrade = price.offtrade*(litres.offtrade/litres.pu.offtrade) ) %>%
-  dplyr::mutate(country = "England & Wales")
 
+price_on <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+                       sheet = "England & Wales data",
+                       range = "B43:AB52",
+                       col_names = TRUE)
 
-rm(year,data,population,imp.values,litres.data,litres.offtrade,litres.ontrade,
-   price.offtrade,price.ontrade,prices.data,product,units.data,units.pp.offtrade,units.pp.ontrade)
+setDT(price_on)
+setnames(price_on, "£ per unit of alcohol", "product_name")
 
-#### Scottish Data ------------------------
+price_on <- price_on[ product_name != 'Total' & product_name != "Other"]
+price_on <- melt.data.table(price_on,id.vars = "product_name",variable.name = "year")
 
+price_on[product_name == "Spirits", product := "on_spirits"]
+price_on[product_name == "RTDs", product := "on_rtds"]
+price_on[product_name == "Fortified Wines", product := "on_wine"]
+price_on[product_name == "Wine", product := "on_wine"]
+price_on[product_name == "Cider", product := "on_cider"]
+price_on[product_name == "Perry", product := "on_cider"]
+price_on[product_name == "Beer", product := "on_beer"]
+price_on[, trade := "on"]
 
-#####################################################
-############ YEAR AND PRODUCT IDENTIFIERS ###########
+price_on$value <- as.numeric(price_on$value)
 
-year <- rep(seq(1994,2019,1),each=9)
 
-product <- rep(c("Total","Spirits","RTDs","Fortified Wines","Wine","Other","Cider","Perry","Beer"),2019-1994+1)
 
+price_off <- read_excel(path = paste0(filepath,"mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
+                        sheet = "England & Wales data",
+                        range = "AD43:BD52",
+                        col_names = TRUE)
 
-#####################################################
-######## TOTAL CONSUMED IN 000s OF LITRES ###########
+setDT(price_off)
+setnames(price_off, "£ per unit of alcohol", "product_name")
 
-# consumption data - volume of pure alcohol (1000L). (on trade)
+price_off <- price_off[ product_name != 'Total' & product_name != "Other"]
+price_off <- melt.data.table(price_off,id.vars = "product_name",variable.name = "year")
 
-litres.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "Scotland data",
-                          range = "C5:AB13",
-                          col_names = FALSE)
+price_off[product_name == "Spirits", product := "off_spirits"]
+price_off[product_name == "RTDs", product := "off_rtds"]
+price_off[product_name == "Fortified Wines", product := "off_wine"]
+price_off[product_name == "Wine", product := "off_wine"]
+price_off[product_name == "Cider", product := "off_cider"]
+price_off[product_name == "Perry", product := "off_cider"]
+price_off[product_name == "Beer", product := "off_beer"]
+price_off[, trade := "off"]
 
-litres.data <- as.matrix(litres.data)
-litres.data <- round(as.numeric(litres.data),2)
+price_off$value <- as.numeric(price_off$value)
 
-litres.ontrade <- as.vector(matrix(litres.data,ncol=1))
+price <- rbind(price_on,price_off)
 
-# consumption data - volume of pure alcohol (1000L). (off trade)
+setnames(price,
+         old = c("value"),
+         new = c("price_pu"))
+rm(price_on,price_off)
 
-litres.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "Scotland data",
-                          range = "AE5:BD13",
-                          col_names = FALSE)
 
-litres.data <- as.matrix(litres.data)
-litres.data <- round(as.numeric(litres.data),2)
+################################
+### merge all data together ####
 
-litres.offtrade <- as.vector(matrix(litres.data,ncol=1))
 
-#####################################################
-############ UNITS CONSUMED PER PERSON ##############
+merge1 <- merge.data.table(litres,units, by = c("product_name","trade","year","product"),all = TRUE)
+merge2 <- merge.data.table(merge1,price, by = c("product_name","trade","year","product"))
+merge3 <- merge.data.table(merge2,population,by = "year",all.x = TRUE)
 
-# consumption data - units per person. (on trade)
+## total units
 
-units.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                         sheet = "Scotland data",
-                         range = "C31:AB39",
-                         col_names = FALSE)
+merge3[, units := units_pp*population]
 
-units.data <- as.matrix(units.data)
-units.data <- round(as.numeric(units.data),2)
 
-units.pp.ontrade <- as.vector(matrix(units.data,ncol=1))
+## create weight from litres of consumption
 
-# consumption data - units per person. (off trade)
+merge3[, total := sum(litres), by = c("product","trade","year")]
+merge3[, weight := litres/total]
 
-units.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                         sheet = "Scotland data",
-                         range = "AE31:BD39",
-                         col_names = FALSE)
 
-units.data <- as.matrix(units.data)
-units.data <- round(as.numeric(units.data),2)
+## year as continuous
 
-units.pp.offtrade <- as.vector(matrix(units.data,ncol=1))
+merge3[, year := as.numeric(year)]
 
-#####################################################
-############ PRICES PER UNIT ########################
+data_mesas_englandwales <- merge3
 
-# price data - average price per unit sold (on trade)
-
-prices.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "Scotland data",
-                          range = "C44:AB52",
-                          col_names = FALSE)
-
-prices.data <- as.matrix(prices.data)
-prices.data <- round(as.numeric(prices.data),2)
-
-
-price.ontrade <- as.vector(matrix(prices.data,ncol=1))
-
-# price data - average price per unit sold (off trade)
-
-prices.data <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                          sheet = "Scotland data",
-                          range = "AE44:BD52",
-                          col_names = FALSE)
-
-prices.data <- as.matrix(prices.data)
-prices.data <- round(as.numeric(prices.data),2)
-
-price.offtrade <- as.vector(matrix(prices.data,ncol=1))
-
-
-
-#####################################################
-############ POPULATION DATA ########################
-
-population <- read_excel(path = paste0("data-raw/","mesas-monitoring-report-2020-alcohol-sales-price-and-affordability",".xlsx"),
-                         sheet = "Population data",
-                         range = "B5:C26",
-                         col_names = FALSE)
-
-population <- data.frame(population) %>%
-  rename(year = ...1,
-         population = ...2) %>%
-  filter(year >= 2000)
-
-#####################################################
-######### COMBINE DATA INTO ONE FRAME ###############
-
-data <- data.frame(year,product,
-                   litres.ontrade,litres.offtrade,
-                   units.pp.ontrade,units.pp.offtrade,
-                   price.ontrade,price.offtrade)
-
-## from 2015 impute RTD units per person in the on-trade as equal to the entire "other category"
-## (RTD is merged into other with fortified wines and perry from this year onwards. Assume these other 2 = 0)
-
-imp.values <- c(data[year==2015 & product == "Other","units.pp.ontrade"],
-                data[year==2016 & product == "Other","units.pp.ontrade"],
-                data[year==2017 & product == "Other","units.pp.ontrade"],
-                data[year==2018 & product == "Other","units.pp.ontrade"],
-                data[year==2019 & product == "Other","units.pp.ontrade"]
-)
-
-library(data.table)
-
-data <- data.table(data)
-
-data[year==2015 & product == "RTDs",units.pp.ontrade :=  imp.values[1]]
-data[year==2016 & product == "RTDs",units.pp.ontrade :=  imp.values[2]]
-data[year==2017 & product == "RTDs",units.pp.ontrade :=  imp.values[3]]
-data[year==2018 & product == "RTDs",units.pp.ontrade :=  imp.values[4]]
-data[year==2019 & product == "RTDs",units.pp.ontrade :=  imp.values[5]]
-
-data <- data %>%
-  filter(year >= 2000) %>%
-  filter(product != "Other")
-
-
-
-data_mesas_scotland <- merge(data,population) %>%
-  mutate(units.ontrade = (units.pp.ontrade*population) ) %>%
-  mutate(units.offtrade = (units.pp.offtrade*population) ) %>%
-  select(year,product,units.ontrade,units.offtrade,price.ontrade,price.offtrade)
-
-data_mesas_scotland$country <- "Scotland"
-
-rm(year,data,population,imp.values,litres.data,litres.offtrade,litres.ontrade,
-   price.offtrade,price.ontrade,prices.data,product,units.data,units.pp.offtrade,units.pp.ontrade)
-
-
-####### COMBINE ENGLAND AND WALES WITH SCOTLAND
-
-alcohol_data <- rbind(data_mesas_englandwales,data_mesas_scotland)
-
-####### extract 2010 and 2019 prices for real-terms calculations
-
-real.2010 <- alcohol_data %>%
-  filter(year == 2010) %>%
-  rename(price.ontrade_2010 = price.ontrade,
-         price.offtrade_2010 = price.offtrade) %>%
-  select(product,country,price.ontrade_2010,price.offtrade_2010)
-
-real.2019 <- alcohol_data %>%
-  filter(year == 2019) %>%
-  rename(price.ontrade_2019 = price.ontrade,
-         price.offtrade_2019 = price.offtrade) %>%
-  select(product,country,price.ontrade_2019,price.offtrade_2019)
-
-alcohol_data <- merge(alcohol_data,real.2010,
-                      by=c("country","product"),
-                      all=TRUE,
-                      sort=TRUE)
-
-alcohol_data <- merge(alcohol_data,real.2019,
-                      by=c("country","product"),
-                      all=TRUE,
-                      sort=TRUE)
-
-####### calculate consumption figures in nominal and real terms
-
-alcohol_data <- alcohol_data %>%
-  mutate(cons.on.nom =  (price.ontrade*units.ontrade)  /1000000) %>%
-  mutate(cons.off.nom = (price.offtrade*units.offtrade)/1000000) %>%
-  mutate(cons.on.2010 =  (price.ontrade_2010*units.ontrade)  /1000000) %>%
-  mutate(cons.off.2010 = (price.offtrade_2010*units.offtrade)/1000000) %>%
-  mutate(cons.on.2019 =  (price.ontrade_2019*units.ontrade)  /1000000) %>%
-  mutate(cons.off.2019 = (price.offtrade_2019*units.offtrade)/1000000) %>%
-  select(-c(price.ontrade_2010,price.ontrade_2019,price.offtrade_2010,price.offtrade_2019))
-
-
-rm(real.2010,real.2019)
-
-usethis::use_data(alcohol_data,overwrite=TRUE)
+usethis::use_data(data_mesas_englandwales,overwrite=TRUE)
