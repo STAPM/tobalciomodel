@@ -5,7 +5,7 @@
 \alias{data_mesas_englandwales}
 \title{Alcohol Consumption Data for England and Wales 2000-2019.}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 364 rows and 11 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 200 rows and 7 columns.
 }
 \usage{
 data_mesas_englandwales
