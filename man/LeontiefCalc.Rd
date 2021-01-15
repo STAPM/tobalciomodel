@@ -4,12 +4,12 @@
 \alias{LeontiefCalc}
 \title{Produce Sectoral Output Multipliers}
 \usage{
-LeontiefCalc(FAI = TRUE, year_select = 2010)
+LeontiefCalc(FAI = TRUE, select_year = 2010)
 }
 \arguments{
 \item{FAI}{logical. TRUE if using the Fraser of Allender Institute IO table (the default). Select FALSE to use one of the ONS tables.}
 
-\item{year_select}{year of data to use if using the ONS tables.}
+\item{select_year}{year of data to use if using the ONS tables.}
 }
 \description{
 Calculate the Leontief inverse Type I and Type II matrices from the package data and calculate

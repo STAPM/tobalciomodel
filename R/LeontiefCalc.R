@@ -4,12 +4,12 @@
 #' the sector by sector multipliers for output, GVA, and employment.
 #'
 #' @param FAI logical. TRUE if using the Fraser of Allender Institute IO table (the default). Select FALSE to use one of the ONS tables.
-#' @param year_select year of data to use if using the ONS tables.
+#' @param select_year year of data to use if using the ONS tables.
 #'
 #' @export
 LeontiefCalc <- function(
 FAI = TRUE,
-year_select = 2010
+select_year = 2010
 ) {
 
 ###  STEP 1) extract the correct input output table and other necessary vectors from package data
@@ -23,14 +23,14 @@ if (FAI == TRUE) {
   gva.wages    <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.wages"]))
   gva.gos      <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.gos"]))
 } else if (FAI == FALSE) {
-  flowtable <- as.matrix(tobalciomodel::data_iotables_ons[year == year_select,-c(1,107:116)])
-  total.output <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == year_select,"total.output"]))
-  hhold.demand <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == year_select,"hhold.demand"]))
-  hhold.output <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == year_select,"hhold.output"]))
-  gva.total    <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.total"]))
-  gva.taxes    <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.taxes"]))
-  gva.wages    <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.wages"]))
-  gva.gos      <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.gos"]))
+  flowtable <- as.matrix(tobalciomodel::data_iotables_ons[year == select_year,-c(1,107:116)])
+  total.output <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"total.output"]))
+  hhold.demand <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"hhold.demand"]))
+  hhold.output <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"hhold.output"]))
+  gva.total    <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"gva.total"]))
+  gva.taxes    <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"gva.taxes"]))
+  gva.wages    <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"gva.wages"]))
+  gva.gos      <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"gva.gos"]))
 }
 
 ### STEP 2) Create the Leontief type 1 matrix
@@ -114,7 +114,7 @@ gos.multipliers.type2 <- coef.gos*output.multipliers.type2
 if (FAI == TRUE) {
   name <- as.character(tobalciomodel::data_iotable_fai$name)
 } else if (FAI == FALSE) {
-  name <- as.character(tobalciomodel::data_iotables_ons$name)
+  name <- as.character(tobalciomodel::data_iotables_ons[year == select_year,"name"])
 }
 
 data <- cbind(name,
