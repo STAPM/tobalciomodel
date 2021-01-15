@@ -23,7 +23,7 @@ if (FAI == TRUE) {
   gva.wages    <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.wages"]))
   gva.gos      <- as.vector(as.matrix(tobalciomodel::data_iotable_fai[,"gva.gos"]))
 } else if (FAI == FALSE) {
-  flowtable <- as.matrix(tobalciomodel::data_iotables_ons[year == select_year,-c(1,107:116)])
+  flowtable <- as.matrix(tobalciomodel::data_iotables_ons[year == select_year,-c(1,107:117)])
   total.output <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"total.output"]))
   hhold.demand <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"hhold.demand"]))
   hhold.output <- as.vector(as.matrix(tobalciomodel::data_iotables_ons[year == select_year,"hhold.output"]))
