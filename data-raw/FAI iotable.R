@@ -38,6 +38,10 @@ total.demand <- read_excel(path = paste0("data-raw/","2010_UK_Alcohol_consumptio
                         range = "DT6:DT111",
                         col_names = FALSE)
 
+govt.demand <- read_excel(path = paste0("data-raw/","2010_UK_Alcohol_consumption_disaggregated_IxI",".xlsx"),
+                           range = "DI6:DI111",
+                           col_names = FALSE)
+
 gva.taxes <- read_excel(path = paste0("data-raw/","2010_UK_Alcohol_consumption_disaggregated_IxI",".xlsx"),
                            range = "D116:DE116",
                            col_names = FALSE)
@@ -58,6 +62,7 @@ gva.total <- read_excel(path = paste0("data-raw/","2010_UK_Alcohol_consumption_d
 flowtable <- as.matrix(flowtable)
 total.demand <- as.matrix(total.demand)
 final.demand <- as.matrix(final.demand)
+govt.demand  <- as.matrix(govt.demand)
 hhold.demand <- as.matrix(hhold.demand)
 total.output <- as.vector(as.matrix(total.output))
 hhold.output <- as.vector(as.matrix(hhold.output))
@@ -69,11 +74,11 @@ gva.total <- as.vector(as.matrix(gva.total))
 
 name <- as.vector(as.matrix(sector))
 
-data_iotable_fai <- data.frame(name,flowtable,hhold.demand,final.demand,hhold.output,total.output,total.demand,
+data_iotable_fai <- data.frame(name,flowtable,hhold.demand,govt.demand,final.demand,hhold.output,total.output,total.demand,
                                gva.taxes,gva.wages,gva.gos,gva.total)
 
 setnames(data_iotable_fai, old = names(data_iotable_fai), new = c("name",paste0("sec",c(1:106)),
-                                                                  "hhold.demand","final.demand",
+                                                                  "hhold.demand","govt.demand","final.demand",
                                                                   "hhold.output","total.output","total.demand",
                                                                   "gva.taxes","gva.wages","gva.gos","gva.total"))
 

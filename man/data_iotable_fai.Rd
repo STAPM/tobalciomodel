@@ -5,7 +5,7 @@
 \alias{data_iotable_fai}
 \title{Fraser of Allender Institute (FAI) Input-Output Table.}
 \format{
-An object of class \code{data.frame} with 106 rows and 116 columns.
+An object of class \code{data.frame} with 106 rows and 117 columns.
 }
 \usage{
 data_iotable_fai

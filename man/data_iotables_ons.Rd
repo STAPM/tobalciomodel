@@ -5,7 +5,7 @@
 \alias{data_iotables_ons}
 \title{Office for National Statistics (ONS) Input-Output Tables.}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 2310 rows and 116 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 2310 rows and 117 columns.
 }
 \usage{
 data_iotables_ons
