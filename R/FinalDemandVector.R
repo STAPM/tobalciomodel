@@ -30,7 +30,19 @@ FinalDemandVec <- function(change.off = NULL,
   # tobacco changes go into sector 18 - manufacture of tobacco products
   final.demand[18] <- change.tob
   } else if (FAI == FALSE) {
+    ## Initialise a vector to store the changes in final demand to put into the IO model
+    final.demand <- rep(0,105)
 
+    # off-trade changes go into sector 61 - Wholesale Trade (Alcohol)
+    final.demand[59] <- change.off
+
+    # on-trade changes equally split between 69 - Accommodation (Alcohol) and 71 - Food and Beverage (Alcohol)
+    split <- 0.5
+    final.demand[67] <- change.on[1]*split
+    final.demand[68] <- change.on[1]*(1-split)
+
+    # tobacco changes go into sector 18 - manufacture of tobacco products
+    final.demand[16] <- change.tob
   }
 
 return(final.demand)
