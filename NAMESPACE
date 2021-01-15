@@ -2,6 +2,7 @@
 
 export(CleanFinalDemand)
 export(FinalDemandVec)
+export(LeontiefCalc)
 export(PrefChanges)
 export(TaxPol)
 export(hhold_reallocate)
