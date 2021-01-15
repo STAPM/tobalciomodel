@@ -4,19 +4,10 @@
 \alias{FinalDemandVec}
 \title{Construct the Vector of Final Demand Changes}
 \usage{
-FinalDemandVec(
-  change.off = NULL,
-  change.on = NULL,
-  change.tob = NULL,
-  FAI = TRUE
-)
+FinalDemandVec(data = NULL, FAI = TRUE)
 }
 \arguments{
-\item{change.off}{total change in consumption of off-trade alcohol (£m)}
-
-\item{change.on}{total change in consumption of on-trade alcohol (£m)}
-
-\item{change.tob}{total change in consumption of tobacco (£m)}
+\item{data}{vector of changes in final demand for; off-trade alcohol, on-trade alcohol, tobacco (£m)}
 
 \item{FAI}{logical. TRUE if using the Fraser of Allender Institute IO table (the default). Select FALSE to use one of the ONS tables.}
 }

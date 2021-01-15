@@ -4,16 +4,16 @@
 #' previous calculations as inputs. Calibrate the final demand vector to the input-output table chosen
 #' for the analysis.
 #'
-#' @param change.off total change in consumption of off-trade alcohol (£m)
-#' @param change.on total change in consumption of on-trade alcohol (£m)
-#' @param change.tob total change in consumption of tobacco (£m)
+#' @param data vector of changes in final demand for; off-trade alcohol, on-trade alcohol, tobacco (£m)
 #' @param FAI logical. TRUE if using the Fraser of Allender Institute IO table (the default). Select FALSE to use one of the ONS tables.
 #'
 #' @export
-FinalDemandVec <- function(change.off = NULL,
-                           change.on = NULL,
-                           change.tob = NULL,
+FinalDemandVec <- function(data = NULL,
                            FAI = TRUE) {
+
+  change.off <- data[1]
+  change.on  <- data[2]
+  change.tob <- data[3]
 
   if (FAI == TRUE) {
   ## Initialise a vector to store the changes in final demand to put into the IO model
