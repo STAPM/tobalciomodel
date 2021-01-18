@@ -43,5 +43,6 @@ if (FAI == TRUE) {
 new_final_demand = net_revenue*distribution
 total_final_demand = new_final_demand + final_demand
 
-return(total_final_demand)
+return(list(final_demand = total_final_demand,
+            net_revenue = net_revenue))
 }
