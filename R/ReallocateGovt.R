@@ -5,7 +5,7 @@
 #' reflect this reallocation before conducting input-output analysis.
 #'
 #' @param data the data table of duties, prices, and consumption produced by the `TaxPol()` function
-#' @param final_demand the vector of final demand changes calulcated by the `FinalDemandVec()` function.
+#' @param final_demand the vector of final demand changes calcuulated by the `FinalDemandVec()` function.
 #' @param FAI logical. TRUE if using the Fraser of Allender Institute IO table (the default). Select FALSE to use one of the ONS tables.
 #' @param select_year year of data to use if using the ONS tables.
 #'
