@@ -61,6 +61,9 @@ cleaned <- tobalciomodel::CleanFinalDemand(data = data)
 # construct a full vector of changes in final demand
 final_demand_vec  <- tobalciomodel::FinalDemandVec(data = cleaned,
                                                    FAI = FAI)
+if (reallocate == FALSE) {
+  demand_vec <- final_demand_vec
+}
 
 ##### STEP 3 - REALLOCATION OF DEMAND IF SPECIFIED
 if (reallocate == TRUE & tax_policy == TRUE) {
@@ -75,7 +78,7 @@ if (reallocate == TRUE & pref_changes == TRUE) {
                                       FAI = FAI,
                                       select_year = select_year,
                                       prorata = TRUE)
-  demand_vec <- reallocatedGovt$final_demand
+  demand_vec <- reallocatedHHold
 }
 ##### STEP 4 - Extract Leontief Matrices and Multipliers
 

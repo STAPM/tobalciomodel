@@ -20,9 +20,9 @@ select_year = 2010
 
 # government loses the duty on the units no longer consumed and gains the duty increase on units still consumed:
 # (duty in pence, convert to pounds by dividing by 100, divide by 1000000 to get into millions of pounds)
-data1[, revenue := ((duty_per_unit*ch_cons) + ch_duty_per_unit*(units_total - ch_cons))/(100*1000000) ]
+data[, revenue := ((duty_per_unit*ch_cons) + ch_duty_per_unit*(units_total - ch_cons))/(100*1000000) ]
 
-net_revenue <- sum(data1$revenue)
+net_revenue <- sum(data$revenue)
 
 # STEP 2a) Reallocate net tax revenue across final demand
 
