@@ -7,7 +7,7 @@ Maintainer: Damon Morris <d.j.morris@sheffield.ac.uk>
 Description: Input-Output modelling is used to estimate the wider economic
     impacts of policies designed to limit the consumption of alcohol and tobacco
     products. 
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: 
