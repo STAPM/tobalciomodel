@@ -6,14 +6,15 @@
 \usage{
 TaxPol(
   alcohol_data = tobalciomodel::data_mesas_englandwales,
-  elasticities_data = tobalciomodel::elasticities,
+  elasticities_data = tobalciomodel::data_elasticities,
   duties_data = tobalciomodel::data_alcohol_duty,
   beer_duty = c(1, 1, 1),
   cider_duty = c(1, 1, 1, 1, 1),
   wine_duty = c(1, 1, 1, 1, 1, 1, 1),
   spirit_duty = c(1),
   rtd_duty = c(1),
-  select_year = 2019
+  select_year = 2019,
+  allow_cross = "No"
 )
 }
 \description{
