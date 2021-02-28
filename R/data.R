@@ -19,7 +19,7 @@
 #'
 #' Price elasticity of demand for 10 alcohol products, taken from Meng et al. (2014)
 #'
-"elasticities"
+"data_elasticities"
 
 #' LFS Employment Data for 106 Sectors.
 #'

@@ -5,7 +5,7 @@
 \alias{data_alcohol_duty}
 \title{Alcohol duties as of September 2020.}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 34 rows and 10 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 34 rows and 12 columns.
 }
 \usage{
 data_alcohol_duty
