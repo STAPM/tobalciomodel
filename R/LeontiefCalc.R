@@ -44,8 +44,8 @@ A <- flowtable %*% ((total.output )^-1 * diag(length(total.output)))
 IminusA <- diag(length(total.output)) - A
 
 # Calculate the Leontief Inverse matrix
-L <- solve(IminusA)
-L <- round(L,4)
+L1 <- solve(IminusA)
+L1 <- round(L1,4)
 
 
 ## STEP 3) Create the Leontief type 2 matrix - endoegenous households
@@ -80,10 +80,10 @@ L2 <- round(L2,4)
 
 output.multipliers.type0 <- rep(1,length(total.output))
 output.multipliers.type1 <- rep(NA,length(total.output))
-output.multipliers.type2 <- rep(NA,length(total.output))
+#output.multipliers.type2 <- rep(NA,length(total.output))
 for (i in 1:length(total.output)) {
-  output.multipliers.type1[i] <- sum(L[,i])
-  output.multipliers.type2[i] <- sum(L2[,i])
+  output.multipliers.type1[i] <- sum(L1[,i])
+  #output.multipliers.type2[i] <- sum(L2[,i])
 }
 
 ### STEP 5) Output to GVA coefficients and multipliers
@@ -94,59 +94,49 @@ coef.tax <- gva.taxes / total.output
 coef.coe <- gva.wages / total.output
 coef.gos <- gva.gos   / total.output
 
-gva.multipliers.type0 <- coef.gva*output.multipliers.type0
-tax.multipliers.type0 <- coef.tax*output.multipliers.type0
-coe.multipliers.type0 <- coef.coe*output.multipliers.type0
-gos.multipliers.type0 <- coef.gos*output.multipliers.type0
+gva.multipliers.type0 <- coef.gva
+tax.multipliers.type0 <- coef.tax
+coe.multipliers.type0 <- coef.coe
+gos.multipliers.type0 <- coef.gos
 
-gva.multipliers.type1 <- coef.gva*output.multipliers.type1
-tax.multipliers.type1 <- coef.tax*output.multipliers.type1
-coe.multipliers.type1 <- coef.coe*output.multipliers.type1
-gos.multipliers.type1 <- coef.gos*output.multipliers.type1
-
-gva.multipliers.type2 <- coef.gva*output.multipliers.type2
-tax.multipliers.type2 <- coef.tax*output.multipliers.type2
-coe.multipliers.type2 <- coef.coe*output.multipliers.type2
-gos.multipliers.type2 <- coef.gos*output.multipliers.type2
+gva.multipliers.type1 <- as.vector(coef.gva %*% L1 / coef.gva)
+coe.multipliers.type1 <- as.vector(coef.coe %*% L1 / coef.coe)
+gos.multipliers.type1 <- as.vector(coef.gos %*% L1 / coef.gos)
+tax.multipliers.type1 <- as.vector(coef.tax %*% L1 / coef.tax)
 
 ### STEP 6) Construct the output table
 
 if (FAI == TRUE) {
-  name <- as.character(tobalciomodel::data_iotable_fai$name)
+  sector <- as.character(tobalciomodel::data_iotable_fai$name)
 } else if (FAI == FALSE) {
-  name <- as.character(tobalciomodel::data_iotables_ons[year == select_year,"name"])
+  sector <- as.character(tobalciomodel::data_iotables_ons[year == select_year,"name"])
 }
 
-data <- cbind(name,
-              output.multipliers.type0,output.multipliers.type1,output.multipliers.type2,
-              gva.multipliers.type0,gva.multipliers.type1,gva.multipliers.type2,
-              tax.multipliers.type0,tax.multipliers.type1,tax.multipliers.type2,
-              coe.multipliers.type0,coe.multipliers.type1,coe.multipliers.type2,
-              gos.multipliers.type0,gos.multipliers.type1,gos.multipliers.type2)
+data <- cbind(sector,
+              output.multipliers.type0,output.multipliers.type1,
+              gva.multipliers.type0,gva.multipliers.type1,
+              coe.multipliers.type0,coe.multipliers.type1,
+              gos.multipliers.type0,gos.multipliers.type1,
+              tax.multipliers.type0,tax.multipliers.type1)
 
 data <- data.table(data)
 
 data$output.multipliers.type0 <- as.numeric(as.character(data$output.multipliers.type0))
 data$output.multipliers.type1 <- as.numeric(as.character(data$output.multipliers.type1))
-data$output.multipliers.type2 <- as.numeric(as.character(data$output.multipliers.type2))
 
 data$gva.multipliers.type0 <- as.numeric(as.character(data$gva.multipliers.type0))
 data$gva.multipliers.type1 <- as.numeric(as.character(data$gva.multipliers.type1))
-data$gva.multipliers.type2 <- as.numeric(as.character(data$gva.multipliers.type2))
 
 data$tax.multipliers.type0 <- as.numeric(as.character(data$tax.multipliers.type0))
 data$tax.multipliers.type1 <- as.numeric(as.character(data$tax.multipliers.type1))
-data$tax.multipliers.type2 <- as.numeric(as.character(data$tax.multipliers.type2))
 
 data$coe.multipliers.type0 <- as.numeric(as.character(data$coe.multipliers.type0))
 data$coe.multipliers.type1 <- as.numeric(as.character(data$coe.multipliers.type1))
-data$coe.multipliers.type2 <- as.numeric(as.character(data$coe.multipliers.type2))
 
 data$gos.multipliers.type0 <- as.numeric(as.character(data$gos.multipliers.type0))
 data$gos.multipliers.type1 <- as.numeric(as.character(data$gos.multipliers.type1))
-data$gos.multipliers.type2 <- as.numeric(as.character(data$gos.multipliers.type2))
 
  return(list(multipliers = data,
-             leontief1 = L,
+             leontief1 = L1,
              leontief2 = L2))
 }

@@ -15,121 +15,48 @@
 #'
 #' @export
 ImpactCalc <- function(
-demand.change = fdemand_fai_govt$final_demand,
-multipliers = leontief_fai,
-select_year = 2010,
-FAI = TRUE,
-export = FALSE,
-path = "output/",
-name = "example"
+    demand.change ,
+    multipliers
 ) {
 
-# extract multipliers from the list object
-mult <- multipliers$multipliers
+  data <- cbind(multipliers,demand.change)
 
-output.effects.0 <- round(sum(demand.change*mult[,"output.multipliers.type0"]))
-output.effects.1 <- round(sum(demand.change*mult[,"output.multipliers.type1"]))
-output.effects.2 <- round(sum(demand.change*mult[,"output.multipliers.type2"]))
+  ### Calculate output effects
 
-gva.effects.0 <- round(sum(demand.change*mult[,"gva.multipliers.type0"]))
-gva.effects.1 <- round(sum(demand.change*mult[,"gva.multipliers.type1"]))
-gva.effects.2 <- round(sum(demand.change*mult[,"gva.multipliers.type2"]))
+  data[, output.effect.direct   := output.multipliers.type0*demand.change]
+  data[, output.effect.indirect := output.multipliers.type1*demand.change - output.effect.direct]
 
-coe.effects.0 <- round(sum(demand.change*mult[,"coe.multipliers.type0"]))
-coe.effects.1 <- round(sum(demand.change*mult[,"coe.multipliers.type1"]))
-coe.effects.2 <- round(sum(demand.change*mult[,"coe.multipliers.type2"]))
+  output.0 <- sum(data[,"output.effect.direct"])
+  output.1 <- sum(data[,"output.effect.indirect"])
 
-tax.effects.0 <- round(sum(demand.change*mult[,"tax.multipliers.type0"]))
-tax.effects.1 <- round(sum(demand.change*mult[,"tax.multipliers.type1"]))
-tax.effects.2 <- round(sum(demand.change*mult[,"tax.multipliers.type2"]))
+  ### Calculate GVA effects
 
-gos.effects.0 <- round(sum(demand.change*mult[,"gos.multipliers.type0"]))
-gos.effects.1 <- round(sum(demand.change*mult[,"gos.multipliers.type1"]))
-gos.effects.2 <- round(sum(demand.change*mult[,"gos.multipliers.type2"]))
+  data[, gva.effect.direct   := gva.multipliers.type0*demand.change]
+  data[, gva.effect.indirect := gva.multipliers.type1*gva.effect.direct - gva.effect.direct]
 
-# combine into a matrix - Type I and II effects for output, GVA, and employment
+  gva.0 <- sum(data[,"gva.effect.direct"])
+  gva.1 <- sum(data[,"gva.effect.indirect"])
 
-effects <- matrix(c(output.effects.0,
-                    output.effects.1 - output.effects.0,
-                    output.effects.2 - output.effects.1,
-                    output.effects.2,
-                    gva.effects.0,
-                    gva.effects.1 - gva.effects.0,
-                    gva.effects.2 - gva.effects.1,
-                    gva.effects.2,
-                    coe.effects.0,
-                    coe.effects.1 - coe.effects.0,
-                    coe.effects.2 - coe.effects.1,
-                    coe.effects.2,
-                    tax.effects.0,
-                    tax.effects.1 - tax.effects.0,
-                    tax.effects.2 - tax.effects.1,
-                    tax.effects.2,
-                    gos.effects.0,
-                    gos.effects.1 - gos.effects.0,
-                    gos.effects.2 - gos.effects.1,
-                    gos.effects.2),
-                  byrow=FALSE,
-                  ncol = 5,
-                  dimnames = list(c("Direct Effect","Indirect Effect","Induced Effect","Total Effect"),
-                                  c("Output (£mn)","Total GVA (£mn)","Hhold GVA (£mn)","Govt GVA (£mn)","Firm GVA (£mn)")))
+  ### Calculate cost of employment effects
 
-if (FAI == TRUE) {
-  #### read in and clean the employment data
-  empl <- tobalciomodel::employment[,c(1:11)]
-  setDT(empl)
-  employment <- melt.data.table(empl,id.vars = "sector",value.name = "employment")
-  # filter on year
-  employment <- employment[variable == paste0("fte_",select_year),c("sector","employment")]
-  #### this produces a 106 vector of employment by sector in the correct year
+  data[, coe.effect.direct   := coe.multipliers.type0*demand.change]
+  data[, coe.effect.indirect := coe.multipliers.type1*coe.effect.direct - coe.effect.direct]
 
-  #### read in the compensation of employees
-  coe <- tobalciomodel::data_iotable_fai[,"hhold.output"]
+  coe.0 <- sum(data[,"coe.effect.direct"])
+  coe.1 <- sum(data[,"coe.effect.indirect"])
 
-  #### coe per employee
-  coe_per_employee = coe/employment$employment
+  ### collect into a matrix
 
-  #### change in coe/coe per employee to get change in employment
-  emp.effects.0 <- round(sum(demand.change*mult[,"coe.multipliers.type0"]/coe_per_employee))
-  emp.effects.1 <- round(sum(demand.change*mult[,"coe.multipliers.type1"]/coe_per_employee))
-  emp.effects.2 <- round(sum(demand.change*mult[,"coe.multipliers.type2"]/coe_per_employee))
+  effects <- matrix(c(output.0,output.1,
+                      gva.0,gva.1,
+                      coe.0,coe.1),
+                    nrow = 2,
+                    byrow = FALSE,
+                    dimnames = list(c("Direct Effect","Indirect Effect"),
+                                    c("Output","GVA","CoE")))
 
-  ### update the "effects" table
+  effects <- round(effects,3)
 
-  effects <- matrix(c(output.effects.0,
-                      output.effects.1 - output.effects.0,
-                      output.effects.2 - output.effects.1,
-                      output.effects.2,
-                      gva.effects.0,
-                      gva.effects.1 - gva.effects.0,
-                      gva.effects.2 - gva.effects.1,
-                      gva.effects.2,
-                      coe.effects.0,
-                      coe.effects.1 - coe.effects.0,
-                      coe.effects.2 - coe.effects.1,
-                      coe.effects.2,
-                      tax.effects.0,
-                      tax.effects.1 - tax.effects.0,
-                      tax.effects.2 - tax.effects.1,
-                      tax.effects.2,
-                      gos.effects.0,
-                      gos.effects.1 - gos.effects.0,
-                      gos.effects.2 - gos.effects.1,
-                      gos.effects.2,
-                      emp.effects.0,
-                      emp.effects.1 - emp.effects.0,
-                      emp.effects.2 - emp.effects.1,
-                      emp.effects.2),
-                    byrow=FALSE,
-                    ncol = 6,
-                    dimnames = list(c("Direct Effect","Indirect Effect","Induced Effect","Total Effect"),
-                                    c("Output (£mn)","Total GVA (£mn)","Hhold GVA (£mn)","Govt GVA (£mn)","Firm GVA (£mn)","Employment")))
-
-}
-
-if (export == TRUE) {
-  write.csv(effects,paste0(path,name,".csv"))
-}
 
   return(effects)
 }
