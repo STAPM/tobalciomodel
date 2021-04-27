@@ -37,7 +37,7 @@ if (FAI == TRUE) {
 
 ## Calculate coefficient matrix:
 A <- flowtable %*% ((total.output )^-1 * diag(length(total.output)))
-A <- round(A,5)
+# A <- round(A,5)
 # Show A
 
 # Identity matrix minus A
@@ -45,7 +45,7 @@ IminusA <- diag(length(total.output)) - A
 
 # Calculate the Leontief Inverse matrix
 L <- solve(IminusA)
-L <- round(L,5)
+L <- round(L,4)
 
 
 ## STEP 3) Create the Leontief type 2 matrix - endoegenous households
@@ -65,13 +65,13 @@ flow.table2 <- cbind(flow.table2,c(hhold.demand,0))  # add household spending as
 
 ## Calculate coefficient matrix:
 A2 <- flow.table2 %*% (( c(total.output,total.hhold.income) )^-1 * diag(length( c(total.output,total.hhold.income)  ) ) )
-A2 <- round(A2,5)
+# A2 <- round(A2,5)
 # Identity matrix minus A
 IminusA2 <- diag(length(c(total.output,sum(total.output)))) - A2
 
 # Calculate the Leontief Inverse matrix
 L2 <- solve(IminusA2)
-L2 <- round(L2,5)
+L2 <- round(L2,4)
 
 ### STEP 4) Calculate Sectoral Output Multipliers
 # type 0 - direct effect (i.e. no multiplier, just equal to demand change)
