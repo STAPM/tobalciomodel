@@ -2,4 +2,5 @@
 
 export(LeontiefCalc)
 export(ReadSUT)
+export(ReallocateHhold)
 import(data.table)
