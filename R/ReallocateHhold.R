@@ -1,5 +1,16 @@
 #' Reallocate Household Expenditure
 #'
+#' A function to reallocate, based on assumptions about how individuals
+#' redistribute spending, the expenditure saved as a result of a policy
+#' or exogenous changes in consumer preferences.
+#'
+#' @param expenditure change in consumption, measured in basic prices.
+#' @param saving_rate proportion of saved expenditure that will be saved rather than redistributed.
+#' @param vector character. The distribution of reallocation of spending to implement.
+#' Valid options are the column names of the \code{vectors_hhold} data.
+#' @param vector_data data table containing the redistribution vectors.
+#' @param mapping data table containing the mapping algorithm from COICOP to CPA.
+#'
 #'
 #' @export
 ReallocateHhold <- function(expenditure = -20,

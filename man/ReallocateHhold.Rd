@@ -12,6 +12,20 @@ ReallocateHhold(
   mapping = tobalciomodel::coicop_cpa_mapping
 )
 }
+\arguments{
+\item{expenditure}{change in consumption, measured in basic prices.}
+
+\item{saving_rate}{proportion of saved expenditure that will be saved rather than redistributed.}
+
+\item{vector}{character. The distribution of reallocation of spending to implement.
+Valid options are the column names of the \code{vectors_hhold} data.}
+
+\item{mapping}{data table containing the mapping algorithm from COICOP to CPA.}
+
+\item{vector_data}{data table containing the redistribution vectors.}
+}
 \description{
-Reallocate Household Expenditure
+A function to reallocate, based on assumptions about how individuals
+redistribute spending, the expenditure saved as a result of a policy
+or exogenous changes in consumer preferences.
 }
