@@ -1,58 +1,38 @@
-#' Alcohol duties as of September 2020.
+#' LFS Employment Data
 #'
-"data_alcohol_duty"
+#' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
+#' are collapsed into the 105 CPA categories used in the ONS Supply and Use Tables and for a given year, the average total
+#' employment across the four quarters is taken.
+#'
+#' Figures are available for total employment and total full-time equivalent (FTE)
+#' employment (employees categorised in the LFS as part-time are considered 0.5 FTE).
+#'
+#' The employment figures are constructed from the LFS micro-data obtained from the UK Data Service
+#' and processed using the `lfsclean` package v0.9.0.
+#'
+"lfs_empl_cpa"
 
-#' Alcohol Consumption Data for England and Wales 2000-2019.
+#' LFS Employment Data
 #'
-"data_mesas_englandwales"
+#' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
+#' are collapsed into the 106 industry categories used in the FAI alcohol-disaggregated input-output table. the average total
+#' employment across the four quarters is taken.
+#'
+#' Figures are available for total employment and total full-time equivalent (FTE)
+#' employment (employees categorised in the LFS as part-time are considered 0.5 FTE).
+#'
+#' The employment figures are constructed from the LFS micro-data obtained from the UK Data Service
+#' and processed using the `lfsclean` package v0.9.0.
+#'
+"lfs_empl_fai"
 
-#' Fraser of Allender Institute (FAI) Input-Output Table.
-#'
-"data_iotable_fai"
 
-#' Office for National Statistics (ONS) Input-Output Tables.
+#' ASHE Earnings Data
 #'
-"data_iotables_ons"
-
-
-#' Alcohol own-price elasticities.
+#' Average annual earnings published by the ONS from analysis of the Annual Survey of Hours and Earnings by 4-digit SIC-2007 industry.
+#' Data are collapsed into the 105 categories used in the ONS Supply and Use Tables using employment calculated from the Labour Force
+#' Survey by industry as weights to calculate average annual earnings by CPA category.
 #'
-#' Price elasticity of demand for 10 alcohol products, taken from Meng et al. (2014)
-#'
-"data_elasticities"
-
-#' LFS Employment Data for 106 Sectors.
-#'
-#' Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
-#' is then collapsed into the 106 sectors (including 3 alcohol disaggregated sectors) used in the FAI IO table.
-#' Employment for the disaggregated sectors is split from the parent sector proportionately by total sectoral
-#' output measured in 2010 in the IO table.
-#'
-#' For each year from 2010 to 2019, total employment and total employment measured in full-time equivalents (FTE)
-#' is available (individuals who report being part-time are considered 0.5 FTE)
-#'
-#' @format A data frame with 106 observations and 23 variables.
-"employment"
-
-#' Macroeconomic Data.
-#'
-#' Total employment generated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
-#' is then collapsed into the 106 sectors (including 3 alcohol disaggregated sectors) used in the FAI IO table.
-#' Employment for the disaggregated sectors is split from the parent sector proportionately by total sectoral
-#' output measured in 2010 in the IO table.
-#'
-#' For each year from 2010 to 2019, total employment and total employment measured in full-time equivalents (FTE)
-#' is available (individuals who report being part-time are considered 0.5 FTE)
-#'
-#' @format A data frame with 10 observations and 5 variables.
-#' \describe{
-#'     \item{year}{}
-#'     \item{cpih_index}{inflation index (base year 2010)}
-#'     \item{gdp}{nominal Gross Domestic Product (£millions)}
-#'     \item{gva}{nominal Gross Value Added (£millions)}
-#'     \item{emp}{aggregate employment (full-time equivalents)}
-#'     \item{gdp_real}{Real Gross Domestic Product in 2010 prices (£millions)}
-#'     \item{gva_real}{Real Gross Value Added in 2010 prices (£millions)}
-#' }
-"macro"
-
+#' Figures are taken for the most recent year for which data is available. As of 05/05/2021 this is the 2020 provisional estimates. The data
+#' are obtained \href{https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/industry4digitsic2007ashetable16}{here}.
+"ashe_earn_cpa"

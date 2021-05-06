@@ -4,19 +4,19 @@ Title: Modelling Economic Impacts of Tobacco/Alcohol Policy
 Version: 0.5.0
 Author: Damon Morris
 Maintainer: Damon Morris <d.j.morris@sheffield.ac.uk>
-Description: Input-Output modelling is used to estimate the wider economic
+Description: Functions to estimate the wider economic
     impacts of policies designed to limit the consumption of alcohol and tobacco
     products. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    R (>= 2.10),
-    data.table
+    R (>= 2.10)
 RoxygenNote: 7.1.1
 Imports:
     dplyr,
-    data.table
+    data.table,
+    readxl
 Suggests: 
     knitr,
     rmarkdown

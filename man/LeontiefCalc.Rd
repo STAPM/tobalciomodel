@@ -2,16 +2,15 @@
 % Please edit documentation in R/LeontiefCalc.R
 \name{LeontiefCalc}
 \alias{LeontiefCalc}
-\title{Produce Sectoral Output Multipliers}
+\title{Calculate L Matrices and Multipliers}
 \usage{
-LeontiefCalc(FAI = TRUE, select_year = 2010)
+LeontiefCalc(list)
 }
 \arguments{
-\item{FAI}{logical. TRUE if using the Fraser of Allender Institute IO table (the default). Select FALSE to use one of the ONS tables.}
-
-\item{select_year}{year of data to use if using the ONS tables.}
+\item{list}{List. The output of the ReadSUT() function containing the IO table, supply table, and
+technical coefficients.}
 }
 \description{
-Calculate the Leontief inverse Type I and Type II matrices from the package data and calculate
-the sector by sector multipliers for output, GVA, and employment.
+Take the processed Input-Output and Supply and Use Tables and derive the Leontief inverse matrix and
+multipliers required for the economic impact analysis.
 }
