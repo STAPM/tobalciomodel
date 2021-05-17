@@ -7,7 +7,8 @@
 #' @param expenditure change in consumption, measured in basic prices.
 #' @param saving_rate proportion of saved expenditure that will be saved rather than redistributed.
 #' @param vector character. The distribution of reallocation of spending to implement.
-#' Valid options are the column names of the \code{vectors_hhold} data.
+#' Valid options are the column names of the \code{vectors_hhold} data. The default is to allocate spending
+#' pro-rata according to the 2018 distribution of consumer spending with alcohol and tobacco excluded.
 #' @param vector_data data table containing the redistribution vectors.
 #' @param mapping data table containing the mapping algorithm from COICOP to CPA.
 #'

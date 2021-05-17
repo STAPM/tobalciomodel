@@ -18,7 +18,8 @@ ReallocateHhold(
 \item{saving_rate}{proportion of saved expenditure that will be saved rather than redistributed.}
 
 \item{vector}{character. The distribution of reallocation of spending to implement.
-Valid options are the column names of the \code{vectors_hhold} data.}
+Valid options are the column names of the \code{vectors_hhold} data. The default is to allocate spending
+pro-rata according to the 2018 distribution of consumer spending with alcohol and tobacco excluded.}
 
 \item{mapping}{data table containing the mapping algorithm from COICOP to CPA.}
 
