@@ -14,6 +14,25 @@
 #' @export
 #'
 #' @examples
+#'
+#' \dontrun{
+#'
+#' ## construct a final demand vector for a fall in household spending in basic
+#' ## prices of £20m and an increase in government spending of £10m.
+#'
+#' ## Assume households and governments distribute spending pro-rata as per
+#' ## household final consumption expenditure and central government spending
+#' ## distributions measured in 2018.
+#'
+#' ## Households assumed to save 10% of freed-up spending.
+#'
+#' finaldemand <- tobalciomodel::PrepFinalDemand(hhold_exp = -20,
+#' govt_exp = 10,
+#' hhold_saving = 0.1,
+#' hhold_vector = "hhfce_noalctob",
+#' govt_vector = "central")
+#'
+#' }
 PrepFinalDemand <- function(hhold_exp,
                             govt_exp,
                             hhold_saving = 0.1,
