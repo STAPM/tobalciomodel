@@ -3,7 +3,7 @@
 \docType{data}
 \name{vectors_hhold}
 \alias{vectors_hhold}
-\title{Redistribution Vectors}
+\title{Household Redistribution Vectors}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 36 rows and 8 columns.
 }

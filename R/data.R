@@ -45,7 +45,7 @@
 #'
 "lfs_empl_fai"
 
-#' Redistribution Vectors
+#' Household Redistribution Vectors
 #'
 #' A dataset of vectors which can be used to distribute expenditure of households
 #' across 36 COICOP categories of consumer spending. These include pro-rata distributions
@@ -54,3 +54,12 @@
 #'
 "vectors_hhold"
 
+#' Government Redistribution Vectors
+#'
+#' A dataset of vectors which can be used to distribute government spending across the 105
+#' CPA categories. These include pro-rata distributions for central government spending, local
+#' government spending, and total public sector spending. Other vectors allow allocation of all
+#' spending to public admin, defence, and compulsory social security; education services; health services;
+#' caring and social work; cultural services including libraries, museums, archives.
+#'
+"vectors_govt"
