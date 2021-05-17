@@ -21,7 +21,7 @@ employment.
 }
 \examples{
 
-\dontrun {
+\dontrun{
 
 ### construct the final demand vector
 
