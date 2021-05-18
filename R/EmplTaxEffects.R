@@ -84,14 +84,23 @@ EmplTaxEffects <- function(effects,
 
   earn[, total_tax := employee_nic + employer_nic + income_tax]
 
-  ## multiply tax per employee by the employment effects
+  ## multiply tax and net earnings per employee by the employment effects
 
-  earn[, emp_tax_effects_t0 := total_tax*emp_effects_t0]
-  earn[, emp_tax_effects_t1 := total_tax*emp_effects_t1]
+  earn[, emp_tax_effects_t0 := total_tax*emp_effects_t0/1000000]
+  earn[, emp_tax_effects_t1 := total_tax*emp_effects_t1/1000000]
 
+  earn[, emp_earnings_effects_t0 := (avg_salary - income_tax - employee_nic)*emp_effects_t0/1000000]
+  earn[, emp_earnings_effects_t1 := (avg_salary - income_tax - employee_nic)*emp_effects_t1/1000000]
+
+
+  table <- matrix(c(sum(earn[,"emp_tax_effects_t0"]),sum(earn[,"emp_tax_effects_t1"]),
+                        earn[,"emp_earnings_effects_t0"],sum(earn[,"emp_earnings_effects_t1"])),
+                  ncol = 2,
+                  dimnames = list(c("Type 0 - Direct","Type 1 - Direct + Indirect"),
+                                  c("Employment Taxes (£m)","Net Earnings (£m)"))
+  )
 
   return(list(earn_tax_data = earn,
-              total_tax_t0 = sum(earn[,"emp_tax_effects_t0"]),
-              total_tax_t1 = sum(earn[,"emp_tax_effects_t1"])))
+              earn_tax_effect = table))
 
 }
