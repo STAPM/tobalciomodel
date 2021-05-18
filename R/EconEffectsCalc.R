@@ -54,11 +54,11 @@ EconEffectsCalc <- function(leontief,
   ## coefficients and will give the change in the respective quantity in
   ## the given industry.
 
-  emp_effects_t0 <- as.vector(as.matrix(output_effects_t0*mults$multipliers[,"emp.type0"]))
-  gva_effects_t0 <- as.vector(as.matrix(output_effects_t0*mults$multipliers[,"gva.type0"]))
+  emp_effects_t0 <- as.vector(as.matrix(output_effects_t0*leontief$multipliers[,"emp.type0"]))
+  gva_effects_t0 <- as.vector(as.matrix(output_effects_t0*leontief$multipliers[,"gva.type0"]))
 
-  emp_effects_t1 <- as.vector(as.matrix(output_effects_t1*mults$multipliers[,"emp.type0"]))
-  gva_effects_t1 <- as.vector(as.matrix(output_effects_t1*mults$multipliers[,"gva.type0"]))
+  emp_effects_t1 <- as.vector(as.matrix(output_effects_t1*leontief$multipliers[,"emp.type0"]))
+  gva_effects_t1 <- as.vector(as.matrix(output_effects_t1*leontief$multipliers[,"gva.type0"]))
 
 
   ## construct data table of outputs
