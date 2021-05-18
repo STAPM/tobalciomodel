@@ -40,7 +40,7 @@ EconEffectsCalc <- function(leontief,
                             final_demand_vec) {
 
 L0 <- diag(nrow(L1))
-L1 <- mults$leontief1
+L1 <- leontief$leontief1
 f  <- as.vector(as.matrix(final_demand_vec[,"final_demand"]))
 
 ## output effects: Ch O = L * Ch f
