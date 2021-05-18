@@ -94,13 +94,12 @@ EmplTaxEffects <- function(effects,
 
 
   table <- matrix(c(sum(earn[,"emp_tax_effects_t0"]),sum(earn[,"emp_tax_effects_t1"]),
-                        earn[,"emp_earnings_effects_t0"],sum(earn[,"emp_earnings_effects_t1"])),
+                    sum(earn[,"emp_earnings_effects_t0"]),sum(earn[,"emp_earnings_effects_t1"])),
                   ncol = 2,
                   dimnames = list(c("Type 0 - Direct","Type 1 - Direct + Indirect"),
                                   c("Employment Taxes (£m)","Net Earnings (£m)"))
   )
 
-  return(list(earn_tax_data = earn,
-              earn_tax_effect = table))
+  return(table)
 
 }
