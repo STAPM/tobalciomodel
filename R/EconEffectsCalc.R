@@ -63,7 +63,7 @@ EconEffectsCalc <- function(leontief,
 
   ## construct data table of outputs
 
-  effects <- cbind(finaldemand[,c("CPA_code","Product")],
+  effects <- cbind(final_demand_vec[,c("CPA_code","Product")],
                    output_effects_t0,output_effects_t1,
                    gva_effects_t0,gva_effects_t1,
                    emp_effects_t0,emp_effects_t1)
