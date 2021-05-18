@@ -1,7 +1,7 @@
 Package: tobalciomodel
 Type: Package
 Title: Modelling Economic Impacts of Tobacco/Alcohol Policy
-Version: 0.5.0.9004
+Version: 0.5.0.9005
 Author: Damon Morris
 Maintainer: Damon Morris <d.j.morris@sheffield.ac.uk>
 Description: Functions to estimate the wider economic
