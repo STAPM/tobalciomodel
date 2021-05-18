@@ -98,8 +98,10 @@ EmplTaxEffects <- function(effects,
                     round( sum(earn[,"emp_earnings_effects_t0"]) ,3),
                     round( sum(earn[,"emp_earnings_effects_t1"]) ,3)),
                   ncol = 2,
-                  dimnames = list(c("Type 0 - Direct","Type 1 - Direct + Indirect"),
-                                  c("Employment Taxes (£m)","Net Earnings (£m)"))
+                  dimnames = list(c("Type 0 - Direct",
+                                    "Type 1 - Direct + Indirect"),
+                                  c("Employment Taxes (£m)",
+                                    "Net Earnings (£m)"))
   )
 
   return(table)
