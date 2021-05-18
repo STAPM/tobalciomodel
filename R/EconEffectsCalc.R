@@ -39,36 +39,41 @@
 EconEffectsCalc <- function(leontief,
                             final_demand_vec) {
 
-L0 <- diag(nrow(L1))
-L1 <- leontief$leontief1
-f  <- as.vector(as.matrix(final_demand_vec[,"final_demand"]))
+  ## get leontief matrices and final demand vector
 
-## output effects: Ch O = L * Ch f
+  L1 <- leontief$leontief1
+  L0 <- diag(nrow(L1))
+  f  <- as.vector(as.matrix(final_demand_vec[,"final_demand"]))
 
-output_effects_t0 <- as.vector(as.matrix(L0 %*% f))
-output_effects_t1 <- as.vector(as.matrix(L1 %*% f))
+  ## output effects: Ch O = L * Ch f
 
-## use the type 0 multipliers - these are equivalent to the
-## coefficients and will give the change in the respective quantity in
-## the given industry.
+  output_effects_t0 <- as.vector(as.matrix(L0 %*% f))
+  output_effects_t1 <- as.vector(as.matrix(L1 %*% f))
 
-emp_effects_t0 <- as.vector(as.matrix(output_effects_t0*mults$multipliers[,"emp.type0"]))
-gva_effects_t0 <- as.vector(as.matrix(output_effects_t0*mults$multipliers[,"gva.type0"]))
+  ## use the type 0 multipliers - these are equivalent to the
+  ## coefficients and will give the change in the respective quantity in
+  ## the given industry.
 
-emp_effects_t1 <- as.vector(as.matrix(output_effects_t1*mults$multipliers[,"emp.type0"]))
-gva_effects_t1 <- as.vector(as.matrix(output_effects_t1*mults$multipliers[,"gva.type0"]))
+  emp_effects_t0 <- as.vector(as.matrix(output_effects_t0*mults$multipliers[,"emp.type0"]))
+  gva_effects_t0 <- as.vector(as.matrix(output_effects_t0*mults$multipliers[,"gva.type0"]))
 
-effects <- cbind(finaldemand[,c("CPA_code","Product")],
-                 output_effects_t0,output_effects_t1,
-                 gva_effects_t0,gva_effects_t1,
-                 emp_effects_t0,emp_effects_t1)
+  emp_effects_t1 <- as.vector(as.matrix(output_effects_t1*mults$multipliers[,"emp.type0"]))
+  gva_effects_t1 <- as.vector(as.matrix(output_effects_t1*mults$multipliers[,"gva.type0"]))
 
-setnames(effects,
-         names(effects),
-         c("CPA_code","Product",
-           "output_effects_t0","output_effects_t1",
-           "gva_effects_t0","gva_effects_t1",
-           "emp_effects_t0","emp_effects_t1"))
 
-return(effects)
+  ## construct data table of outputs
+
+  effects <- cbind(finaldemand[,c("CPA_code","Product")],
+                   output_effects_t0,output_effects_t1,
+                   gva_effects_t0,gva_effects_t1,
+                   emp_effects_t0,emp_effects_t1)
+
+  setnames(effects,
+           names(effects),
+           c("CPA_code","Product",
+            "output_effects_t0","output_effects_t1",
+             "gva_effects_t0","gva_effects_t1",
+             "emp_effects_t0","emp_effects_t1"))
+
+  return(effects)
 }
