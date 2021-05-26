@@ -52,10 +52,10 @@ LeontiefCalc <- function(list) {
   coe.type0 <- coef.coe
   gos.type0 <- coef.gos
 
-  gva.type1 <- as.vector(coef.gva %*% L1 / coef.gva)
-  coe.type1 <- as.vector(coef.coe %*% L1 / coef.coe)
-  gos.type1 <- as.vector(coef.gos %*% L1 / coef.gos)
-  tax.type1 <- as.vector(coef.tax %*% L1 / coef.tax)
+  gva.type1 <- as.vector(coef.gva %*% L1 )
+  coe.type1 <- as.vector(coef.coe %*% L1 )
+  gos.type1 <- as.vector(coef.gos %*% L1 )
+  tax.type1 <- as.vector(coef.tax %*% L1 )
 
   ### EMPLOYMENT MULTIPLIERS
 
@@ -63,7 +63,7 @@ LeontiefCalc <- function(list) {
 
   emp.type0 <- coef.emp
 
-  emp.type1 <- as.vector(coef.emp %*% L1 / coef.emp)
+  emp.type1 <- as.vector(coef.emp %*% L1)
 
 
 
