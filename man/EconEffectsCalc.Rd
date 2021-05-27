@@ -4,12 +4,18 @@
 \alias{EconEffectsCalc}
 \title{Calculate Economic Impacts}
 \usage{
-EconEffectsCalc(leontief, final_demand_vec)
+EconEffectsCalc(
+  leontief,
+  final_demand_vec,
+  earnings_data = tobalciomodel::ashe_earn_cpa
+)
 }
 \arguments{
 \item{leontief}{List. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.}
 
 \item{final_demand_vec}{Data table. The output of \code{PrepFinalDemand}.}
+
+\item{earnings_data}{Data table. earnings data by sector to match to employment.}
 }
 \value{
 A data table of economic impacts by sector
