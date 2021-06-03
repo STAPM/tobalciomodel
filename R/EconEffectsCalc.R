@@ -123,13 +123,13 @@ EconEffectsCalc <- function(leontief,
   earn <- merge.data.table(effects, earnings_data,
                            by = c("CPA_code","Product"))
 
-  ## tax parameters (correct as at 18/05/2021)
+  ### tax parameters (CORRECT AS AT 18/05/2021)
     # income tax
 
-  pa                <- 12570
-  basic_rate        <- 0.20
-  higher_threshold  <- 50270
-  higher_rate       <- 0.40
+  personal_allowance     <- 12570
+  basic_rate             <- 0.20
+  higher_rate_threshold  <- 50270
+  higher_rate            <- 0.40
 
     # employer NICs (weekly, so *52 to get annual)
 
@@ -144,13 +144,26 @@ EconEffectsCalc <- function(leontief,
   employee_nic_rate1 <- 0.12
   employee_nic_rate2 <- 0.02
 
+    # combine into a data table to be exported
+
+  tax_values <- c(personal_allowance, basic_rate, higher_rate_threshold, higher_rate,
+                  employer_nic_threshold, employer_nic_rate,
+                  employee_nic_threshold1, employee_nic_rate1,
+                  employee_nic_threshold2, employee_nic_rate2)
+
+  tax_vars   <- c("personal_allowance", "basic_rate", "higher_rate_threshold", "higher_rate",
+                  "employer_nic_threshold", "employer_nic_rate",
+                  "employee_nic_threshold1", "employee_nic_rate1",
+                  "employee_nic_threshold2", "employee_nic_rate2")
+
+  tax_params <- data.table(tax_vars, tax_values)
 
   ##########################
   ##### Tax Calculator #####
 
   ## calculate income tax paid per worker by sector based on average wage.
-  earn[,taxable_higher_rate := max(0,avg_salary - higher_threshold), by="CPA_code"]
-  earn[,taxable_basic_rate  := max(0,avg_salary - pa) - taxable_higher_rate, by="CPA_code"]
+  earn[,taxable_higher_rate := max(0,avg_salary - higher_rate_threshold), by="CPA_code"]
+  earn[,taxable_basic_rate  := max(0,avg_salary - personal_allowance) - taxable_higher_rate, by="CPA_code"]
 
   earn[, income_tax := basic_rate*taxable_basic_rate +
          higher_rate*taxable_higher_rate]
@@ -185,5 +198,7 @@ EconEffectsCalc <- function(leontief,
   earn[, netearn_effects_t0_p := (avg_salary - income_tax - employee_nic)*emp_effects_t0_p/1000000]
   earn[, netearn_effects_t1_p := (avg_salary - income_tax - employee_nic)*emp_effects_t1_p/1000000]
 
-    return(earn)
+    return(list(effects = earn,
+                tax_params = tax_params))
+
 }
