@@ -9,6 +9,8 @@
 #' @param hhold_saving Numeric. Assumed household savings rate.
 #' @param hhold_vector Character. How household spending is redistributed.
 #' @param govt_vector Character. How government spending is redistributed.
+#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+#'            ONS ones. Defaults to FALSE.
 #'
 #' @return
 #' @export
@@ -45,22 +47,33 @@ PrepFinalDemand <- function(hhold_exp,
                                                        saving_rate = hhold_saving,
                                                        vector = hhold_vector,
                                                        vectors_data = tobalciomodel::vectors_hhold,
-                                                       mapping = tobalciomodel::coicop_cpa_mapping)
+                                                       mapping = tobalciomodel::coicop_cpa_mapping,
+                                                       FAI = FAI)
 
   ### Distribute changes in government spending
   final_demand_govt  <- tobalciomodel::ReallocateGovt(expenditure = govt_exp,
                                                       vector = govt_vector,
-                                                      vectors_data = tobalciomodel::vectors_govt)
+                                                      vectors_data = tobalciomodel::vectors_govt,
+                                                      FAI = FAI)
 
 
   ### Merge and sum up the household and government vectors to get the
   ### overall change in final demand vector.
 
+  if (FAI == FALSE) {
   final_demand <- merge.data.table(final_demand_hhold,
                                    final_demand_govt,
                                    by = c("CPA_code","Product"))
 
+  } else if (FAI == TRUE) {
+    final_demand <- merge.data.table(final_demand_hhold,
+                                     final_demand_govt,
+                                     by = c("IOC","Sector"))
+
+  }
+
   final_demand[, final_demand := hhold_exp + govt_exp]
+
 
   return(final_demand)
 }

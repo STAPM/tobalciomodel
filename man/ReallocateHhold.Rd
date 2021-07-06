@@ -5,11 +5,12 @@
 \title{Reallocate Household Expenditure}
 \usage{
 ReallocateHhold(
-  expenditure = -20,
+  expenditure = c(-20, 10, 30),
   saving_rate = 0.1,
   vector = "hhfce_noalctob",
   vectors_data = tobalciomodel::vectors_hhold,
-  mapping = tobalciomodel::coicop_cpa_mapping
+  mapping = tobalciomodel::coicop_cpa_mapping,
+  FAI = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ Valid options are the column names of the \code{vectors_hhold} data. The default
 pro-rata according to the 2018 distribution of consumer spending with alcohol and tobacco excluded.}
 
 \item{mapping}{data table containing the mapping algorithm from COICOP to CPA.}
+
+\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+ONS ones. Defaults to FALSE.}
 
 \item{vector_data}{data table containing the redistribution vectors.}
 }

@@ -52,6 +52,13 @@
 #'
 "iotable_fai"
 
+#' Mapping Products and Sectors
+#'
+#' Allows mapping between product CPA categories and sector IOC categories by linking both classifications
+#' to the standard industrial classification (SIC) 2007.
+#'
+"sic_cpa_fai_mapping"
+
 #' Household Redistribution Vectors
 #'
 #' A dataset of vectors which can be used to distribute expenditure of households

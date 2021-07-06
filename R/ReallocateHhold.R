@@ -11,19 +11,22 @@
 #' pro-rata according to the 2018 distribution of consumer spending with alcohol and tobacco excluded.
 #' @param vector_data data table containing the redistribution vectors.
 #' @param mapping data table containing the mapping algorithm from COICOP to CPA.
+#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+#'            ONS ones. Defaults to FALSE.
 #'
 #'
 #' @export
-ReallocateHhold <- function(expenditure = -20,
+ReallocateHhold <- function(expenditure = c(-20,10,30),
                             saving_rate = 0.1,
                             vector = "hhfce_noalctob",
                             vectors_data = tobalciomodel::vectors_hhold,
-                            mapping = tobalciomodel::coicop_cpa_mapping
+                            mapping = tobalciomodel::coicop_cpa_mapping,
+                            FAI = FALSE
                 ) {
 
  # calculate the amount of expenditure that will be reallocated
 
- exp <- -1*(1 - saving_rate)*expenditure
+ exp <- -1*(1 - saving_rate)*sum(expenditure)
 
  # select the chosen reallocation vector
 
@@ -97,9 +100,38 @@ ReallocateHhold <- function(expenditure = -20,
  x <- x[,c("CPA_code","Product.y","total_exp")]
  setnames(x,c("Product.y","total_exp"),c("Product","hhold_exp"))
 
+ if (FAI == FALSE) {
+
  ## add in the initial change to expenditure on tobacco and alcohol
- x[Product == "Alcoholic beverages  & Tobacco products",
-   hhold_exp := hhold_exp + expenditure]
+ x[Product == "Alcoholic beverages  & Tobacco products", hhold_exp := hhold_exp + sum(expenditure)]
+
+ } else if (FAI == TRUE) {
+
+ ## extract the CPA/IOC lookup table and merge, collapsing by FAI categories
+ merge_data <- unique(tobalciomodel::sic_cpa_fai_mapping[,c("CPA_code","Product","IOC","Sector")])
+
+ map_to_FAI <- merge(x, merge_data, by = c("CPA_code","Product"))
+
+ FAI_data <- map_to_FAI[, .(hhold_exp = sum(hhold_exp)), by = c("IOC","Sector")]
+
+ ## merge to the names of the FAI IO table to get the 3 disaggregated alcohol sectors
+
+ sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
+ setDT(sectors)
+ setnames(sectors, names(sectors), "Sector")
+
+ FAI_data <- merge(sectors, FAI_data, by = "Sector", all = TRUE, sort = FALSE)
+
+ ## fill in the three alcohol categories and manufacture of tobacco with the initial changes
+ ## to expenditure - splitting on-trade equally between accommodation/ food and beverage services
+
+ FAI_data[61, hhold_exp := expenditure[1]]
+ FAI_data[c(69,71), hhold_exp := 0.5*expenditure[2]]
+ FAI_data[18, hhold_exp := expenditure[3]]
+
+ x <- copy(FAI_data)
+
+ }
 
 return(x)
 }

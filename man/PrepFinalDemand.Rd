@@ -22,6 +22,9 @@ PrepFinalDemand(
 \item{hhold_vector}{Character. How household spending is redistributed.}
 
 \item{govt_vector}{Character. How government spending is redistributed.}
+
+\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+ONS ones. Defaults to FALSE.}
 }
 \value{
 

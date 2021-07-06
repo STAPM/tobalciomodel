@@ -7,7 +7,8 @@
 ReallocateGovt(
   expenditure = 10,
   vector = "central",
-  vectors_data = tobalciomodel::vectors_govt
+  vectors_data = tobalciomodel::vectors_govt,
+  FAI = FALSE
 )
 }
 \arguments{
@@ -16,6 +17,9 @@ ReallocateGovt(
 \item{vector}{character. The distribution of reallocation of spending to implement.
 Valid options are the column names of the \code{vectors_hhold} data. The default is to
 allocate spending pro-rata according to the 2018 distribution of central government spending.}
+
+\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+ONS ones. Defaults to FALSE.}
 
 \item{vector_data}{data table containing the redistribution vectors.}
 }
