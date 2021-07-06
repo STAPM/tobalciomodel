@@ -2,13 +2,13 @@
 library(readxl)
 library(data.table)
 
-#path  <- "data-raw/"
-#file  <- "2010_UK_Alcohol_consumption_disaggregated_IxI.xlsx"
-#sheet <- "Sheet1"
-
 path  <- "data-raw/"
-file  <- "tobalciomodel.xlsx"
-sheet <- "Input Output Table"
+file  <- "2010_UK_Alcohol_consumption_disaggregated_IxI.xlsx"
+sheet <- "Sheet1"
+
+#path  <- "data-raw/"
+#file  <- "tobalciomodel.xlsx"
+#sheet <- "Input Output Table"
 
 ### Read in the sector names
 sector <- read_excel(path = paste0(path,file),
@@ -93,12 +93,12 @@ gva.total <- as.vector(as.matrix(gva.total))
 
 name <- as.vector(as.matrix(sector))
 
-data_iotable_fai <- data.frame(name,flowtable,hhold.demand,govt.demand,final.demand,hhold.output,total.output,total.demand,
+iotable_fai <- data.frame(name,flowtable,hhold.demand,govt.demand,final.demand,hhold.output,total.output,total.demand,
                                gva.taxes,gva.wages,gva.gos,gva.total)
 
-setnames(data_iotable_fai, old = names(data_iotable_fai), new = c("name",paste0("sec",c(1:106)),
+setnames(iotable_fai, old = names(iotable_fai), new = c("name",paste0("sec",c(1:106)),
                                                                   "hhold.demand","govt.demand","final.demand",
                                                                   "hhold.output","total.output","total.demand",
                                                                   "gva.taxes","gva.wages","gva.gos","gva.total"))
 
-usethis::use_data(data_iotable_fai,overwrite=TRUE)
+usethis::use_data(iotable_fai,overwrite=TRUE)

@@ -6,17 +6,21 @@
 #' function is designed to use can be found
 #' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
 #'
-#' @param path Character. File path for the directory containing the SUTs excel workbook.
+#' @param path Character. File path for the directory containing the ONS SUTs excel workbook.
 #' @param year Integer. Select the year (from 1997 to 2018) of data to use in the analysis.
 #' @param fte Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE
 #'            use total employees.
+#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+#'            ONS ones. Defaults to FALSE.
 #'
 #'
 #' @export
 ReadSUT <- function(path,
                     year = 2018,
-                    fte = TRUE) {
+                    fte = TRUE,
+                    FAI = FALSE) {
 
+if (FAI == FALSE) {
   y <- copy(year)
 
 ### Read Supply Table (used to convert basic prices to purchaser prices) ######
@@ -93,4 +97,46 @@ gva <- matrix(c(supply$Product,
 return(list(supply = supply,
             iotable = iotable,
             coefs = gva))
+
+} else if (FAI == TRUE) {
+
+  ### No supply table
+
+  ### io table
+
+  iotable <- as.matrix(tobalciomodel::iotable_fai[,2:107])
+
+  ### coefficients
+
+  gva.total <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"gva.total"]))
+  gva.taxes <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"gva.taxes"]))
+  gva.gos   <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"gva.gos"]))
+  gva.wages <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"gva.wages"]))
+  total.output <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"total.output"]))
+
+  if (fte == TRUE) {
+    employment <- tobalciomodel::lfs_empl_fai[year == y, "tot_fte"]
+  } else {
+    employment <- tobalciomodel::lfs_empl_fai[year == y, "tot_emp"]
+  }
+  employment <- as.vector(as.matrix(employment))
+
+  gva <- matrix(c(tobalciomodel::iotable_fai$name,
+                  total.output,
+                  employment,
+                  employment/total.output,
+                  gva.total/total.output,
+                  gva.taxes/total.output,
+                  gva.gos/total.output,
+                  gva.wages/total.output),
+                nrow = 106,
+                byrow = FALSE,
+                dimnames = list(NULL,
+                                c("Sector","output","employment","empl_coef","gva_coef","tax_coef","gos_coef","coe_coef")))
+
+  return(list(iotable = iotable,
+              coefs = gva))
+
+}
+
 }

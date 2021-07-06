@@ -45,6 +45,13 @@
 #'
 "lfs_empl_fai"
 
+#' Input-Output Table
+#'
+#' Input-output flow-table as well as demand and output vectors from the alcohol-disaggregated
+#' input-output table constructed by Fraser of Allender Institute (FAI).
+#'
+"iotable_fai"
+
 #' Household Redistribution Vectors
 #'
 #' A dataset of vectors which can be used to distribute expenditure of households
