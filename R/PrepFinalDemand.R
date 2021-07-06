@@ -39,7 +39,8 @@ PrepFinalDemand <- function(hhold_exp,
                             govt_exp,
                             hhold_saving = 0.1,
                             hhold_vector = "hhfce_noalctob",
-                            govt_vector = "central") {
+                            govt_vector = "central",
+                            FAI = FALSE) {
 
   ### Distribute changes in household spending
 
