@@ -1,3 +1,8 @@
-inst/doc
 .Rproj.user
 .Rhistory
+.RData
+.Ruserdata
+*/*.dta
+.DS_Store
+**/.DS_Store
+inst/doc
