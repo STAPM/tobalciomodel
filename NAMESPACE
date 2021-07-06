@@ -3,6 +3,7 @@
 export(EconEffectsCalc)
 export(LeontiefCalc)
 export(PrepFinalDemand)
+export(ReadInputs)
 export(ReadSUT)
 export(ReallocateGovt)
 export(ReallocateHhold)
