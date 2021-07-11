@@ -5,12 +5,9 @@
 #' alcohol and off-trade alcohol measured in basic prices and also the net change
 #' in government revenue.
 #'
-#' @param inputs Data table. Output from the `stapmr` package function `EconCalc()`
+#' @param data Data table. Output from the `stapmr` package function `EconCalc()`
 #' @param policy_effect_year Numeric. Year for which economic impacts are to be modelled.
-#' @param quantity Logical. If TRUE calculate the effects of a non-price induced change in quantity consumed.
-#' Changes are calculated relative to the control arm of the simulation. Defaults to FALSE.
-#' @param quantity_prop Numeric vector of length 3. The proportionate exogenous change in consumption to model for
-#' off-trade alcohol, on-trade alcohol, and tobacco respectively.
+#' @param n_years Numeric. Number of years starting with the policy effect year for which to extract treatment effects.
 #'
 #' @return
 #' @export
@@ -30,51 +27,44 @@
 #' iomodel_inputs <- ReadInputs(econ_calcs)
 #'
 #' }
-ReadInputs <- function(inputs,
+ReadInputs <- function(data,
                        policy_effect_year,
-                       quantity = FALSE,
-                       quantity_prop = c(-0.1,-0.1,-0.1)) {
+                       n_years = 1) {
 
-  ## restrict to the policy effect year
+  ## restrict to the selected years
 
-  inputs <- inputs[year == policy_effect_year,]
+  max_year <- policy_effect_year + n_years - 1
 
-  inputs <- inputs[,c("arm","product","year","basic_price_mean","price_mean","cons_tot","tot_tr_annual")]
+  data <- data[year %in% policy_effect_year:max_year,]
+
+  data <- data[,c("arm","product","year","mean_basic_price","mean_price","tot_cons_annual","tot_tr_annual")]
 
   ## reshape wide
 
-  wide <- dcast(inputs,
-                product + year ~ arm,
-                value.var = c("basic_price_mean","price_mean","cons_tot","tot_tr_annual"))
+  wide <- dcast(data,
+                year + product ~ arm,
+                value.var = c("tot_cons_annual","mean_basic_price","mean_price","tot_tr_annual"))
 
   ### Calculate the changes in consumer demand at basic prices and net change in govt revenue
 
-  if (quantity == FALSE) {
+    wide[, demand_change := mean_basic_price_control*(tot_cons_annual_treatment - tot_cons_annual_control)]
 
-  wide[, demand_change := basic_price_mean_control*(cons_tot_treatment - cons_tot_control)]
+    final_demand_vec <- as.data.table(wide[,c("year","product","demand_change")])
+    final_demand_vec <- dcast(final_demand_vec, year ~ product, value.var = "demand_change")
 
-  final_demand_vec <- as.matrix(wide[,c("product","demand_change")])
+    ## government revenues and total expenditure
 
-  wide[, net_tax_gain := tot_tr_annual_treatment - tot_tr_annual_control]
+    wide[, net_tax_gain := tot_tr_annual_treatment - tot_tr_annual_control]
+    govt_revenue <- wide[, .(govt_revenue = sum(net_tax_gain)), by = "year"]
 
-  govt_revenue <- sum(wide[,"net_tax_gain"])
+    wide[, tot_exp_change := (mean_price_treatment*tot_cons_annual_treatment) - (mean_basic_price_control*tot_cons_annual_control)]
+    tot_exp <- wide[, .(tot_exp_change = sum(tot_exp_change)), by = "year"]
 
-  } else if (quantity == TRUE) {
+    ## merge together
 
-  wide[product == "alc_off", prop := quantity_prop[1]]
-  wide[product == "alc_on", prop := quantity_prop[2]]
-  wide[product == "tob_all", prop := quantity_prop[3]]
-
-  wide[, demand_change := basic_price_mean_control*( (cons_tot_control*(1+prop) ) - cons_tot_control)]
-
-  final_demand_vec <- as.matrix(wide[,c("product","demand_change")])
-
-  wide[, net_tax_gain := (tot_tr_annual_control*(1+prop)) - tot_tr_annual_control]
+    merge <- merge(final_demand_vec, merge(govt_revenue, tot_exp, by = "year"), by = "year")
 
 
-  }
-
-return(list(final_demand_vec = final_demand_vec,
-            govt_revenue = govt_revenue))
+return(merge)
 
 }

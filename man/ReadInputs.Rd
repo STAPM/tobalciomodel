@@ -4,23 +4,14 @@
 \alias{ReadInputs}
 \title{Read IO Model Inputs from STAPM Output}
 \usage{
-ReadInputs(
-  inputs,
-  policy_effect_year,
-  quantity = FALSE,
-  quantity_prop = c(-0.1, -0.1, -0.1)
-)
+ReadInputs(data, policy_effect_year, n_years = 1)
 }
 \arguments{
-\item{inputs}{Data table. Output from the `stapmr` package function `EconCalc()`}
+\item{data}{Data table. Output from the `stapmr` package function `EconCalc()`}
 
 \item{policy_effect_year}{Numeric. Year for which economic impacts are to be modelled.}
 
-\item{quantity}{Logical. If TRUE calculate the effects of a non-price induced change in quantity consumed.
-Changes are calculated relative to the control arm of the simulation. Defaults to FALSE.}
-
-\item{quantity_prop}{Numeric vector of length 3. The proportionate exogenous change in consumption to model for
-off-trade alcohol, on-trade alcohol, and tobacco respectively.}
+\item{n_years}{Numeric. Number of years starting with the policy effect year for which to extract treatment effects.}
 }
 \value{
 
