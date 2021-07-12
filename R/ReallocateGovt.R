@@ -72,7 +72,7 @@ ReallocateGovt <- function(expenditure = 10,
   FAI_data[c(69,71), govt_exp := 0]
   FAI_data[18, govt_exp := 0]
 
-  govt_exp <- copy(FAI_data)
+  govt_exp <- merge(sectors, FAI_data, by = "Sector", sort = FALSE)
 
   }
 

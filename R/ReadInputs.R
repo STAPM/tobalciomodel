@@ -57,12 +57,16 @@ ReadInputs <- function(data,
     wide[, net_tax_gain := tot_tr_annual_treatment - tot_tr_annual_control]
     govt_revenue <- wide[, .(govt_revenue = sum(net_tax_gain)), by = "year"]
 
-    wide[, tot_exp_change := (mean_price_treatment*tot_cons_annual_treatment) - (mean_basic_price_control*tot_cons_annual_control)]
+    wide[, tot_exp_change := (mean_basic_price_control*tot_cons_annual_treatment) - (mean_basic_price_control*tot_cons_annual_control)]
     tot_exp <- wide[, .(tot_exp_change = sum(tot_exp_change)), by = "year"]
 
     ## merge together
 
-    merge <- merge(final_demand_vec, merge(govt_revenue, tot_exp, by = "year"), by = "year")
+    merge <- merge(final_demand_vec, merge(tot_exp, govt_revenue, by = "year"), by = "year")
+
+    setnames(merge,
+             names(merge),
+             c("year","exp_alc_off_bp","exp_alc_on_bp","exp_tob_bp","exp_total_bp","net_govt_revenue"))
 
 
 return(merge)

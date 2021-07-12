@@ -4,7 +4,8 @@
 #' redistribute spending, the expenditure saved as a result of a policy
 #' or exogenous changes in consumer preferences.
 #'
-#' @param expenditure change in consumption, measured in basic prices.
+#' @param expenditure Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
+#' on-trade alcohol, and tobacco.
 #' @param saving_rate proportion of saved expenditure that will be saved rather than redistributed.
 #' @param vector character. The distribution of reallocation of spending to implement.
 #' Valid options are the column names of the \code{vectors_hhold} data. The default is to allocate spending
@@ -129,7 +130,9 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
  FAI_data[c(69,71), hhold_exp := 0.5*expenditure[2]]
  FAI_data[18, hhold_exp := expenditure[3]]
 
- x <- copy(FAI_data)
+ ## merge again to order sector names properly
+
+ x <- merge(sectors, FAI_data, by = "Sector", sort = FALSE)
 
  }
 

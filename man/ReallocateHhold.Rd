@@ -14,7 +14,8 @@ ReallocateHhold(
 )
 }
 \arguments{
-\item{expenditure}{change in consumption, measured in basic prices.}
+\item{expenditure}{Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
+on-trade alcohol, and tobacco.}
 
 \item{saving_rate}{proportion of saved expenditure that will be saved rather than redistributed.}
 

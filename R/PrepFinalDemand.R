@@ -4,7 +4,8 @@
 #' about the distributions of spending and the household saving rate, and produce
 #' the resulting vector of changes in final demand to model.
 #'
-#' @param hhold_exp Numeric. Change in household consumption measured in basic prices.
+#' @param hhold_exp Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
+#' on-trade alcohol, and tobacco.
 #' @param govt_exp Numeric. Change in government spending.
 #' @param hhold_saving Numeric. Assumed household savings rate.
 #' @param hhold_vector Character. How household spending is redistributed.
@@ -70,6 +71,13 @@ PrepFinalDemand <- function(hhold_exp,
     final_demand <- merge.data.table(final_demand_hhold,
                                      final_demand_govt,
                                      by = c("IOC","Sector"))
+
+    sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
+    setDT(sectors)
+    setnames(sectors, names(sectors), "Sector")
+
+    final_demand <- merge(sectors, final_demand, by = "Sector", sort = FALSE)
+
 
   }
 

@@ -14,7 +14,8 @@ PrepFinalDemand(
 )
 }
 \arguments{
-\item{hhold_exp}{Numeric. Change in household consumption measured in basic prices.}
+\item{hhold_exp}{Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
+on-trade alcohol, and tobacco.}
 
 \item{govt_exp}{Numeric. Change in government spending.}
 
