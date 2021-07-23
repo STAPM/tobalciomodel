@@ -6,7 +6,7 @@
 #' function is designed to use can be found
 #' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
 #'
-#' @param path Character. File path for the directory containing the ONS SUTs excel workbook.
+#' @param path Character. File path to the folder containing the ONS SUTs excel workbook.
 #' @param year Integer. Select the year (from 1997 to 2018) of data to use in the analysis.
 #' @param fte Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE
 #'            use total employees.
@@ -20,8 +20,10 @@ ReadSUT <- function(path,
                     fte = TRUE,
                     FAI = FALSE) {
 
-if (FAI == FALSE) {
   y <- copy(year)
+
+
+if (FAI == FALSE) {
 
 ### Read Supply Table (used to convert basic prices to purchaser prices) ######
 

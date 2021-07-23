@@ -7,7 +7,7 @@
 ReadSUT(path, year = 2018, fte = TRUE, FAI = FALSE)
 }
 \arguments{
-\item{path}{Character. File path for the directory containing the ONS SUTs excel workbook.}
+\item{path}{Character. File path to the folder containing the ONS SUTs excel workbook.}
 
 \item{year}{Integer. Select the year (from 1997 to 2018) of data to use in the analysis.}
 
