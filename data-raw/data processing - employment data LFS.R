@@ -9,8 +9,8 @@ library(magrittr)
 
 ## construct 4-digit employment by industry-year from the Labour Force Survey
 
-root <- "C:/"
-file <- "Users/cm1djm/Documents/Datasets/Labour Force Survey/raw data/"
+root <- "D:/"
+file <- "Work Documents/Datasets/Labour Force Survey/raw data/"
 
 vars <- c("year","quarter","pwt","age","gender","lmstatus","full_time","sic2007_4dig")
 
