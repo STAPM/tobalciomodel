@@ -120,7 +120,7 @@ EconEffectsCalc <- function(leontief,
 
   ## construct data table of outputs
 
-  effects <- cbind(final_demand_vec[,c("CPA_code","Product")],
+  effects <- cbind(fdemand[,-c("hhold_exp","govt_exp","final_demand")],
                      out_effects_t0_m,out_effects_t1_m,
                      gva_effects_t0_m,gva_effects_t1_m,
                      emp_effects_t0_m,emp_effects_t1_m,
@@ -131,8 +131,13 @@ EconEffectsCalc <- function(leontief,
   ##############################################################################
   ### Use calculated employment effects to estimate effects on income taxes ####
 
+  if (FAI == TRUE) {
+  earn <- merge.data.table(effects, earnings_data,
+                           by = c("IOC","Sector"))
+  } else if (FAI == FALSE) {
   earn <- merge.data.table(effects, earnings_data,
                            by = c("CPA_code","Product"))
+  }
 
   ### tax parameters (CORRECT AS AT 18/05/2021)
     # income tax
@@ -172,9 +177,16 @@ EconEffectsCalc <- function(leontief,
   ##########################
   ##### Tax Calculator #####
 
+  # temp rename sector identifier so the calculator runs for either IO table setup
+  if (FAI == TRUE) {
+    setnames(earn, "IOC", "code")
+    } else if (FAI == FALSE) {
+    setnames(earn, "CPA_code", "code")
+  }
+
   ## calculate income tax paid per worker by sector based on average wage.
-  earn[,taxable_higher_rate := max(0,avg_salary - higher_rate_threshold), by="CPA_code"]
-  earn[,taxable_basic_rate  := max(0,avg_salary - personal_allowance) - taxable_higher_rate, by="CPA_code"]
+  earn[,taxable_higher_rate := max(0,avg_salary - higher_rate_threshold), by="code"]
+  earn[,taxable_basic_rate  := max(0,avg_salary - personal_allowance) - taxable_higher_rate, by="code"]
 
   earn[, income_tax := basic_rate*taxable_basic_rate +
          higher_rate*taxable_higher_rate]
@@ -183,14 +195,14 @@ EconEffectsCalc <- function(leontief,
 
   ## calculate employer national insurance contributions
 
-  earn[, employer_nic_elig := max(0,avg_salary - employer_nic_threshold), by="CPA_code"]
+  earn[, employer_nic_elig := max(0,avg_salary - employer_nic_threshold), by="code"]
   earn[, employer_nic := employer_nic_rate*employer_nic_elig]
 
   earn[, c("employer_nic_elig") := NULL]
 
   ## calculate employee national insurance contributions
-  earn[,empl_nic_elig2 := max(0,avg_salary - employee_nic_threshold2), by="CPA_code"]
-  earn[,empl_nic_elig1 := max(0,avg_salary - employee_nic_threshold1) - empl_nic_elig2, by="CPA_code"]
+  earn[,empl_nic_elig2 := max(0,avg_salary - employee_nic_threshold2), by="code"]
+  earn[,empl_nic_elig1 := max(0,avg_salary - employee_nic_threshold1) - empl_nic_elig2, by="code"]
 
   earn[, employee_nic := employee_nic_rate1*empl_nic_elig1 +
          employee_nic_rate2*empl_nic_elig2]
@@ -208,6 +220,12 @@ EconEffectsCalc <- function(leontief,
 
   earn[, netearn_effects_t0_p := (avg_salary - income_tax - employee_nic)*emp_effects_t0_p/1000000]
   earn[, netearn_effects_t1_p := (avg_salary - income_tax - employee_nic)*emp_effects_t1_p/1000000]
+
+  if (FAI == TRUE) {
+    setnames(earn, "code", "IOC")
+  } else if (FAI == FALSE) {
+    setnames(earn, "code", "CPA_code")
+  }
 
     return(list(effects = earn,
                 tax_params = tax_params))

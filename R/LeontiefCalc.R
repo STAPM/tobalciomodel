@@ -72,7 +72,7 @@ LeontiefCalc <- function(list) {
   ## output multiplier method i.e. summing up the columns of L1 is equivalent to multiplying L1
   ## by a vector of 1s - such a vector would be the output coefficients i.e. output/output = 1)
 
-  multipliers <- cbind(supply,
+  multipliers <- data.table(supply,
                        output.type0,output.type1,
                        emp.type0,emp.type1,
                        gva.type0,gva.type1,
