@@ -4,18 +4,15 @@
 \alias{EconEffectsCalc}
 \title{Calculate Economic Impacts}
 \usage{
-EconEffectsCalc(
-  leontief,
-  final_demand_vec,
-  earnings_data = tobalciomodel::ashe_earn_cpa
-)
+EconEffectsCalc(leontief, fdemand, FAI = FALSE)
 }
 \arguments{
-\item{leontief}{List. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.}
+\item{leontief}{List object. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.}
 
-\item{final_demand_vec}{Data table. The output of \code{PrepFinalDemand}.}
+\item{fdemand}{Data table. The output of \code{PrepFinalDemand}.}
 
-\item{earnings_data}{Data table. earnings data by sector to match to employment.}
+\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+ONS ones. Defaults to FALSE.}
 }
 \value{
 A data table of economic impacts by sector

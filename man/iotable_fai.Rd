@@ -5,7 +5,7 @@
 \alias{iotable_fai}
 \title{Input-Output Table}
 \format{
-An object of class \code{data.frame} with 106 rows and 117 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 106 rows and 118 columns.
 }
 \usage{
 iotable_fai

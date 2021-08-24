@@ -4,11 +4,14 @@
 \alias{LeontiefCalc}
 \title{Calculate L Matrices and Multipliers}
 \usage{
-LeontiefCalc(list)
+LeontiefCalc(list, FAI = TRUE)
 }
 \arguments{
 \item{list}{List. The output of the ReadSUT() function containing the IO table, supply table, and
 technical coefficients.}
+
+\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+ONS ones. Defaults to FALSE.}
 }
 \description{
 Take the processed Input-Output and Supply and Use Tables and derive the Leontief inverse matrix and
