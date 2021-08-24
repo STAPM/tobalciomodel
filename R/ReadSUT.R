@@ -106,7 +106,7 @@ return(list(supply = supply,
 
   ### io table
 
-  iotable <- as.matrix(tobalciomodel::iotable_fai[,2:107])
+  iotable <- as.matrix(tobalciomodel::iotable_fai[,3:108])
 
   ### coefficients
 
@@ -123,7 +123,8 @@ return(list(supply = supply,
   }
   employment <- as.vector(as.matrix(employment))
 
-  gva <- matrix(c(tobalciomodel::iotable_fai$name,
+  gva <- matrix(c(tobalciomodel::iotable_fai$IOC,
+                  tobalciomodel::iotable_fai$Sector,
                   total.output,
                   employment,
                   employment/total.output,
@@ -134,7 +135,7 @@ return(list(supply = supply,
                 nrow = 106,
                 byrow = FALSE,
                 dimnames = list(NULL,
-                                c("Sector","output","employment","empl_coef","gva_coef","tax_coef","gos_coef","coe_coef")))
+                                c("IOC","Sector","output","employment","empl_coef","gva_coef","tax_coef","gos_coef","coe_coef")))
 
   return(list(iotable = iotable,
               coefs = gva))
