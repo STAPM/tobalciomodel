@@ -44,10 +44,10 @@ EconEffectsCalc <- function(leontief,
 
   ## vector of annual earnings by sector based on choice of IO tables
 
-  if (FAI = TRUE) {
-    earnings_data = tobalciomodel::ashe_earn_fai
-  } else if (FAI = FALSE) {
-    earnings_data = tobalciomodel::ashe_earn_cpa
+  if (FAI == TRUE) {
+    earnings_data <- tobalciomodel::ashe_earn_fai
+  } else if (FAI == FALSE) {
+    earnings_data <- tobalciomodel::ashe_earn_cpa
   }
 
   ## extract multipliers and final demand vectors from inputs
