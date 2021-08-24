@@ -5,14 +5,22 @@
 #'
 #' @param list List. The output of the ReadSUT() function containing the IO table, supply table, and
 #' technical coefficients.
+#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+#'            ONS ones. Defaults to FALSE.
 #'
 #' @export
-LeontiefCalc <- function(list) {
+LeontiefCalc <- function(list,
+                         FAI = TRUE) {
 
   ## extract objects from list
   iotable <- list$iotable
   coefs   <- list$coefs
   supply  <- list$supply
+
+  if (FAI == TRUE) {
+    supply <- tobalciomodel::iotable_fai[,c("IOC","Sector")]
+    setnames
+  }
 
   total.output <- as.numeric(coefs[,"output"])
 
@@ -73,11 +81,11 @@ LeontiefCalc <- function(list) {
   ## by a vector of 1s - such a vector would be the output coefficients i.e. output/output = 1)
 
   multipliers <- data.table(supply,
-                       output.type0,output.type1,
-                       emp.type0,emp.type1,
-                       gva.type0,gva.type1,
-                       coe.type0,coe.type1,
-                       gos.type0,gos.type1)
+                            output.type0,output.type1,
+                            emp.type0,emp.type1,
+                            gva.type0,gva.type1,
+                            coe.type0,coe.type1,
+                            gos.type0,gos.type1)
 
   return(list(multipliers = multipliers,
               leontief1 = L1))
