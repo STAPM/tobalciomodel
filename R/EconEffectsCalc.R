@@ -4,9 +4,10 @@
 #' model the impact of changes in demand on output, gross value added, and
 #' employment.
 #'
-#' @param leontief List. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.
-#' @param final_demand_vec Data table. The output of \code{PrepFinalDemand}.
-#' @param earnings_data Data table. earnings data by sector to match to employment.
+#' @param leontief List object. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.
+#' @param fdemand Data table. The output of \code{PrepFinalDemand}.
+#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+#'            ONS ones. Defaults to FALSE.
 #'
 #' @return A data table of economic impacts by sector
 #' @export
@@ -38,13 +39,23 @@
 #'
 #' }
 EconEffectsCalc <- function(leontief,
-                            final_demand_vec,
-                            earnings_data = tobalciomodel::ashe_earn_cpa) {
+                            fdemand,
+                            FAI = FALSE) {
+
+  ## vector of annual earnings by sector based on choice of IO tables
+
+  if (FAI = TRUE) {
+    earnings_data = tobalciomodel::ashe_earn_fai
+  } else if (FAI = FALSE) {
+    earnings_data = tobalciomodel::ashe_earn_cpa
+  }
+
+  ## extract multipliers and final demand vectors from inputs
 
   multipliers <- leontief$multipliers
   L1 <- leontief$leontief1
   L0 <- diag(nrow(L1))
-  f  <- as.vector(as.matrix(final_demand_vec[,"final_demand"]))
+  f  <- as.vector(as.matrix(fdemand[,"final_demand"]))
 
   ### -------Output effects------- ###
 
