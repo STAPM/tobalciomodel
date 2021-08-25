@@ -72,11 +72,11 @@ PrepFinalDemand <- function(hhold_exp,
                                      final_demand_govt,
                                      by = c("IOC","Sector"))
 
-    sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
-    setDT(sectors)
-    setnames(sectors, names(sectors), "Sector")
+    #sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
+    #setDT(sectors)
+   # setnames(sectors, names(sectors), "Sector")
 
-    final_demand <- merge(sectors, final_demand, by = "Sector", sort = FALSE)
+    #final_demand <- merge(sectors, final_demand, by = "Sector", sort = FALSE)
 
 
   }

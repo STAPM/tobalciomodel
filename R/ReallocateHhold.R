@@ -117,7 +117,7 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
 
  ## merge to the names of the FAI IO table to get the 3 disaggregated alcohol sectors
 
- sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
+ sectors <- as.data.frame(tobalciomodel::iotable_fai[,"Sector"])
  setDT(sectors)
  setnames(sectors, names(sectors), "Sector")
 
