@@ -59,11 +59,10 @@ ReallocateGovt <- function(expenditure = 10,
 
     ## merge to the names of the FAI IO table to get the 3 disaggregated alcohol sectors
 
-  sectors <- as.data.frame(tobalciomodel::iotable_fai[,"Sector"])
+  sectors <- as.data.frame(tobalciomodel::iotable_fai[,c("IOC","Sector")])
   setDT(sectors)
-  setnames(sectors, names(sectors), "Sector")
 
-  FAI_data <- merge(sectors, FAI_data, by = "Sector", all = TRUE, sort = FALSE)
+  FAI_data <- merge(sectors, FAI_data, by = c("IOC", "Sector"), all = TRUE, sort = FALSE)
 
   ## fill in the three alcohol categories and manufacture of tobacco with the initial changes
   ## to expenditure (these are always 0 for govt spending)
@@ -71,8 +70,6 @@ ReallocateGovt <- function(expenditure = 10,
   FAI_data[61, govt_exp := 0]
   FAI_data[c(69,71), govt_exp := 0]
   FAI_data[18, govt_exp := 0]
-
-  govt_exp <- merge(sectors, FAI_data, by = "Sector", sort = FALSE)
 
   }
 
