@@ -71,6 +71,7 @@ ReallocateGovt <- function(expenditure = 10,
   FAI_data[c(69,71), govt_exp := 0]
   FAI_data[18, govt_exp := 0]
 
+  govt_exp <- copy(FAI_data)
   }
 
   return(govt_exp)

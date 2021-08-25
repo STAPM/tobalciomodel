@@ -108,31 +108,30 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
 
  } else if (FAI == TRUE) {
 
- ## extract the CPA/IOC lookup table and merge, collapsing by FAI categories
- merge_data <- unique(tobalciomodel::sic_cpa_fai_mapping[,c("CPA_code","Product","IOC","Sector")])
+    ## extract the CPA/IOC lookup table and merge, collapsing by FAI categories
+    merge_data <- unique(tobalciomodel::sic_cpa_fai_mapping[,c("CPA_code","Product","IOC","Sector")])
 
- map_to_FAI <- merge(x, merge_data, by = c("CPA_code","Product"))
+    map_to_FAI <- merge(govt_exp, merge_data, by = c("CPA_code","Product"))
 
- FAI_data <- map_to_FAI[, .(hhold_exp = sum(hhold_exp)), by = c("IOC","Sector")]
+    FAI_data <- map_to_FAI[, .(govt_exp = sum(govt_exp)), by = c("IOC","Sector")]
 
  ## merge to the names of the FAI IO table to get the 3 disaggregated alcohol sectors
 
- sectors <- as.data.frame(tobalciomodel::iotable_fai[,"Sector"])
- setDT(sectors)
- setnames(sectors, names(sectors), "Sector")
+    sectors <- as.data.frame(tobalciomodel::iotable_fai[,c("IOC","Sector")])
+    setDT(sectors)
 
- FAI_data <- merge(sectors, FAI_data, by = "Sector", all = TRUE, sort = FALSE)
+    FAI_data <- merge(sectors, FAI_data, by = c("IOC", "Sector"), all = TRUE, sort = FALSE)
 
  ## fill in the three alcohol categories and manufacture of tobacco with the initial changes
  ## to expenditure - splitting on-trade equally between accommodation/ food and beverage services
 
- FAI_data[61, hhold_exp := expenditure[1]]
- FAI_data[c(69,71), hhold_exp := 0.5*expenditure[2]]
- FAI_data[18, hhold_exp := expenditure[3]]
+    FAI_data[61, hhold_exp := expenditure[1]]
+    FAI_data[c(69,71), hhold_exp := 0.5*expenditure[2]]
+    FAI_data[18, hhold_exp := expenditure[3]]
 
  ## merge again to order sector names properly
 
- x <- merge(sectors, FAI_data, by = "Sector", sort = FALSE)
+ x <- copy(FAI_data)
 
  }
 
