@@ -65,12 +65,12 @@ PrepFinalDemand <- function(hhold_exp,
   if (FAI == FALSE) {
   final_demand <- merge.data.table(final_demand_hhold,
                                    final_demand_govt,
-                                   by = c("CPA_code","Product"))
+                                   by = c("CPA_code","Product"), sort = FALSE)
 
   } else if (FAI == TRUE) {
     final_demand <- merge.data.table(final_demand_hhold,
                                      final_demand_govt,
-                                     by = c("IOC","Sector"))
+                                     by = c("IOC","Sector"), sort = FALSE)
 
     #sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
     #setDT(sectors)
