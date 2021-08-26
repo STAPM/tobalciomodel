@@ -101,6 +101,8 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
  x <- x[,c("CPA_code","Product.y","total_exp")]
  setnames(x,c("Product.y","total_exp"),c("Product","hhold_exp"))
 
+ hhold_exp <- copy(x)
+
  if (FAI == FALSE) {
 
  ## add in the initial change to expenditure on tobacco and alcohol
@@ -111,9 +113,9 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
     ## extract the CPA/IOC lookup table and merge, collapsing by FAI categories
     merge_data <- unique(tobalciomodel::sic_cpa_fai_mapping[,c("CPA_code","Product","IOC","Sector")])
 
-    map_to_FAI <- merge(govt_exp, merge_data, by = c("CPA_code","Product"))
+    map_to_FAI <- merge(hhold_exp, merge_data, by = c("CPA_code","Product"))
 
-    FAI_data <- map_to_FAI[, .(govt_exp = sum(govt_exp)), by = c("IOC","Sector")]
+    FAI_data <- map_to_FAI[, .(hhold_exp = sum(hhold_exp)), by = c("IOC","Sector")]
 
  ## merge to the names of the FAI IO table to get the 3 disaggregated alcohol sectors
 
@@ -131,9 +133,9 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
 
  ## merge again to order sector names properly
 
- x <- copy(FAI_data)
+    hhold_exp <- copy(FAI_data)
 
  }
 
-return(x)
+return(hhold_exp)
 }
