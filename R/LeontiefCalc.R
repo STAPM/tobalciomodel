@@ -10,7 +10,7 @@
 #'
 #' @export
 LeontiefCalc <- function(list,
-                         FAI = TRUE) {
+                         FAI = FALSE) {
 
   ## extract objects from list
   iotable <- list$iotable
