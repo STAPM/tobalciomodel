@@ -19,18 +19,14 @@ supply <- supply[,-c(4:7)]
 
 setnames(supply,
          names(supply),
-         c("code","Product","output_bp","imports","margins","taxes","output_pp"))
-
-supply[, tax_prop := round(taxes/output_pp,3)]
-supply[, scale_bp_to_pp := output_pp/output_bp]
-supply[, scale_pp_to_bp := output_bp/output_pp]
+         c("CPA_code","Product","output_bp","imports","margins","taxes","output_pp"))
 
 ### Read the Use table - product by product
 
 iotable <- read_excel(paste0(path,"/supply and use 1997-2018.xlsx"),
                       sheet = paste0("Table 2 - Int Con ",y),
-                      range = "B5:DC110")
-iotable <- as.matrix(iotable)
+                      range = "A5:DC110")
+#iotable <- as.matrix(iotable)
 
 ### GVA figures and employment by sector, create a table of technical coefficients
 ### (input as proportion of total output)
@@ -84,31 +80,25 @@ final.demand <- as.vector(as.matrix(read_excel(paste0(path,"/supply and use 1997
                                                range = "T6:T110",
                                                col_names = FALSE) ))
 
+gva <- data.table(supply$CPA_code, supply$Product,
+                  hhold.demand, govt.demand, final.demand,
+                  hhold.output, total.output, total.demand,
+                  gva.taxes, gva.wages, gva.gos, gva.total)
 
-gva <- matrix(c(supply$Product,
-                hhold.demand,
-                govt.demand,
-                final.demand,
-                hhold.output,
-                total.output,
-                total.demand,
-                gva.taxes,
-                gva.wages,
-                gva.gos,
-                gva.total),
-              nrow = 105,
-              byrow = FALSE,
-              dimnames = list(NULL,
-                              c("Product","hhold.demand","govt.demand","final.demand","hhold.output",
-                                "total.output","total.demand","gva.taxes","gva.wages","gva.gos","gva.total")))
+setnames(gva, names(gva), c("CPA_code","Product","hhold.demand","govt.demand","final.demand","hhold.output",
+                            "total.output","total.demand","gva.taxes","gva.wages","gva.gos","gva.total"))
+
 
 
 supply <- data.table(supply)
+
 iotable <- data.table(iotable)
+setnames(iotable, "...1", "CPA_code")
+
 gva <- data.table(gva)
 
-data <- merge(iotable, gva, by = "Product")
-data <- merge(data, supply, by = "Product")
+data <- merge(iotable, gva, by = c("CPA_code", "Product"), sort = FALSE)
+data <- merge(data, supply, by = c("CPA_code", "Product"), sort = FALSE)
 
 ### index year and combine years
 

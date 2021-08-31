@@ -4,11 +4,9 @@
 \alias{ReadSUT}
 \title{Read in Supply and Use Tables}
 \usage{
-ReadSUT(path, year = 2018, fte = TRUE, FAI = FALSE)
+ReadSUT(year = 2018, fte = TRUE, FAI = FALSE)
 }
 \arguments{
-\item{path}{Character. File path to the folder containing the ONS SUTs excel workbook.}
-
 \item{year}{Integer. Select the year (from 1997 to 2018) of data to use in the analysis.}
 
 \item{fte}{Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE

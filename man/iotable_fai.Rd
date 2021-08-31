@@ -6,20 +6,12 @@
 \title{Input-Output Table}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 106 rows and 118 columns.
-
-An object of class \code{data.table} (inherits from \code{data.frame}) with 106 rows and 118 columns.
 }
 \usage{
-iotable_fai
-
 iotable_fai
 }
 \description{
 Input-output flow-table as well as demand and output vectors from the alcohol-disaggregated
 input-output table constructed by Fraser of Allender Institute (FAI).
-
-Input-output flow-table as well as demand and output vectors derived from the ONS supply and use tables
-1997 - 2018. In addition to the same variables obtained from the FAI input-output table, additional information
-is available on purchaser prices, tax as a proportion of the purchaser price, and industry profit margins.
 }
 \keyword{datasets}

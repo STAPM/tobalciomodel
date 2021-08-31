@@ -69,7 +69,11 @@
 #' 1997 - 2018. In addition to the same variables obtained from the FAI input-output table, additional information
 #' is available on purchaser prices, tax as a proportion of the purchaser price, and industry profit margins.
 #'
-"iotable_fai"
+#' Supply and Use Tables are published by the Office for National Statistics. The raw data tables from which this
+#' dataset is derived can be found
+#' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
+#'
+"iotable_ons"
 
 #' Mapping Products and Sectors
 #'
