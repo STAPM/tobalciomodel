@@ -22,7 +22,7 @@ LeontiefCalc <- function(list,
     setnames
   }
 
-  total.output <- as.numeric(coefs[,"output"])
+  total.output <- as.vector(as.matrix(coefs[,"output"]))
 
   ## A matrix
 
@@ -50,10 +50,10 @@ LeontiefCalc <- function(list,
 
   ### GVA MULTIPLIERS
 
-  coef.gva <- as.numeric(coefs[,"gva_coef"])
-  coef.tax <- as.numeric(coefs[,"tax_coef"])
-  coef.coe <- as.numeric(coefs[,"coe_coef"])
-  coef.gos <- as.numeric(coefs[,"gos_coef"])
+  coef.gva <- as.vector(as.matrix(coefs[,"gva_coef"]))
+  coef.tax <- as.vector(as.matrix(coefs[,"tax_coef"]))
+  coef.coe <- as.vector(as.matrix(coefs[,"coe_coef"]))
+  coef.gos <- as.vector(as.matrix(coefs[,"gos_coef"]))
 
   gva.type0 <- coef.gva
   tax.type0 <- coef.tax
@@ -67,7 +67,7 @@ LeontiefCalc <- function(list,
 
   ### EMPLOYMENT MULTIPLIERS
 
-  coef.emp <- as.numeric(coefs[,"empl_coef"])
+  coef.emp <- as.vector(as.matrix(coefs[,"empl_coef"]))
 
   emp.type0 <- coef.emp
 

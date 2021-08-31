@@ -2,6 +2,7 @@
 
 export(EconEffectsCalc)
 export(LeontiefCalc)
+export(ModelExt)
 export(PrepFinalDemand)
 export(ReadInputs)
 export(ReadSUT)

@@ -133,10 +133,10 @@ EconEffectsCalc <- function(leontief,
 
   if (FAI == TRUE) {
   earn <- merge.data.table(effects, earnings_data,
-                           by = c("IOC","Sector"))
+                           by = c("IOC","Sector"), sort = FALSE)
   } else if (FAI == FALSE) {
   earn <- merge.data.table(effects, earnings_data,
-                           by = c("CPA_code","Product"))
+                           by = c("CPA_code","Product"), sort = FALSE)
   }
 
   ### tax parameters (CORRECT AS AT 18/05/2021)

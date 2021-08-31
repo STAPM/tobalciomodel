@@ -14,16 +14,16 @@ PrepFinalDemand(
 )
 }
 \arguments{
-\item{hhold_exp}{Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
+\item{hhold_exp}{Numeric vector of length 3. Change in household consumption measured in basic prices for off-trade alcohol,
 on-trade alcohol, and tobacco.}
 
 \item{govt_exp}{Numeric. Change in government spending.}
 
 \item{hhold_saving}{Numeric. Assumed household savings rate.}
 
-\item{hhold_vector}{Character. How household spending is redistributed.}
+\item{hhold_vector}{Character. Name of the vector which determines how household spending is redistributed.}
 
-\item{govt_vector}{Character. How government spending is redistributed.}
+\item{govt_vector}{Character. Name of the vector which determines how government spending is redistributed.}
 
 \item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 ONS ones. Defaults to FALSE.}

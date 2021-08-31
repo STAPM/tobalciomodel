@@ -87,7 +87,18 @@ merge_mapping[CPA_code == "CPA_B09", avg_salary := 55519]
 
 ashe_earn_cpa <- copy(merge_mapping)
 
-usethis::use_data(ashe_earn_cpa,overwrite = TRUE)
+## rename some categories
+merge_mapping[CPA_code == "CPA_B06 & B07", Product := "Crude Petroleum And Natural Gas & Metal Ores"]
+merge_mapping[CPA_code == "CPA_C235_6"   , Product := "Manufacture of cement, lime, plaster and articles of concrete, cement and plaster"]
+merge_mapping[CPA_code == "CPA_L68A"     , Product := "Imputed rents of owner-occupied dwellings"]
+merge_mapping[CPA_code == "CPA_L68BXL683", Product := "Real estate services, excluding on a fee or contract basis and excluding imputed rent"]
+merge_mapping[CPA_code == "CPA_L683"     , Product := "Real estate activities on a fee or contract basis"]
+
+
+
+
+
+usethis::use_data(ashe_earn_cpa, overwrite = TRUE)
 
 
 rm(list = ls())

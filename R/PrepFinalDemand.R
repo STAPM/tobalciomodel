@@ -4,12 +4,12 @@
 #' about the distributions of spending and the household saving rate, and produce
 #' the resulting vector of changes in final demand to model.
 #'
-#' @param hhold_exp Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
+#' @param hhold_exp Numeric vector of length 3. Change in household consumption measured in basic prices for off-trade alcohol,
 #' on-trade alcohol, and tobacco.
 #' @param govt_exp Numeric. Change in government spending.
 #' @param hhold_saving Numeric. Assumed household savings rate.
-#' @param hhold_vector Character. How household spending is redistributed.
-#' @param govt_vector Character. How government spending is redistributed.
+#' @param hhold_vector Character. Name of the vector which determines how household spending is redistributed.
+#' @param govt_vector Character. Name of the vector which determines how government spending is redistributed.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 #'            ONS ones. Defaults to FALSE.
 #'
