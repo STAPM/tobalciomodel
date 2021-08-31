@@ -63,6 +63,14 @@
 #'
 "iotable_fai"
 
+#' Input-Output Table
+#'
+#' Input-output flow-table as well as demand and output vectors derived from the ONS supply and use tables
+#' 1997 - 2018. In addition to the same variables obtained from the FAI input-output table, additional information
+#' is available on purchaser prices, tax as a proportion of the purchaser price, and industry profit margins.
+#'
+"iotable_fai"
+
 #' Mapping Products and Sectors
 #'
 #' Allows mapping between product CPA categories and sector IOC categories by linking both classifications

@@ -85,16 +85,16 @@ if (fte == TRUE) {
 
 gva <- matrix(c(supply$Product,
                 total.output,
-                employment,
-                employment/total.output,
                 gva.total/total.output,
                 gva.taxes/total.output,
                 gva.gos/total.output,
-                gva.wages/total.output),
+                gva.wages/total.output,
+                employment,
+                employment/total.output),
               nrow = 105,
               byrow = FALSE,
               dimnames = list(NULL,
-                              c("Product","output","employment","empl_coef","gva_coef","tax_coef","gos_coef","coe_coef")))
+                              c("Product","output","gva_coef","tax_coef","gos_coef","coe_coef","employment","empl_coef")))
 
 return(list(supply = supply,
             iotable = iotable,
@@ -126,16 +126,16 @@ return(list(supply = supply,
   gva <- matrix(c(tobalciomodel::iotable_fai$IOC,
                   tobalciomodel::iotable_fai$Sector,
                   total.output,
-                  employment,
-                  employment/total.output,
                   gva.total/total.output,
                   gva.taxes/total.output,
                   gva.gos/total.output,
-                  gva.wages/total.output),
+                  gva.wages/total.output,
+                  employment,
+                  employment/total.output),
                 nrow = 106,
                 byrow = FALSE,
                 dimnames = list(NULL,
-                                c("IOC","Sector","output","employment","empl_coef","gva_coef","tax_coef","gos_coef","coe_coef")))
+                                c("IOC","Sector","output","gva_coef","tax_coef","gos_coef","coe_coef","employment","empl_coef")))
 
   return(list(iotable = iotable,
               coefs = gva))
