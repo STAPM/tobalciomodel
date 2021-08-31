@@ -4,7 +4,7 @@
 \alias{LeontiefCalc}
 \title{Calculate L Matrices and Multipliers}
 \usage{
-LeontiefCalc(list, FAI = TRUE)
+LeontiefCalc(list, FAI = FALSE)
 }
 \arguments{
 \item{list}{List. The output of the ReadSUT() function containing the IO table, supply table, and
