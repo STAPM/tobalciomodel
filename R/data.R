@@ -4,7 +4,7 @@
 #' categories onto the 105 CPA categories which are used in the Supply and Use tables.
 #'
 #' The mapping is derived from Table 3 - Household Final Consumption Expenditure (HhFCE) -
-#' of the Supply and Use Tables for 2018.
+#' of the Supply and Use Tables for 2018. The data can be found \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
 "coicop_cpa_mapping"
 
 #' ASHE Earnings Data
