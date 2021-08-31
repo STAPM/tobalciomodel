@@ -45,6 +45,16 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
    v <- as.vector(as.matrix( vectors_data[,7] ))
  } else if (vector == "all_rec_services") {
    v <- as.vector(as.matrix( vectors_data[,8] ))
+ } else if (vector == "all_clothing") {
+     v <- as.vector(as.matrix( vectors_data[,9] ))
+ } else if (vector == "all_furniture") {
+     v <- as.vector(as.matrix( vectors_data[,10] ))
+ } else if (vector == "all_appliances") {
+     v <- as.vector(as.matrix( vectors_data[,11] ))
+ } else if (vector == "all_vehicles") {
+     v <- as.vector(as.matrix( vectors_data[,12] ))
+ } else if (vector == "all_books") {
+     v <- as.vector(as.matrix( vectors_data[,13] ))
  }
 
  # redistribute the expenditure along the vector

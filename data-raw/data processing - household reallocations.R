@@ -68,6 +68,12 @@ all_hotels       <- c(rep(0,34),1,0)
 all_rec_durables <- c(rep(0,28),1,rep(0,7))
 all_rec_services <- c(rep(0,30),1,rep(0,5))
 
+all_clothing     <- c(rep(0,5),1,rep(0,30))
+all_furniture    <- c(rep(0,12),1,rep(0,23))
+all_appliances   <- c(rep(0,14),1,rep(0,21))
+all_vehicles     <- c(rep(0,21),1,rep(0,14))
+all_books        <- c(rep(0,31),1,rep(0,4))
+
 #### combine vectors into one data table
 
 coicop <- names(hhfce[,-c(1:2)])
@@ -77,7 +83,8 @@ proportions <- data.table(coicop,
                           hhfce_noalc,
                           hhfce_notob,
                           hhfce_noalctob,
-                          all_hotels, all_rec_durables, all_rec_services)
+                          all_hotels, all_rec_durables, all_rec_services,
+                          all_clothing, all_furniture, all_appliances, all_vehicles, all_books)
 setDT(proportions)
 
 vectors_hhold <- copy(proportions)
