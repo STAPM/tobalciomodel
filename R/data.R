@@ -75,6 +75,24 @@
 #'
 "iotable_ons"
 
+#' MESAS England and Wales
+#'
+#' Data on alcohol consumption and prices published by MESAS - Monitoring and Evaluating Scotland's Alcohol Strategy - for
+#' England and Wales. Data are for 2016-2020.
+#'
+#' @source \href{https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/}{MESAS monitoring report 2021}.
+#'
+"mesas_eng_wales"
+
+#' MESAS Scotland
+#'
+#' Data on alcohol consumption and prices published by MESAS - Monitoring and Evaluating Scotland's Alcohol Strategy - for
+#' Scotland. Data are for 2016-2020.
+#'
+#' @source \href{https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/}{MESAS monitoring report 2021}.
+#'
+"mesas_scotland"
+
 #' Mapping Products and Sectors
 #'
 #' Allows mapping between product CPA categories and sector IOC categories by linking both classifications
