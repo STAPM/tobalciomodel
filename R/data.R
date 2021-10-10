@@ -100,6 +100,13 @@
 #'
 "sic_cpa_fai_mapping"
 
+#' Tobacco Data
+#'
+#' Data on tobacco consumption and prices obtained from ONS and other sources.
+#'
+#'
+"tobacco_data"
+
 #' Household Redistribution Vectors
 #'
 #' A dataset of vectors which can be used to distribute expenditure of households
