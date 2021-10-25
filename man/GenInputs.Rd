@@ -12,6 +12,7 @@ GenInputs(
   prop_alc_off = -0.1,
   prop_tob_fm = -0.1,
   prop_tob_ryo = -0.1,
+  govt = TRUE,
   yr = 2020
 )
 }
@@ -29,6 +30,8 @@ GenInputs(
 \item{prop_tob_fm}{Proportionate change in factory-made cigarettes expenditure.}
 
 \item{prop_tob_ryo}{Proportionate change in hand-rolled tobacco expenditure.}
+
+\item{govt}{Logical. If TRUE include changes in government revenue in the analysis.}
 
 \item{yr}{year of data to use.}
 }

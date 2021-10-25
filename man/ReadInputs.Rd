@@ -4,14 +4,17 @@
 \alias{ReadInputs}
 \title{Read IO Model Inputs from STAPM Output}
 \usage{
-ReadInputs(data, policy_effect_year, n_years = 1)
+ReadInputs(data, policy_effect_year, n_years = 1, govt = TRUE)
 }
 \arguments{
 \item{data}{Data table. Output from the `stapmr` package function `EconCalc()`}
 
 \item{policy_effect_year}{Numeric. Year for which economic impacts are to be modelled.}
 
-\item{n_years}{Numeric. Number of years starting with the policy effect year for which to extract treatment effects.}
+\item{n_years}{Numeric. Number of years starting with
+the policy effect year for which to extract treatment effects.}
+
+\item{govt}{Logical. If TRUE include changes in government revenue in the analysis.}
 }
 \value{
 

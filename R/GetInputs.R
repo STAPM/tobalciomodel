@@ -11,6 +11,7 @@
 #' @param prop_alc_off Proportionate change in alcohol expenditure.
 #' @param prop_tob_fm Proportionate change in factory-made cigarettes expenditure.
 #' @param prop_tob_ryo Proportionate change in hand-rolled tobacco expenditure.
+#' @param govt Logical. If TRUE include changes in government revenue in the analysis.
 #' @param yr year of data to use.
 #'
 #' @return
@@ -28,6 +29,7 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
                       prop_alc_off = -0.1,
                       prop_tob_fm = -0.1,
                       prop_tob_ryo = -0.1,
+                      govt = TRUE,
                       yr = 2020) {
 
   # restrict to year chosen
@@ -95,8 +97,13 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
 
   ##### Totals
 
-  net_govt_revenue <- tax_alc_off_bp + tax_alc_on_bp + tax_tob_bp
   exp_total_bp <- exp_alc_off_bp + exp_alc_on_bp + exp_tob_bp
+
+  if (isTRUE(govt)) {
+    net_govt_revenue <- tax_alc_off_bp + tax_alc_on_bp + tax_tob_bp
+  } else if (!isTRUE(govt)) {
+    net_govt_revenue <- 0
+  }
 
   ######## Combine outputs
 

@@ -7,7 +7,9 @@
 #'
 #' @param data Data table. Output from the `stapmr` package function `EconCalc()`
 #' @param policy_effect_year Numeric. Year for which economic impacts are to be modelled.
-#' @param n_years Numeric. Number of years starting with the policy effect year for which to extract treatment effects.
+#' @param n_years Numeric. Number of years starting with
+#' the policy effect year for which to extract treatment effects.
+#' @param govt Logical. If TRUE include changes in government revenue in the analysis.
 #'
 #' @return
 #' @export
@@ -29,7 +31,8 @@
 #' }
 ReadInputs <- function(data,
                        policy_effect_year,
-                       n_years = 1) {
+                       n_years = 1,
+                       govt = TRUE) {
 
   ## restrict to the selected years
 
@@ -63,6 +66,12 @@ ReadInputs <- function(data,
     ## merge together
 
     merge <- merge(final_demand_vec, merge(tot_exp, govt_revenue, by = "year"), by = "year")
+
+    ## adjust government revenue
+
+    if (!isTRUE(govt)) {
+      net_govt_revenue <- 0
+    }
 
     setnames(merge,
              names(merge),
