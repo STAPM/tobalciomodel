@@ -121,7 +121,7 @@ data <- data[, .(avg_salary = weighted.mean(salary, w = fte, na.rm=TRUE) ) ,
 
 
 
-fai_data <- tobalciomodel::lfs_empl_fai[year == 2010,c("IOC","Product")]
+fai_data <- tobalciomodel::lfs_empl_fai[year == 2010,c("IOC","Sector")]
 
 final_data <- merge(x = fai_data,
                     y = data[,c("IOC","avg_salary")],
@@ -142,7 +142,7 @@ final_data[71, avg_salary := sec3]
 
 ashe_earn_fai <- copy(final_data)
 
-setnames(ashe_earn_fai, "Product", "Sector")
+#setnames(ashe_earn_fai, "Product", "Sector")
 
 ### save out the dataset
 
