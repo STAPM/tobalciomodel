@@ -146,6 +146,22 @@ setnames(ashe_earn_fai, "Product", "Sector")
 
 ### save out the dataset
 
+#################### 3 NAs:
+
+# IOC = 09, Mining Support Service Activities
+# IOC = 12, Manufacture of Tobacco Products
+# IOC = 39, Remediation Activities And Other Waste Management Services
+
+##### Replace with (from ONS) :
+
+# CPA_B09, Mining support services = 55519.00
+# CPA_C11.01-6 & C12, Manufacture of Alcohol and Tobacco Products = 34890.40
+# CPA_E39, Remediation services and other waste management services = 37168.00
+
+ashe_earn_fai[IOC == "09", avg_salary := 55519.00]
+ashe_earn_fai[IOC == "12", avg_salary := 34890.40]
+ashe_earn_fai[IOC == "39", avg_salary := 37168.00]
+
 usethis::use_data(ashe_earn_fai, overwrite = TRUE)
 
 
