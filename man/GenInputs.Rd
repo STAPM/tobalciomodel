@@ -40,3 +40,9 @@ Function to use aggregate data on expenditures included in the package to estima
 changes in expenditure in basic prices following assumed percentage changes in
 consumption.
 }
+\examples{
+
+\dontrun{
+
+}
+}

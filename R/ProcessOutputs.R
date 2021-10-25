@@ -10,6 +10,10 @@
 #' @export
 #'
 #' @examples
+#'
+#' \dontrun{
+#'
+#' }
 ProcessOutputs <- function(data,
                            sort) {
 

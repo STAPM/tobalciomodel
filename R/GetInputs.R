@@ -17,6 +17,10 @@
 #' @export
 #'
 #' @examples
+#'
+#' \dontrun{
+#'
+#' }
 GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
                       alcohol_eng = tobalciomodel::mesas_eng_wales,
                       alcohol_scot = tobalciomodel::mesas_scotland,
