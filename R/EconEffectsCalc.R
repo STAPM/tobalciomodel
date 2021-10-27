@@ -57,7 +57,20 @@ EconEffectsCalc <- function(leontief,
   L0 <- diag(nrow(L1))
   f  <- as.vector(as.matrix(fdemand[,"final_demand"]))
 
+  #### Calculate economic effects here - using both the "p" and "m" methods
+  #### p -> "product" method - matrix multiplication.
+  #### m -> "multiplier" method - use the multipliers.
+
+  #### Both methods will yield the same aggregate economic effects, but the interpretation
+  #### of the calculations at the sector level have different interpretations:
+
+  #### "p method" - the economic impact of all changes in the economy ON the sector itself.
+  #### "m method" - the economic impact of changes in the sector ON THE ECONOMY AS A WHOLE.
+
+
+  ####################################
   ### -------Output effects------- ###
+  ####################################
 
   # P-method
 
@@ -69,7 +82,7 @@ EconEffectsCalc <- function(leontief,
   out_effects_t0_m <- f*multipliers$output.type0
   out_effects_t1_m <- f*multipliers$output.type1
 
-  # build in test to show M and P methods give the same answer
+  # test that M and P methods give the same answer
 
   testthat::expect_equal(sum(out_effects_t0_m),
                          sum(out_effects_t0_p))
@@ -77,7 +90,9 @@ EconEffectsCalc <- function(leontief,
   testthat::expect_equal(sum(out_effects_t1_m),
                          sum(out_effects_t1_p))
 
+  #################################
   ### -------GVA effects------- ###
+  #################################
 
   # P-method
 
@@ -97,7 +112,9 @@ EconEffectsCalc <- function(leontief,
   testthat::expect_equal(sum(gva_effects_t1_m),
                          sum(gva_effects_t1_p))
 
+  ########################################
   ### -------Employment effects------- ###
+  ########################################
 
   # P-method
 
@@ -130,6 +147,8 @@ EconEffectsCalc <- function(leontief,
 
   ##############################################################################
   ### Use calculated employment effects to estimate effects on income taxes ####
+
+  ### note earnings data is 2020
 
   if (FAI == TRUE) {
   earn <- merge.data.table(effects, earnings_data,

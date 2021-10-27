@@ -1,8 +1,8 @@
 ---
-title: "Input-Output Modelling of Tobacco and Alcohol Demand"
+title: "Input-Output Modelling using tobalciomodel"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Price to Consumption Modelling using pricepol}
+  %\VignetteIndexEntry{Input-Output Modelling using tobalciomodel}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -46,43 +46,47 @@ The workflows are listed below:
 
 The workflow for the input-output modelling to be described in this vignette is summarised in the figure below. 
 
-```{r flowdiag, echo = F, fig.cap = "Tax to Price to Consumption workflow."}
+```{r flowdiag, echo = F, fig.cap = "Input-output modelling workflow."}
 
 DiagrammeR::grViz("digraph {
 
 graph [layout = dot]
 
 # define the global styles of the nodes. We can override these in box if we wish
+
 node [shape = rectangle, style = filled, fillcolor = Linen]
 
-data1 [label = 'Synthetic Population', shape = folder, fillcolor = LemonChiffon]
-data2 [label = 'LCFS Price Distributions', shape = folder, fillcolor = LemonChiffon]
-data3 [label = 'Tax Policies', shape = folder, fillcolor = LemonChiffon]
-
-data4 [label = 'Passthrough \n Coefficients', shape = folder, fillcolor = LemonChiffon]
-data5 [label = 'Price Elasticities', shape = folder, fillcolor = LemonChiffon]
+a [label =  'STAPM']
 
 subgraph cluster_0 {
 
 graph[shape = rectangle, style = rounded, bgcolor = gold]
-label = 'PricePolModel functions'
+label = 'tobalciomodel functions and data'
 
-a [label =  'Map Price \n Distributions']
-b [label =  'Calculate \n Expected Price']
-c [label =  'Apply Passthrough']
-d [label =  'Apply Elasticities']
-e [label =  'Update Price Distributions']
+data1 [label = 'MESAS Report 2021', shape = folder, fillcolor = LemonChiffon]
+data2 [label = 'HMRC Tobacco Duties', shape = folder, fillcolor = LemonChiffon]
+data3 [label = 'Labour Force Survey', shape = folder, fillcolor = LemonChiffon]
+
+
+b [label =  'Read Inputs']
+c [label =  'Generate Inputs']
+d [label =  'Prepare \n Final Demand Vectors']
+e [label =  'Read in the \n Input-Output table']
+f [label =  'Calculate Multipliers & \n Leontief Inverse matrices']
+g [label =  'Calculate Economic Effects']
+h [label =  'Process Outputs']
 }
 
-out1 [label=   'New Price \n Distributions', shape = oval, fillcolor = cyan]
-out2 [label=   '% Change in \n Participation', shape = oval, fillcolor = cyan]
-out3 [label=   '% Change in \n Consumption', shape = oval, fillcolor = cyan]
+out1 [label=   'Direct and Indirect \n Economic Impacts', shape = oval, fillcolor = cyan]
+out2 [label=   'Sector Specific \n Economic Impacts', shape = oval, fillcolor = cyan]
 
 # edge definitions with the node IDs
-{data1 data2}  -> a -> b -> c -> d -> e -> {out1 out2 out3} 
-                  data3 -> b
-                  data4 -> c
-                  data5 -> d
+{b c} -> d -> e -> f -> g -> h -> {out1 out2} 
+                  a -> b
+                  data1 -> c
+                  data2 -> c
+                  data3 -> g
+                  
 }", width = 768, height = 500)
 
 ```
