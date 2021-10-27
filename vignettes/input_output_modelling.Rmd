@@ -110,21 +110,15 @@ This section describes and summarises the Scottish and English/Welsh alcohol con
 
 ### Tobacco Data
 
-### LFS Employment and Earnings Data
+### LFS Employment Data
 
-Employment data are not included with IO tables, so in order to model the impacts of policy on employment this information must be obtained externally and matched to the sectors IO table. 
-
-Employment data is obtained from the quarterly Labour Force Survey (LFS) and processed using the `lfsclean` version 0.6.2 package. Employment data coded according to SIC-2007 industries has been available since 2008. Annual employment figures by 4-digit industry to then map to the 106 industries used in the FAI input-output table. Employment is measured as total number of full-time equivalents (FTEs), with a part-time employee counted as 0.5 FTE. Employment can also be measured in hours, using the total hours usually worked per week.   
+Employment and earnings data are not included with IO tables, so in order to model the impacts of policy on employment this information must be obtained externally and matched to the sectors IO table. Employment data is obtained from the quarterly Labour Force Survey (LFS) and processed using the `lfsclean` version 0.6.2 package. Employment data coded according to SIC-2007 industries has been available since 2008. Annual employment figures by 4-digit industry to then map to the 106 industries used in the FAI input-output table. Employment is measured as total number of full-time equivalents (FTEs), with a part-time employee counted as 0.5 FTE. Employment can also be measured in hours, using the total hours usually worked per week.   
 
 Firstly, we total the number of employees (excluding self-employed) by 4-digit industry within each quarterly dataset, using the LFS person weights to aggregate to the employment count into an estimate for the whole population. To obtain annual figures, we then average employment in each industry across the four quarters. Employment in 2020 is currently based only on quarter 1 data. This produces a panel of 4-digit industry employment over the period 2010-2020.  
 
-### Matching Cleaned Employment Data to the FAI IO Table Sectors
+### ASHE Earnings Data
 
-An issue with the FAI table is that the industry codes do not align with the industry names in all cases. For example, IOC 94 is labelled as "Other Personal Service Activities" whereas SIC-2007 2-digit code 94 in fact relates to "Activities membership organisations" and "Other Personal Service Activities" is actually SIC-2007 division 96. We make the assumption that the data in the FAI table is correctly matched to industry titles, rather than the SIC codes, and accordingly match on the basis of titles rather than codes. 
-
-In this way we match the SIC-2007 4-digit industries onto the 103 industries in the IO table used by FAI. In order to allocate employment in the sectors which are disaggregated into alcohol and non-alcohol, we use the output data in the IO table and assume employment is split according to the same proportion as output. e.g. if output in Wholesale and Retail Trade is split 80/20 between the non-alcohol and alcohol sectors, this same split is applied to employment. 
-
-This produces employment figures for the 106 sectors in the FAI IO table and is found in the dataset `tobalciomodel::employment`, sorted in order of sector in the FAI tables and so can be easily matched to `tobalciomodel::iotable` on a one-to-one basis. Both headcount and FTE measures of employment are produced for each year 2010-2020 inclusive.
+We obtain annual earnings data from the statistical releases of the [Annual Survey of Hours and Earnings (ASHE) by the Office for National Statistics](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/industry4digitsic2007ashetable16). The ASHE is an annual panel dataset which is a representative sample of 1% of employees registered for PAYE and completed by employers on behalf of employees using payroll records. It therefore contains reliable data on earnings, and among the summary datasets released by ONS are estimates of average annual earnings by sector. We use the data from the 2020 release. 
 
 ## Methodology 
 
