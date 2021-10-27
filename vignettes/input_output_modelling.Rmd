@@ -1,0 +1,292 @@
+---
+title: "Input-Output Modelling of Tobacco and Alcohol Demand"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Price to Consumption Modelling using pricepol}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+suppressPackageStartupMessages(library(DiagrammeR))
+suppressPackageStartupMessages(library(here))
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(stapmr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(ggthemes))
+suppressPackageStartupMessages(library(pricepol))
+suppressPackageStartupMessages(library(readxl))
+suppressPackageStartupMessages(library(flextable))
+suppressPackageStartupMessages(library(magrittr))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(tobalciomodel))
+
+```
+
+## Introduction
+
+The purpose of this vignette is to describe how the `tobalciomodel` produces input-output analyses of the impact of changes in alcohol and tobacco consumption on the economy. The package can produce policy analysis by using the output of a price policy modelling simulation in the Sheffield Tobacco and Alcohol Policy Model (STAPM). Alternatively, using data stored in the package itself, simple "percentage change" scenarios can be modelled. 
+
+To illustrate the use of the `pricepol` functions for different tasks, we have created example workflows. You can use these examples to help understand how the code works. At the moment, these workflows are accessible only to the project team. To access them, you will need to be added to the SPECTRUM WP4 Gitlab organisation.  
+
+The workflows are listed below:  
+
+- [Input output modelling](https://gitlab.com/SPECTRUM_Sheffield/projects/input-output-modelling)
+
+The workflow for the input-output modelling to be described in this vignette is summarised in the figure below. 
+
+```{r flowdiag, echo = F, fig.cap = "Tax to Price to Consumption workflow."}
+
+DiagrammeR::grViz("digraph {
+
+graph [layout = dot]
+
+# define the global styles of the nodes. We can override these in box if we wish
+node [shape = rectangle, style = filled, fillcolor = Linen]
+
+data1 [label = 'Synthetic Population', shape = folder, fillcolor = LemonChiffon]
+data2 [label = 'LCFS Price Distributions', shape = folder, fillcolor = LemonChiffon]
+data3 [label = 'Tax Policies', shape = folder, fillcolor = LemonChiffon]
+
+data4 [label = 'Passthrough \n Coefficients', shape = folder, fillcolor = LemonChiffon]
+data5 [label = 'Price Elasticities', shape = folder, fillcolor = LemonChiffon]
+
+subgraph cluster_0 {
+
+graph[shape = rectangle, style = rounded, bgcolor = gold]
+label = 'PricePolModel functions'
+
+a [label =  'Map Price \n Distributions']
+b [label =  'Calculate \n Expected Price']
+c [label =  'Apply Passthrough']
+d [label =  'Apply Elasticities']
+e [label =  'Update Price Distributions']
+}
+
+out1 [label=   'New Price \n Distributions', shape = oval, fillcolor = cyan]
+out2 [label=   '% Change in \n Participation', shape = oval, fillcolor = cyan]
+out3 [label=   '% Change in \n Consumption', shape = oval, fillcolor = cyan]
+
+# edge definitions with the node IDs
+{data1 data2}  -> a -> b -> c -> d -> e -> {out1 out2 out3} 
+                  data3 -> b
+                  data4 -> c
+                  data5 -> d
+}", width = 768, height = 500)
+
+```
+
+## Data 
+
+
+### Input-Output Tables
+
+The input-output table is that used by [Connolly et al. (2018)](https://strathprints.strath.ac.uk/63723/) (FAI hereafter). It used a table containing 106 sectors, 3 of which are alcohol specific sectors disaggregated from the larger Standard Industrial Classification (SIC) industries they belong to. [The Dataset produced for the study has been made available publicly here.](https://pureportal.strath.ac.uk/en/datasets/2010-uk-alcohol-consumption-disaggregated-ixi-table) and is incorporated into the `tobalciomodel` package.
+
+The dataset includes the flow table (which describes intermediate consumption between industries) as well as other demand and production vectors needed for the IO model to function. Below shows a subset of the IO flow table - the first four sectors. 
+
+All purchases are measured in £m. Columns show purchases. Sector 3 purchases £0.775m of sector 1 output, £0.272m of sector 2 output, __£27.029m of its own output__, and £0.061m of sector 4 output. Conversely, rows show sales. Sector 2 makes no sales to sector 1, £262m sales to itself, £0.272m sales to sector 3 (*the other interpretation of the same figure. Purchases to sector 3, sales to sector 2*), and £0.986m sales to sector 4. 
+
+Other variables include demand from households, final demand (the sum of all demand for goods for consumption, from households, governments, exports), household output (total employee compensation), total output (intermediate goods, plus imports, plus value added), total demand (intermediate demand plus final demand), and gross value added variables - total, and split into employee compensation, gross operating surplus, taxes.
+
+### Alcohol Data
+
+This section describes and summarises the Scottish and English/Welsh alcohol consumption data that is included in the package. The data were originally compiled by MESAS from Nielsen retail sales data and were used by FAI and Connolly et al. (2019) in their study of the wider economic impacts of alcohol policy. 
+
+### Tobacco Data
+
+### LFS Employment and Earnings Data
+
+Employment data are not included with IO tables, so in order to model the impacts of policy on employment this information must be obtained externally and matched to the sectors IO table. 
+
+Employment data is obtained from the quarterly Labour Force Survey (LFS) and processed using the `lfsclean` version 0.6.2 package. Employment data coded according to SIC-2007 industries has been available since 2008. Annual employment figures by 4-digit industry to then map to the 106 industries used in the FAI input-output table. Employment is measured as total number of full-time equivalents (FTEs), with a part-time employee counted as 0.5 FTE. Employment can also be measured in hours, using the total hours usually worked per week.   
+
+Firstly, we total the number of employees (excluding self-employed) by 4-digit industry within each quarterly dataset, using the LFS person weights to aggregate to the employment count into an estimate for the whole population. To obtain annual figures, we then average employment in each industry across the four quarters. Employment in 2020 is currently based only on quarter 1 data. This produces a panel of 4-digit industry employment over the period 2010-2020.  
+
+### Matching Cleaned Employment Data to the FAI IO Table Sectors
+
+An issue with the FAI table is that the industry codes do not align with the industry names in all cases. For example, IOC 94 is labelled as "Other Personal Service Activities" whereas SIC-2007 2-digit code 94 in fact relates to "Activities membership organisations" and "Other Personal Service Activities" is actually SIC-2007 division 96. We make the assumption that the data in the FAI table is correctly matched to industry titles, rather than the SIC codes, and accordingly match on the basis of titles rather than codes. 
+
+In this way we match the SIC-2007 4-digit industries onto the 103 industries in the IO table used by FAI. In order to allocate employment in the sectors which are disaggregated into alcohol and non-alcohol, we use the output data in the IO table and assume employment is split according to the same proportion as output. e.g. if output in Wholesale and Retail Trade is split 80/20 between the non-alcohol and alcohol sectors, this same split is applied to employment. 
+
+This produces employment figures for the 106 sectors in the FAI IO table and is found in the dataset `tobalciomodel::employment`, sorted in order of sector in the FAI tables and so can be easily matched to `tobalciomodel::iotable` on a one-to-one basis. Both headcount and FTE measures of employment are produced for each year 2010-2020 inclusive.
+
+## Methodology 
+
+### __Step (1) Recover the Multipliers__
+
+### *Derive the model*
+
+First transform the IO flow table (the $n$ * $n$ matrix of inter-industry purchases) into the __A__ matrix - known as the matrix of technical coefficients. This is obtained by dividing the elements of each column by total output. The elements of the matrix then represents the number of units of the sector in a given row that is required to make one unit of output in the given columns sector. 
+
+Total output, in matrix notation, is then given by the following equation where $x$ is a vector of final demand, $Ay$ represents a vector of intermediate demand, and so $y$ is total demand which must equal total output:
+
+$$
+y = Ay + x
+$$
+$$
+(I-A)y = x
+$$
+
+$$
+y = (I-A)^{-1}x
+$$
+
+The matrix given by $(I-A)^{-1}$ is known as the *__Leontief Inverse Matrix__*. Using this matrix, the effect of any change in demand on total output can be recovered simply by re-writting the above expression in differences:
+
+$$
+\Delta y = (I-A)^{-1} \Delta x
+$$
+
+### *The Output Multiplier*
+
+The multipliers are the coefficients which are used to translate changes in inputs into changes in output. Taking the IO equation:
+
+$$
+\Delta y = (I-A)^{-1} \Delta x
+$$
+
+An illustrative example using a simple three sector model shows the derivation of the sectoral output multipliers: 
+
+
+$$
+\left(\begin{array}{c} 
+\Delta y_1 \\ 
+\Delta y_2 \\
+\Delta y_3
+\end{array}\right)
+=
+\left(\begin{array}{ccc} 
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} 
+\end{array}\right)
+\left(\begin{array}{c} 
+\Delta x_1 \\ 
+\Delta x_2 \\
+\Delta x_3
+\end{array}\right)
+$$ 
+
+The $a_{ij}$ are the Leontief matrix elements for industry $j$ purchases from industry $i$. $x_{j}$ are the changes in industry $j$ final demand - this can come from export demand, household demand, or government purchases.  We can express this as a system of linear equations:
+
+$$
+\Delta y_1 = (a_{11}*\Delta x_1) + (a_{12}*\Delta x_2) + (a_{13}*\Delta x_3) \\
+\Delta y_2 = (a_{21}*\Delta x_1) + (a_{32}*\Delta x_2) + (a_{23}*\Delta x_3) \\
+\Delta y_3 = (a_{31}*\Delta x_1) + (a_{32}*\Delta x_2) + (a_{33}*\Delta x_3)
+$$
+
+The total change in output is the sum of the $\Delta y$ vector. Summing up the three equations and collecting like terms gives:
+
+$$
+\Delta y = \Delta x_1(a_{11} + a_{21} + a_{31}) + \\ \Delta x_2(a_{12}+a_{22}+a_{32}) + \\\ \Delta x_3(a_{13}+a_{23}+a_{33})
+$$
+Defining $M_j = \sum^3_{n=1}a_{nj}$ i.e. $M_j$ for the $j$th sector is the sum of column $j$ in the leontief matrix, and represents the output multiplier - the change in total economy output for a one unit change in final demand for sector $j$:
+
+$$
+\Delta y = \Delta x_1M_1 + \Delta x_2M_2 + \Delta x_3M_3
+$$
+
+Which generalises simply to an input-output analysis with any number, $N$, of sectors:
+
+$$
+\Delta y = \sum^N_{n=1}\Delta x_nM_n 
+$$
+
+### *GVA and Employment Multipliers*
+
+Gross value added (GVA) multipliers are based on the assumption that the proportion of total output which is comprised of GVA remains unchanged after a change in final demand. GVA is the value of output beyond the value of the inputs, and includes taxes, gross operating surplus, and compensation of employees. Defining for a given sector $n$ the GVA coefficient as $k$ we can calculate the change in GVA:
+
+$$
+k_n = \frac{GVA_n}{y_n} \\
+$$
+Rearranging:
+$$
+GVA_n = k_n y_n \\
+$$
+In matrix notation:
+$$
+\Delta GVA = k \Delta y 
+$$
+Substitute in the expression for $\Delta y$
+$$
+\Delta GVA = k \Delta y = \sum^N_{n=1}k_n\Delta x_nM_n 
+$$
+
+So the GVA multiplier for sector $n$ is simply the GVA proportion multiplied by the output multiplier - $k_n M_n$. 
+
+A similar approach is taken to the creation of the employment multipliers. We calculate for each sector the employment/output ratio - the number of employees required to make £1 worth of output - and multiply this by the output multiplier. We therefore implicitly make the assumption that employment remains proportional to output, given any change in production.  
+
+## Implementation in R
+
+### __Step (1) Produce Inputs__
+
+The first step is to derive the inputs for the scenario to be modelled.
+
+```{r inputs_stapm, eval = FALSE}
+
+  inputs <- ReadInputs(data,
+                       policy_effect_year = 2022,
+                       n_years = 1)
+
+```
+
+The alternative is to apply percentage changes to total spending - in basic prices - to the alcohol and tobacco duty in the package data `tobacco_data`, `mesas_eng_wales`, and `mesas_scotland`. These data can be used to calculate the change in cash spending in basic prices for years 2016-2020 for both alcohol and tobacco. 
+
+```{r inputs, echo = FALSE}
+
+tobalciomodel::tobacco_data[year == 2020, c("product","exp_bp")]
+
+tobalciomodel::mesas_eng_wales[year == 2020, c("product","exp_bp")]
+
+```
+
+```{r inputs_agg, eval = TRUE}
+
+  inputs <- GenInputs(prop_alc_on  = -0.1,
+                      prop_alc_off = -0.1,
+                      prop_tob_fm  = 0,
+                      prop_tob_ryo = 0,
+                      yr = 2020)
+```
+
+Whether using `GenInputs` or `ReadInputs`, the output produced is a vector with the following figures - changes in off-trade alcohol expenditure, changes in on-trade alcohol expenditure, changes in tobacco expenditure (all in basic prices and millions of pounds), total change in tobacco and alcohol expenditure, and the net change in government revenue which results from changing consumption. 
+
+```{r show_inputs, echo = FALSE}
+  inputs
+
+```
+
+
+### __Step (2) Policy Parameters__
+
+The next step is to set the policy parameters and apply these to the data created in step 2a. 
+
+- Use the selected data from the previous stage
+- Set alcohol policy parameters 
+  - exogenous change
+  - minimum unit price __(not yet added)__
+  - tax changes __(not yet added)__
+- apply a policy change to each of the 10 alcohol products. 
+- choose whether or not to allow households to re-allocate spending. 
+- choose whether or not government simultaneously changes its spending __(not yet added)__
+
+The output of the function is the vector containing changes in final demand. An example of the function; simulate an exogenous change in demand - where consumption of each product of on-trade alcohol falls by 10%.
+
+The above code equally splits the fall in demand for on-trade alcohol across the two on-trade sectors. Instead of a 0.5/0.5 split, we can simulate a distribution of changes in output by drawing a random proportion to allocate from a uniform distribution. 
+
+
+### __Step (3) Calculate the Policy Impact__
+
+Multiply the change in final demand vector calculated in step 2b by the appropriate column of multipliers obtained in step 1. 
