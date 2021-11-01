@@ -51,7 +51,7 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   data_alc[product %in% c("off_beer","off_cider","off_wine","off_spirits"),
            tax_change := (1 + prop_alc_off)*tot_tax - tot_tax ]
   tax_alc_off_bp <- sum(data_alc[,"tax_change"], na.rm = TRUE)
-  data_alc[, tax := NULL]
+  data_alc[, tax_change := NULL]
 
   ##### on-trade alcohol
 
@@ -67,7 +67,7 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   data_alc[product %in% c("on_beer","on_cider","on_wine","on_spirits"),
            tax_change := (1 + prop_alc_on)*tot_tax - tot_tax ]
   tax_alc_on_bp <- sum(data_alc[,"tax_change"], na.rm = TRUE)
-  data_alc[, tax := NULL]
+  data_alc[, tax_change := NULL]
 
   ##### Tobacco
 
@@ -89,7 +89,7 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
            tax_change := (1 + prop_tob_ryo)*tot_tax - tot_tax ]
 
   tax_tob_bp <- sum(data_tob[,"tax_change"], na.rm = TRUE)
-  data_tob[, tax := NULL]
+  data_tob[, tax_change := NULL]
 
   ##### Totals
 
