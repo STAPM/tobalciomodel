@@ -5,12 +5,12 @@
 \title{Reallocate Household Expenditure}
 \usage{
 ReallocateHhold(
-  expenditure = c(-20, 10, 30),
+  expenditure = c(-20, -10, -30),
   saving_rate = 0.1,
   vector = "hhfce_noalctob",
   vectors_data = tobalciomodel::vectors_hhold,
   mapping = tobalciomodel::coicop_cpa_mapping,
-  FAI = FALSE
+  FAI = T
 )
 }
 \arguments{

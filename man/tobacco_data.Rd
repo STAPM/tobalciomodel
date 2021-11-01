@@ -3,7 +3,7 @@
 \docType{data}
 \name{tobacco_data}
 \alias{tobacco_data}
-\title{Tobacco Data}
+\title{Tobacco Data 2016-2020}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 10 rows and 5 columns.
 }
@@ -11,6 +11,7 @@ An object of class \code{data.table} (inherits from \code{data.frame}) with 10 r
 tobacco_data
 }
 \description{
-Data on tobacco consumption and prices obtained from ONS and other sources.
+Data on tobacco consumption and prices obtained from the ONS and HMRC duty receipts and clearance data available in the
+ONS Tobacco Bulletin.
 }
 \keyword{datasets}

@@ -6,22 +6,17 @@
 \usage{
 GenInputs(
   tobacco = tobalciomodel::tobacco_data,
-  alcohol_eng = tobalciomodel::mesas_eng_wales,
-  alcohol_scot = tobalciomodel::mesas_scotland,
-  prop_alc_on = -0.1,
-  prop_alc_off = -0.1,
-  prop_tob_fm = -0.1,
-  prop_tob_ryo = -0.1,
+  alcohol = tobalciomodel::alcohol_data,
+  prop_alc_on = -0.01,
+  prop_alc_off = -0.01,
+  prop_tob_fm = -0.01,
+  prop_tob_ryo = -0.01,
   govt = TRUE,
   yr = 2020
 )
 }
 \arguments{
 \item{tobacco}{Data table. Tobacco expenditures}
-
-\item{alcohol_eng}{Data table. Alcohol expenditures data for England and Wales.}
-
-\item{alcohol_scot}{Data table. Alcohol expenditures data for Scotland.}
 
 \item{prop_alc_on}{Proportionate change in alcohol expenditure.}
 
@@ -34,6 +29,10 @@ GenInputs(
 \item{govt}{Logical. If TRUE include changes in government revenue in the analysis.}
 
 \item{yr}{year of data to use.}
+
+\item{alcohol_eng}{Data table. Alcohol expenditures data for England and Wales.}
+
+\item{alcohol_scot}{Data table. Alcohol expenditures data for Scotland.}
 }
 \value{
 

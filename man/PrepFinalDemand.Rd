@@ -7,7 +7,7 @@
 PrepFinalDemand(
   hhold_exp,
   govt_exp,
-  hhold_saving = 0.1,
+  hhold_saving = 0,
   hhold_vector = "hhfce_noalctob",
   govt_vector = "central",
   FAI = FALSE
