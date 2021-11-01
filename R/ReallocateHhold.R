@@ -17,7 +17,7 @@
 #'
 #'
 #' @export
-ReallocateHhold <- function(expenditure = c(-20,10,30),
+ReallocateHhold <- function(expenditure = c(-20,-10,-30),
                             saving_rate = 0.1,
                             vector = "hhfce_noalctob",
                             vectors_data = tobalciomodel::vectors_hhold,
@@ -116,7 +116,7 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
  if (FAI == FALSE) {
 
  ## add in the initial change to expenditure on tobacco and alcohol
- x[Product == "Alcoholic beverages  & Tobacco products", hhold_exp := hhold_exp + sum(expenditure)]
+ hhold_exp[Product == "Alcoholic beverages  & Tobacco products", hhold_exp := hhold_exp + sum(expenditure)]
 
  } else if (FAI == TRUE) {
 
@@ -146,6 +146,9 @@ ReallocateHhold <- function(expenditure = c(-20,10,30),
     hhold_exp <- copy(FAI_data)
 
  }
+
+ testthat::expect_true(round(sum(hhold_exp$hhold_exp)) == 0 + -1*(1 - saving_rate)*sum(expenditure),
+                       label = "Function: ReallocateHhold(). Household expenditure vector must sum to total net change in alcohol and tobacco spending reallocated")
 
 return(hhold_exp)
 }
