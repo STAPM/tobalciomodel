@@ -3,10 +3,10 @@
 #' Read and process the Supply and Use Tables (SUTs) for the UK economy which cover the period 1997-2018.
 #'
 #' Supply and Use Tables are published by the Office for National Statistics. The tables which this
-#' function is designed to use can be found
-#' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
+#' function is designed to use are downloaded from
+#' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{this ONS page}.
 #'
-#' @param year Integer. Select the year (from 1997 to 2018) of data to use in the analysis.
+#' @param year_sut Integer. Select the year (from 1997 to 2018) ONS supply and use tables to use in the analysis.
 #' @param fte Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE
 #'            use total employees.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
@@ -14,11 +14,11 @@
 #'
 #'
 #' @export
-ReadSUT <- function(year = 2018,
+ReadSUT <- function(year_sut = 2018,
                     fte = TRUE,
                     FAI = FALSE) {
 
-  y <- copy(year)
+  y <- copy(year_sut)
 
 
 if (FAI == FALSE) {

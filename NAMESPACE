@@ -2,8 +2,8 @@
 
 export(EconEffectsCalc)
 export(GenInputs)
+export(IOModel)
 export(LeontiefCalc)
-export(ModelExt)
 export(PrepFinalDemand)
 export(ProcessOutputs)
 export(ReadInputs)
