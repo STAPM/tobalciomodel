@@ -24,10 +24,10 @@
 #' }
 GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
                       alcohol = tobalciomodel::alcohol_data,
-                      prop_alc_on = -0.1,
-                      prop_alc_off = -0.1,
-                      prop_tob_fm = -0.1,
-                      prop_tob_ryo = -0.1,
+                      prop_alc_on = -0.01,
+                      prop_alc_off = -0.01,
+                      prop_tob_fm = -0.01,
+                      prop_tob_ryo = -0.01,
                       govt = TRUE,
                       yr = 2020) {
 
@@ -49,8 +49,8 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   ## tax
 
   data_alc[product %in% c("off_beer","off_cider","off_wine","off_spirits"),
-           tax := (1 + prop_alc_off)*tot_tax - tot_tax ]
-  tax_alc_off_bp <- sum(data_alc[,"tax"], na.rm = TRUE)
+           tax_change := (1 + prop_alc_off)*tot_tax - tot_tax ]
+  tax_alc_off_bp <- sum(data_alc[,"tax_change"], na.rm = TRUE)
   data_alc[, tax := NULL]
 
   ##### on-trade alcohol
@@ -65,8 +65,8 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   ## tax
 
   data_alc[product %in% c("on_beer","on_cider","on_wine","on_spirits"),
-           tax := (1 + prop_alc_on)*tot_tax - tot_tax ]
-  tax_alc_on_bp <- sum(data_alc[,"tax"], na.rm = TRUE)
+           tax_change := (1 + prop_alc_on)*tot_tax - tot_tax ]
+  tax_alc_on_bp <- sum(data_alc[,"tax_change"], na.rm = TRUE)
   data_alc[, tax := NULL]
 
   ##### Tobacco
@@ -84,11 +84,11 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   ## tax
 
   data_tob[product %in% c("FM_cigs"),
-           tax := (1 + prop_tob_fm)*tot_tax - tot_tax ]
+           tax_change := (1 + prop_tob_fm)*tot_tax - tot_tax ]
   data_tob[product %in% c("RYO_tob"),
-           tax := (1 + prop_tob_ryo)*tot_tax - tot_tax ]
+           tax_change := (1 + prop_tob_ryo)*tot_tax - tot_tax ]
 
-  tax_tob_bp <- sum(data_tob[,"tax"], na.rm = TRUE)
+  tax_tob_bp <- sum(data_tob[,"tax_change"], na.rm = TRUE)
   data_tob[, tax := NULL]
 
   ##### Totals
