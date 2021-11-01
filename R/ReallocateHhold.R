@@ -22,7 +22,7 @@ ReallocateHhold <- function(expenditure = c(-20,-10,-30),
                             vector = "hhfce_noalctob",
                             vectors_data = tobalciomodel::vectors_hhold,
                             mapping = tobalciomodel::coicop_cpa_mapping,
-                            FAI = FALSE
+                            FAI = T
                 ) {
 
  # calculate the amount of expenditure that will be reallocated
@@ -147,7 +147,7 @@ ReallocateHhold <- function(expenditure = c(-20,-10,-30),
 
  }
 
- testthat::expect_true(round(sum(hhold_exp$hhold_exp)) == 0 + -1*(1 - saving_rate)*sum(expenditure),
+ testthat::expect_true(round(sum(hhold_exp$hhold_exp),5) == round(sum(expenditure) -1*(1 - saving_rate)*sum(expenditure),5),
                        label = "Function: ReallocateHhold(). Household expenditure vector must sum to total net change in alcohol and tobacco spending reallocated")
 
 return(hhold_exp)

@@ -37,7 +37,8 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
 
   data_alc[, tot_tax := exp_mp - exp_bp]
 
-  ##### off-trade alcohol
+  ##############################
+  ##### off-trade alcohol ######
 
   ## expenditure
 
@@ -53,7 +54,8 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   tax_alc_off_bp <- sum(data_alc[,"tax_change"], na.rm = TRUE)
   data_alc[, tax_change := NULL]
 
-  ##### on-trade alcohol
+  ##############################
+  ##### on-trade alcohol #######
 
   ## expenditure
 
@@ -69,7 +71,8 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   tax_alc_on_bp <- sum(data_alc[,"tax_change"], na.rm = TRUE)
   data_alc[, tax_change := NULL]
 
-  ##### Tobacco
+  #######################
+  ##### Tobacco #########
 
   ## expenditure
 
@@ -91,7 +94,8 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
   tax_tob_bp <- sum(data_tob[,"tax_change"], na.rm = TRUE)
   data_tob[, tax_change := NULL]
 
-  ##### Totals
+  ####################
+  ##### Totals #######
 
   exp_total_bp <- exp_alc_off_bp + exp_alc_on_bp + exp_tob_bp
 
@@ -105,7 +109,12 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
 
   year = yr
 
-  out <- data.table(year, exp_alc_off_bp, exp_alc_on_bp, exp_tob_bp, exp_total_bp, net_govt_revenue)
+  out <- data.table(year,
+                    round(exp_alc_off_bp,3),
+                    round(exp_alc_on_bp,3),
+                    round(exp_tob_bp,3),
+                    round(exp_total_bp,3),
+                    round(net_govt_revenue,3))
 
 
   return(out)
