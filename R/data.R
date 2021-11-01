@@ -1,3 +1,14 @@
+#' Alcohol Data 2016-2020
+#'
+#' Data on alcohol expenditures, consumption and prices. Data are constructed using price and consumption data published by MESAS - Monitoring
+#' and Evaluating Scotland's Alcohol Strategy. Expenditures at basic prices are constructed by combining with data on total duty receipts by HMRC
+#' published in the ONS alcohol bulletin.
+#'
+#' @source \href{https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/}{MESAS monitoring report 2021}.
+#' @source \href{https://www.gov.uk/government/statistics/alcohol-bulletin}{Alcohol Bulletin}
+#'
+"alcohol_data"
+
 #' Map COICOP to CPA
 #'
 #' A data table which can be used to map expenditure distributed across 36 COICOP

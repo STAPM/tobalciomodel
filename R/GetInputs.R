@@ -23,8 +23,7 @@
 #'
 #' }
 GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
-                      alcohol_eng = tobalciomodel::mesas_eng_wales,
-                      alcohol_scot = tobalciomodel::mesas_scotland,
+                      alcohol = tobalciomodel::alcohol_data,
                       prop_alc_on = -0.1,
                       prop_alc_off = -0.1,
                       prop_tob_fm = -0.1,
@@ -34,10 +33,7 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
 
   # restrict to year chosen
   data_tob      <- tobacco[year == yr,]
-  data_alc_eng  <- alcohol_eng[year == yr]
-  data_alc_scot <- alcohol_scot[year == yr]
-
-  data_alc <- rbindlist(list(data_alc_eng, data_alc_scot))
+  data_alc      <- alcohol[year == yr]
 
   data_alc[, tot_tax := exp_mp - exp_bp]
 
@@ -45,14 +41,14 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
 
   ## expenditure
 
-  data_alc[product %in% c("off_beer","off_cider","off_wine","off_spirits","off_rtds"),
+  data_alc[product %in% c("off_beer","off_cider","off_wine","off_spirits"),
            change := (1 + prop_alc_off)*exp_bp - exp_bp ]
   exp_alc_off_bp <- sum(data_alc[,"change"], na.rm = TRUE)
   data_alc[, change := NULL]
 
   ## tax
 
-  data_alc[product %in% c("off_beer","off_cider","off_wine","off_spirits","off_rtds"),
+  data_alc[product %in% c("off_beer","off_cider","off_wine","off_spirits"),
            tax := (1 + prop_alc_off)*tot_tax - tot_tax ]
   tax_alc_off_bp <- sum(data_alc[,"tax"], na.rm = TRUE)
   data_alc[, tax := NULL]
@@ -61,14 +57,14 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
 
   ## expenditure
 
-  data_alc[product %in% c("on_beer","on_cider","on_wine","on_spirits","on_rtds"),
+  data_alc[product %in% c("on_beer","on_cider","on_wine","on_spirits"),
            change := (1 + prop_alc_on)*exp_bp - exp_bp ]
   exp_alc_on_bp <- sum(data_alc[,"change"], na.rm = TRUE)
   data_alc[, change := NULL]
 
   ## tax
 
-  data_alc[product %in% c("on_beer","on_cider","on_wine","on_spirits","on_rtds"),
+  data_alc[product %in% c("on_beer","on_cider","on_wine","on_spirits"),
            tax := (1 + prop_alc_on)*tot_tax - tot_tax ]
   tax_alc_on_bp <- sum(data_alc[,"tax"], na.rm = TRUE)
   data_alc[, tax := NULL]
