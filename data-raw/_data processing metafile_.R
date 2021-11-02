@@ -23,6 +23,7 @@ source("data-raw/raw data processing code/data processing - employment data LFS 
 source("data-raw/raw data processing code/data processing - employment data LFS cpa.R")
 source("data-raw/raw data processing code/data processing - earnings data LFS fai.R")
 source("data-raw/raw data processing code/data processing - earnings data LFS cpa.R")
+source("data-raw/raw data processing code/data processing - earnings deflator.R")
 
 ### AGGREGATE ALCOHOL AND TOBACCO DATA
 

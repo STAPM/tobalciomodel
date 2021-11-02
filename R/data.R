@@ -9,6 +9,14 @@
 #'
 "alcohol_data"
 
+#' Average Weekly Earnings (AWE) Index
+#'
+#' An index of average weekly earnings growth from 2000 to 2020. Used to deflate the package earnings data to any other year used for the
+#' input-output analysis. Annual figures taken from the ONS statistical release and accessed 02/11/2021.
+#'
+#' @source \href{https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/timeseries/ka5h/emp}{AWE: Whole Economy Index}
+"awe"
+
 #' Map COICOP to CPA
 #'
 #' A data table which can be used to map expenditure distributed across 36 COICOP
