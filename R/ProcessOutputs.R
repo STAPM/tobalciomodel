@@ -92,7 +92,7 @@ ProcessOutputs <- function(data,
   out_t <- out_0 + out_1
 
   gva_0 <- sum(output$gva_effects_t0_p)
-  gva_1 <- sum(output$gva_effects_t1_p) - gva_1
+  gva_1 <- sum(output$gva_effects_t1_p) - gva_0
   gva_t <- gva_0 + gva_1
 
   emp_0 <- round(sum(output$emp_effects_t0_p))
