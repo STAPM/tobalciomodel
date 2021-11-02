@@ -58,7 +58,7 @@ IOModel  <- function(FAI = FALSE,
 
   ### 4) Calculate economic impacts
 
-  econ_impacts <- EconEffectsCalc(leontief, fdemand, FAI = FAI)
+  econ_impacts <- EconEffectsCalc(leontief, fdemand, FAI = FAI, year = year)
 
   ### RETURN OUTPUTS
 

@@ -8,6 +8,13 @@
 #' @param fdemand Data table. The output of \code{PrepFinalDemand}.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 #'            ONS ones. Defaults to FALSE.
+#' @param year Integer. Select the year (from 2016 to 2020) of alcohol, tobacco, earnings and employment data to use in the analysis.
+#' @param inc_tax_thresholds Numeric vector length 2. Thresholds for payment of income tax (annual).
+#' @param inc_tax_rates Numeric vector length 2. Rates of income tax corresponding to the thresholds.
+#' @param employee_nic_thresholds_wk Numeric vector length 2. Thresholds for payment of employee national insurance contributions (weekly).
+#' @param employee_nic_rates Numeric vector length 2. Rates of employee national insurance contributions.
+#' @param employer_nic_threshold_wk Numeric. Threshold for payment of employer national insurance contributions (weekly).
+#' @param employer_nic_rate Numeric. Rate of employer national insurance contributions.
 #'
 #' @return A data table of economic impacts by sector
 #' @export
@@ -16,31 +23,20 @@
 #'
 #' \dontrun{
 #'
-#' ### construct the final demand vector
-#'
-#' final_demand_vec <- tobalciomodel::PrepFinalDemand(hhold_exp = -20,
-#'                                                    govt_exp = 10,
-#'                                                    hhold_saving = 0.1,
-#'                                                    hhold_vector = "hhfce_noalctob",
-#'                                                    govt_vector = "central")
-#'
-#' ### derive the leontief inverse and multipliers
-#'
-#' tables <- tobalciomodel::ReadSUT(path = "inputs",
-#'                                  year = 2018,
-#'                                  fte = TRUE)
-#'
-#' leontief <- tobalciomodel::LeontiefCalc(tables)
-#'
-#' ### calculate economic effects
-#'
-#' effects <- tobalciomodel::EconEffectsCalc(leontief,
-#'                                           final_demand_vec)
 #'
 #' }
 EconEffectsCalc <- function(leontief,
                             fdemand,
-                            FAI = FALSE) {
+                            FAI = FALSE,
+                            year = 2019,
+                            inc_tax_thresholds = c(12570,50270),
+                            inc_tax_rates = c(0.2,0.4),
+                            employee_nic_thresholds_wk = c(184,967),
+                            employee_nic_rates = c(0.12,0.02),
+                            employer_nic_threshold_wk = 170,
+                            employer_nic_rate = 0.1380) {
+
+  yr <- copy(year)
 
   ## vector of annual earnings by sector based on choice of IO tables
 
@@ -150,6 +146,10 @@ EconEffectsCalc <- function(leontief,
 
   ### note earnings data is 2020
 
+  deflator <- as.numeric(tobalciomodel::awe[year == yr,"awe_index"])/100
+
+  ### read in the earnings data for the IO table being used and deflate
+
   if (FAI == TRUE) {
   earn <- merge.data.table(effects, earnings_data,
                            by = c("IOC","Sector"), sort = FALSE)
@@ -158,26 +158,29 @@ EconEffectsCalc <- function(leontief,
                            by = c("CPA_code","Product"), sort = FALSE)
   }
 
+  earn[, avg_salary := avg_salary*deflator]
+  earn[, deflator := NULL]
+
   ### tax parameters (CORRECT AS AT 18/05/2021)
     # income tax
 
-  personal_allowance     <- 12570
-  basic_rate             <- 0.20
-  higher_rate_threshold  <- 50270
-  higher_rate            <- 0.40
+  personal_allowance     <- inc_tax_thresholds[1]
+  basic_rate             <- inc_tax_rates[1]
+  higher_rate_threshold  <- inc_tax_thresholds[2]
+  higher_rate            <- inc_tax_rates[2]
 
     # employer NICs (weekly, so *52 to get annual)
 
-  employer_nic_threshold <- 170*52
-  employer_nic_rate      <- 0.1380
+  employer_nic_threshold <- employer_nic_threshold_wk*52
+  employer_nic_rate      <- employer_nic_rate
 
     # employee NICs (also weekly, need to annualise)
 
-  employee_nic_threshold1 <- 184*52
-  employee_nic_threshold2 <- 967*52
+  employee_nic_threshold1 <- employee_nic_thresholds_wk[1]*52
+  employee_nic_threshold2 <- employee_nic_thresholds_wk[2]*52
 
-  employee_nic_rate1 <- 0.12
-  employee_nic_rate2 <- 0.02
+  employee_nic_rate1 <- employee_nic_rates[1]
+  employee_nic_rate2 <- employee_nic_rates[2]
 
     # combine into a data table to be exported
 

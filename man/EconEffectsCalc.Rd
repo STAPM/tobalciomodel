@@ -4,7 +4,18 @@
 \alias{EconEffectsCalc}
 \title{Calculate Economic Impacts}
 \usage{
-EconEffectsCalc(leontief, fdemand, FAI = FALSE)
+EconEffectsCalc(
+  leontief,
+  fdemand,
+  FAI = FALSE,
+  year = 2019,
+  inc_tax_thresholds = c(12570, 50270),
+  inc_tax_rates = c(0.2, 0.4),
+  employee_nic_thresholds_wk = c(184, 967),
+  employee_nic_rates = c(0.12, 0.02),
+  employer_nic_threshold_wk = 170,
+  employer_nic_rate = 0.138
+)
 }
 \arguments{
 \item{leontief}{List object. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.}
@@ -13,6 +24,20 @@ EconEffectsCalc(leontief, fdemand, FAI = FALSE)
 
 \item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 ONS ones. Defaults to FALSE.}
+
+\item{year}{Integer. Select the year (from 2016 to 2020) of alcohol, tobacco, earnings and employment data to use in the analysis.}
+
+\item{inc_tax_thresholds}{Numeric vector length 2. Thresholds for payment of income tax (annual).}
+
+\item{inc_tax_rates}{Numeric vector length 2. Rates of income tax corresponding to the thresholds.}
+
+\item{employee_nic_thresholds_wk}{Numeric vector length 2. Thresholds for payment of employee national insurance contributions (weekly).}
+
+\item{employee_nic_rates}{Numeric vector length 2. Rates of employee national insurance contributions.}
+
+\item{employer_nic_threshold_wk}{Numeric. Threshold for payment of employer national insurance contributions (weekly).}
+
+\item{employer_nic_rate}{Numeric. Rate of employer national insurance contributions.}
 }
 \value{
 A data table of economic impacts by sector
@@ -26,26 +51,6 @@ employment.
 
 \dontrun{
 
-### construct the final demand vector
-
-final_demand_vec <- tobalciomodel::PrepFinalDemand(hhold_exp = -20,
-                                                   govt_exp = 10,
-                                                   hhold_saving = 0.1,
-                                                   hhold_vector = "hhfce_noalctob",
-                                                   govt_vector = "central")
-
-### derive the leontief inverse and multipliers
-
-tables <- tobalciomodel::ReadSUT(path = "inputs",
-                                 year = 2018,
-                                 fte = TRUE)
-
-leontief <- tobalciomodel::LeontiefCalc(tables)
-
-### calculate economic effects
-
-effects <- tobalciomodel::EconEffectsCalc(leontief,
-                                          final_demand_vec)
 
 }
 }
