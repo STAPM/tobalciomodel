@@ -15,6 +15,6 @@ inctax_params
 }
 \description{
 Data table of income tax and national insurance parameters - thresholds and tax rates - used for calculating tax paid on employment incomes
-based on annual earnings.
+based on annual earnings. Data provided for 2010 - 2020
 }
 \keyword{datasets}

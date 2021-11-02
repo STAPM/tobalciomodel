@@ -78,7 +78,7 @@
 #' Income Tax Parameters
 #'
 #' Data table of income tax and national insurance parameters - thresholds and tax rates - used for calculating tax paid on employment incomes
-#' based on annual earnings.
+#' based on annual earnings. Data provided for 2010 - 2020
 #'
 #' @source \href{https://www.gov.uk/government/collections/tax-structure-and-parameters-statistics}{Tax structure and parameters statistics}
 "inctax_params"
