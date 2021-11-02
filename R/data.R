@@ -75,6 +75,14 @@
 #'
 "lfs_empl_fai"
 
+#' Income Tax Parameters
+#'
+#' Data table of income tax and national insurance parameters - thresholds and tax rates - used for calculating tax paid on employment incomes
+#' based on annual earnings.
+#'
+#' @source \href{https://www.gov.uk/government/collections/tax-structure-and-parameters-statistics}{Tax structure and parameters statistics}
+"inctax_params"
+
 #' Input-Output Table
 #'
 #' Input-output flow-table as well as demand and output vectors from the alcohol-disaggregated

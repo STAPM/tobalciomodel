@@ -13,7 +13,8 @@ IOModel(
   govt_exp,
   hhold_saving = 0,
   hhold_reallocate = "hhfce_noalctob",
-  govt_reallocate = "central"
+  govt_reallocate = "central",
+  tax_data = tobalciomodel::inctax_params
 )
 }
 \arguments{
@@ -37,6 +38,9 @@ on-trade alcohol, and tobacco.}
 \item{hhold_reallocate}{Character. Name of the vector which determines how household spending is redistributed.}
 
 \item{govt_reallocate}{Character. Name of the vector which determines how government spending is redistributed.}
+
+\item{tax_data}{Data table. Package data containing the necessary parameters to calculate
+income tax and national insurance contributions from annual earnings data}
 }
 \value{
 

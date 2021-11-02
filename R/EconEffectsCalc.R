@@ -9,12 +9,8 @@
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 #'            ONS ones. Defaults to FALSE.
 #' @param year Integer. Select the year (from 2016 to 2020) of alcohol, tobacco, earnings and employment data to use in the analysis.
-#' @param inc_tax_thresholds Numeric vector length 2. Thresholds for payment of income tax (annual).
-#' @param inc_tax_rates Numeric vector length 2. Rates of income tax corresponding to the thresholds.
-#' @param employee_nic_thresholds_wk Numeric vector length 2. Thresholds for payment of employee national insurance contributions (weekly).
-#' @param employee_nic_rates Numeric vector length 2. Rates of employee national insurance contributions.
-#' @param employer_nic_threshold_wk Numeric. Threshold for payment of employer national insurance contributions (weekly).
-#' @param employer_nic_rate Numeric. Rate of employer national insurance contributions.
+#' @param tax_data Data table. Package data containing the necessary parameters to calculate
+#' income tax and national insurance contributions from annual earnings data
 #'
 #' @return A data table of economic impacts by sector
 #' @export
@@ -29,12 +25,7 @@ EconEffectsCalc <- function(leontief,
                             fdemand,
                             FAI = FALSE,
                             year = 2019,
-                            inc_tax_thresholds = c(12570,50270),
-                            inc_tax_rates = c(0.2,0.4),
-                            employee_nic_thresholds_wk = c(184,967),
-                            employee_nic_rates = c(0.12,0.02),
-                            employer_nic_threshold_wk = 170,
-                            employer_nic_rate = 0.1380) {
+                            tax_data = tobalciomodel::inctax_params) {
 
   yr <- copy(year)
 
@@ -160,26 +151,30 @@ EconEffectsCalc <- function(leontief,
 
   earn[, avg_salary := avg_salary*deflator]
 
-  ### tax parameters (CORRECT AS AT 18/05/2021)
+  ##########################################################
+  ### Extract the tax parameters for the analysis year #####
+
+  tax_data <- tax_data[year == yr,]
+
     # income tax
 
-  personal_allowance     <- inc_tax_thresholds[1]
-  basic_rate             <- inc_tax_rates[1]
-  higher_rate_threshold  <- inc_tax_thresholds[2]
-  higher_rate            <- inc_tax_rates[2]
+  personal_allowance     <- as.numeric(tax_data[,"personal_allowance"])
+  basic_rate             <- as.numeric(tax_data[,"basic_rate"])
+  higher_rate_threshold  <- as.numeric(tax_data[,"higher_thresh"])
+  higher_rate            <- as.numeric(tax_data[,"higher_rate"])
 
     # employer NICs (weekly, so *52 to get annual)
 
-  employer_nic_threshold <- employer_nic_threshold_wk*52
-  employer_nic_rate      <- employer_nic_rate
+  employer_nic_threshold <- as.numeric(tax_data[,"employer_nic_thresh_wk"])*52
+  employer_nic_rate      <- as.numeric(tax_data[,"employer_nic_rate"])
 
     # employee NICs (also weekly, need to annualise)
 
-  employee_nic_threshold1 <- employee_nic_thresholds_wk[1]*52
-  employee_nic_threshold2 <- employee_nic_thresholds_wk[2]*52
+  employee_nic_threshold1 <- as.numeric(tax_data[,"employee_nic_thresh1_wk"])*52
+  employee_nic_threshold2 <- as.numeric(tax_data[,"employee_nic_thresh2_wk"])*52
 
-  employee_nic_rate1 <- employee_nic_rates[1]
-  employee_nic_rate2 <- employee_nic_rates[2]
+  employee_nic_rate1 <- as.numeric(tax_data[,"employee_nic_rate1"])
+  employee_nic_rate2 <- as.numeric(tax_data[,"employee_nic_rate2"])
 
     # combine into a data table to be exported
 
@@ -204,8 +199,8 @@ EconEffectsCalc <- function(leontief,
     } else if (FAI == FALSE) {
     setnames(earn, "CPA_code", "code")
   }
-
-  ## calculate income tax paid per worker by sector based on average wage.
+        ########################################################################
+        ## calculate income tax paid per worker by sector based on average wage.
   earn[,taxable_higher_rate := max(0,avg_salary - higher_rate_threshold), by="code"]
   earn[,taxable_basic_rate  := max(0,avg_salary - personal_allowance) - taxable_higher_rate, by="code"]
 
@@ -213,15 +208,17 @@ EconEffectsCalc <- function(leontief,
          higher_rate*taxable_higher_rate]
 
   earn[, c("taxable_basic_rate","taxable_higher_rate") := NULL]
-
-  ## calculate employer national insurance contributions
+        ########################################################################
+        ## calculate employer national insurance contributions
 
   earn[, employer_nic_elig := max(0,avg_salary - employer_nic_threshold), by="code"]
   earn[, employer_nic := employer_nic_rate*employer_nic_elig]
 
   earn[, c("employer_nic_elig") := NULL]
 
-  ## calculate employee national insurance contributions
+        ########################################################################
+        ## calculate employee national insurance contributions
+
   earn[,empl_nic_elig2 := max(0,avg_salary - employee_nic_threshold2), by="code"]
   earn[,empl_nic_elig1 := max(0,avg_salary - employee_nic_threshold1) - empl_nic_elig2, by="code"]
 
@@ -230,11 +227,14 @@ EconEffectsCalc <- function(leontief,
 
   earn[, c("empl_nic_elig1","empl_nic_elig2") := NULL]
 
+  ############################
   ## total tax per employee
 
   earn[, total_tax := employee_nic + employer_nic + income_tax]
 
-  ## multiply tax and net earnings per employee by the employment effects
+  ########################################################################
+  ## multiply tax and net earnings per employee for each sector by the
+  ## sectors employment effects
 
   earn[, emptax_effects_t0_p := total_tax*emp_effects_t0_p/1000000]
   earn[, emptax_effects_t1_p := total_tax*emp_effects_t1_p/1000000]
@@ -242,11 +242,15 @@ EconEffectsCalc <- function(leontief,
   earn[, netearn_effects_t0_p := (avg_salary - income_tax - employee_nic)*emp_effects_t0_p/1000000]
   earn[, netearn_effects_t1_p := (avg_salary - income_tax - employee_nic)*emp_effects_t1_p/1000000]
 
+  ## replace the name of the sector variable
+
   if (FAI == TRUE) {
     setnames(earn, "code", "IOC")
   } else if (FAI == FALSE) {
     setnames(earn, "code", "CPA_code")
   }
+
+  ## remove redundant variables
 
   earn[, c("avg_salary","total_tax","income_tax","employee_nic","employer_nic") := NULL]
 

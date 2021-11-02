@@ -9,12 +9,7 @@ EconEffectsCalc(
   fdemand,
   FAI = FALSE,
   year = 2019,
-  inc_tax_thresholds = c(12570, 50270),
-  inc_tax_rates = c(0.2, 0.4),
-  employee_nic_thresholds_wk = c(184, 967),
-  employee_nic_rates = c(0.12, 0.02),
-  employer_nic_threshold_wk = 170,
-  employer_nic_rate = 0.138
+  tax_data = tobalciomodel::inctax_params
 )
 }
 \arguments{
@@ -27,17 +22,8 @@ ONS ones. Defaults to FALSE.}
 
 \item{year}{Integer. Select the year (from 2016 to 2020) of alcohol, tobacco, earnings and employment data to use in the analysis.}
 
-\item{inc_tax_thresholds}{Numeric vector length 2. Thresholds for payment of income tax (annual).}
-
-\item{inc_tax_rates}{Numeric vector length 2. Rates of income tax corresponding to the thresholds.}
-
-\item{employee_nic_thresholds_wk}{Numeric vector length 2. Thresholds for payment of employee national insurance contributions (weekly).}
-
-\item{employee_nic_rates}{Numeric vector length 2. Rates of employee national insurance contributions.}
-
-\item{employer_nic_threshold_wk}{Numeric. Threshold for payment of employer national insurance contributions (weekly).}
-
-\item{employer_nic_rate}{Numeric. Rate of employer national insurance contributions.}
+\item{tax_data}{Data table. Package data containing the necessary parameters to calculate
+income tax and national insurance contributions from annual earnings data}
 }
 \value{
 A data table of economic impacts by sector

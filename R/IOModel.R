@@ -17,6 +17,8 @@
 #' @param hhold_saving Numeric. Assumed household savings rate.
 #' @param hhold_reallocate Character. Name of the vector which determines how household spending is redistributed.
 #' @param govt_reallocate Character. Name of the vector which determines how government spending is redistributed.
+#' @param tax_data Data table. Package data containing the necessary parameters to calculate
+#' income tax and national insurance contributions from annual earnings data
 #'
 #' @author Damon Morris
 #'
@@ -37,7 +39,8 @@ IOModel  <- function(FAI = FALSE,
                      govt_exp,
                      hhold_saving = 0,
                      hhold_reallocate = "hhfce_noalctob",
-                     govt_reallocate = "central") {
+                     govt_reallocate = "central",
+                     tax_data = tobalciomodel::inctax_params) {
 
   ### 1) Prepare the changes in final demand vector
 
@@ -58,7 +61,7 @@ IOModel  <- function(FAI = FALSE,
 
   ### 4) Calculate economic impacts
 
-  econ_impacts <- EconEffectsCalc(leontief, fdemand, FAI = FAI, year = year)
+  econ_impacts <- EconEffectsCalc(leontief, fdemand, FAI = FAI, year = year, tax_data = tax_data)
 
   ### RETURN OUTPUTS
 
