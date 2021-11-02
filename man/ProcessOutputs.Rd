@@ -4,13 +4,16 @@
 \alias{ProcessOutputs}
 \title{Generate Model Outputs}
 \usage{
-ProcessOutputs(data, sort)
+ProcessOutputs(data, sort = NULL, FAI = FALSE)
 }
 \arguments{
 \item{data}{data table. Output of the input-output modelling}
 
 \item{sort}{character. Variable on which to sort sectors by effect size. Inputs are one from
 c("output","empl","gva","inctaxes","earn")}
+
+\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table. If FALSE, uses the
+ONS supply and use tables. Defaults to FALSE}
 }
 \value{
 
