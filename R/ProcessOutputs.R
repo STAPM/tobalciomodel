@@ -52,27 +52,27 @@ ProcessOutputs <- function(data,
                                                    "Accommodation and Food Services","Information and Communication","Other Services"))]
 
   output_ind <- output[, .(out_0 = sum(out_effects_t0_p),
-                           out_1 = sum(out_effects_t1_p)), by = "Industry"]
+                           out_1 = sum(out_effects_t1_p) - sum(out_effects_t0_p)), by = "Industry"]
   output_ind[,out_t := out_0 + out_1]
   output_ind[,outcome := "Output"]
 
   gva_ind    <- output[, .(out_0 = sum(gva_effects_t0_p),
-                           out_1 = sum(gva_effects_t1_p)), by = "Industry"]
+                           out_1 = sum(gva_effects_t1_p) - sum(gva_effects_t0_p)), by = "Industry"]
   gva_ind[,out_t := out_0 + out_1]
   gva_ind[,outcome := "GVA"]
 
   empl_ind   <- output[, .(out_0 = sum(emp_effects_t0_p),
-                           out_1 = sum(emp_effects_t1_p)), by = "Industry"]
+                           out_1 = sum(emp_effects_t1_p) - sum(emp_effects_t0_p)), by = "Industry"]
   empl_ind[,out_t := out_0 + out_1]
   empl_ind[,outcome := "Employment"]
 
   earn_ind   <- output[, .(out_0 = sum(netearn_effects_t0_p),
-                           out_1 = sum(netearn_effects_t1_p)), by = "Industry"]
+                           out_1 = sum(netearn_effects_t1_p) - sum(netearn_effects_t0_p)), by = "Industry"]
   earn_ind[,out_t := out_0 + out_1]
   earn_ind[,outcome := "Net Earnings"]
 
   inctax_ind <- output[, .(out_0 = sum(emptax_effects_t0_p),
-                           out_1 = sum(emptax_effects_t1_p)), by = "Industry"]
+                           out_1 = sum(emptax_effects_t1_p) - sum(emptax_effects_t0_p)), by = "Industry"]
   inctax_ind[,out_t := out_0 + out_1]
   inctax_ind[,outcome := "Income Tax"]
 
@@ -88,23 +88,23 @@ ProcessOutputs <- function(data,
   ## earnings, and income tax on earnings
 
   out_0 <- sum(output$out_effects_t0_p)
-  out_1 <- sum(output$out_effects_t1_p)
+  out_1 <- sum(output$out_effects_t1_p) - out_0
   out_t <- out_0 + out_1
 
   gva_0 <- sum(output$gva_effects_t0_p)
-  gva_1 <- sum(output$gva_effects_t1_p)
+  gva_1 <- sum(output$gva_effects_t1_p) - gva_1
   gva_t <- gva_0 + gva_1
 
   emp_0 <- round(sum(output$emp_effects_t0_p))
-  emp_1 <- round(sum(output$emp_effects_t1_p))
+  emp_1 <- round(sum(output$emp_effects_t1_p)) - emp_0
   emp_t <- round(emp_0 + emp_1)
 
   net_0 <- sum(output$netearn_effects_t0_p)
-  net_1 <- sum(output$netearn_effects_t1_p)
+  net_1 <- sum(output$netearn_effects_t1_p) - net_0
   net_t <- net_0 + net_1
 
   tax_0 <- sum(output$emptax_effects_t0_p)
-  tax_1 <- sum(output$emptax_effects_t1_p)
+  tax_1 <- sum(output$emptax_effects_t1_p) - tax_0
   tax_t <- tax_0 + tax_1
 
   ### put results into a matrix
