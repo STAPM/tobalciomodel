@@ -116,6 +116,10 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
                     round(exp_total_bp,3),
                     round(net_govt_revenue,3))
 
+  setnames(out,
+           names(out),
+           c("year","exp_alc_off_bp","exp_alc_on_bp","exp_tob_bp","exp_total_bp","net_govt_revenue"))
+
 
   return(out)
 }
