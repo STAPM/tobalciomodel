@@ -159,7 +159,6 @@ EconEffectsCalc <- function(leontief,
   }
 
   earn[, avg_salary := avg_salary*deflator]
-  earn[, deflator := NULL]
 
   ### tax parameters (CORRECT AS AT 18/05/2021)
     # income tax
@@ -248,6 +247,8 @@ EconEffectsCalc <- function(leontief,
   } else if (FAI == FALSE) {
     setnames(earn, "code", "CPA_code")
   }
+
+  earn[, c("avg_salary","total_tax","income_tax","employee_nic","employer_nic") := NULL]
 
     return(list(effects = earn,
                 tax_params = tax_params))
