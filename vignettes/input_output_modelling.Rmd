@@ -65,7 +65,8 @@ label = 'tobalciomodel functions and data'
 
 data1 [label = 'MESAS Report 2021', shape = folder, fillcolor = LemonChiffon]
 data2 [label = 'HMRC Tobacco Duties', shape = folder, fillcolor = LemonChiffon]
-data3 [label = 'Labour Force Survey', shape = folder, fillcolor = LemonChiffon]
+data3 [label = 'HMRC Alcohol Duties', shape = folder, fillcolor = LemonChiffon]
+data4 [label = 'Labour Force Survey', shape = folder, fillcolor = LemonChiffon]
 
 
 b [label =  'Read Inputs']
@@ -85,7 +86,8 @@ out2 [label=   'Sector Specific \n Economic Impacts', shape = oval, fillcolor = 
                   a -> b
                   data1 -> c
                   data2 -> c
-                  data3 -> g
+                  data3 -> c
+                  data4 -> g
                   
 }", width = 768, height = 500)
 
@@ -93,6 +95,7 @@ out2 [label=   'Sector Specific \n Economic Impacts', shape = oval, fillcolor = 
 
 ## Data 
 
+A number of external data sources are required to operationalise the input-output methodology. The most important component is the input-output table - a national statistic recording all inter-industry purchases and sales as well as total industry output, employee compensation, and household/government demands from each sector. Aggregate data on alcohol and tobacco expenditures are required as inputs to the model. 
 
 ### Input-Output Tables
 
@@ -104,11 +107,25 @@ All purchases are measured in £m. Columns show purchases. Sector 3 purchases £
 
 Other variables include demand from households, final demand (the sum of all demand for goods for consumption, from households, governments, exports), household output (total employee compensation), total output (intermediate goods, plus imports, plus value added), total demand (intermediate demand plus final demand), and gross value added variables - total, and split into employee compensation, gross operating surplus, taxes.
 
-### Alcohol Data
+### Price, Consumption, and Expenditure Data
 
-This section describes and summarises the Scottish and English/Welsh alcohol consumption data that is included in the package. The data were originally compiled by MESAS from Nielsen retail sales data and were used by FAI and Connolly et al. (2019) in their study of the wider economic impacts of alcohol policy. 
+Aggregate consumption, price, and expenditures data are required to provide the inputs the model. As the input-output tables report expenditures in basic prices (market prices net of tax), the inputs to the model must also be expressed in basic prices.
 
-### Tobacco Data
+#### Alcohol
+
+The data used to compile the originally compiled by the Public Health Scotland programme Monitoring and Evaluating Scotlands Alcohol Strategy (MESAS) from Nielsen retail sales data and were used by FAI and Connolly et al. (2019) in their study of the wider economic impacts of alcohol policy. We use the data from the [MESAS monitoring report 2021](https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/) for information on aggregate consumption. These data contain mean prices, units of alcohol consumed per head, and population counts reported by year, alcohol product, and on vs off trade. Data are presented separately for Scotland and for England & Wales.
+
+In processing the data we construct total units of alcohol consumed by multiplying units per adult by total adult population. England & Wales data is combined with Scotland data by summing up consumption across the nations and calculating a consumption-weighted mean price. We collapse the alcohol categories to beer, cider, wine, and spirits.
+
+As the modelling is at the level of the UK, we adjust consumption figures accordingly before calculating total expenditure. To do this we assume that consumption patterns in Northern Ireland are similar to those for Great Britain and apply a simple upshift. Using [national population projections](https://www.nomisweb.co.uk/query/construct/summary.asp?mode=construct&version=0&dataset=2009) data, we calculate that the population of Northern Ireland is 2.84% of the population of Great Britain in each year from 2018 to 2030. Total units of alcohol consumed in MESAS data are therefore upshifted by a multiplier of 1.0284 to produce a UK consumption estimate. To calculate total UK expenditures at market prices, we assume the mean prices calculated for Great Britain to be representative of the UK mean price.  
+
+In order to calculate expenditure in basic prices, we merge in alcohol duty receipts data by calendar year from the [May - July 2021 Alcohol Bulletin tables](https://www.gov.uk/government/statistics/alcohol-bulletin). These data are presented for the four different alcohol duty regimes administered by HMRC; beer, cider, wine, and spirits (including RTDs). The duty receipts data makes no distinction between on and trade purchases, so the MESAS consumption data are used to apportion the total duty receipts for each product into on-trade and off-trade. The adjusted duty total figures are then subtracted from the upshifted expenditure at market prices along with VAT to give expenditure at basic prices. 
+
+This expenditure at basic prices figure is used as the basis for the calculations of change in demand for alcohol which are entered into the input-output model to calculate total economic effects of changes in alcohol demand. 
+
+#### Tobacco
+
+A similar approach is taken to the construction of aggregate tobacco expenditures data, using primarily the duty and clearances data in the [July 2021 Tobacco Bulletin](https://www.gov.uk/government/statistics/tobacco-bulletin). 
 
 ### LFS Employment Data
 
@@ -246,14 +263,14 @@ The alternative is to apply percentage changes to total spending - in basic pric
 
 tobalciomodel::tobacco_data[year == 2020, c("product","exp_bp")]
 
-tobalciomodel::mesas_eng_wales[year == 2020, c("product","exp_bp")]
+tobalciomodel::alcohol_data[year == 2020, c("product","exp_bp")]
 
 ```
 
 ```{r inputs_agg, eval = TRUE}
 
-  inputs <- GenInputs(prop_alc_on  = -0.1,
-                      prop_alc_off = -0.1,
+  inputs <- GenInputs(prop_alc_on  = -0.01,
+                      prop_alc_off = -0.01,
                       prop_tob_fm  = 0,
                       prop_tob_ryo = 0,
                       yr = 2020)
