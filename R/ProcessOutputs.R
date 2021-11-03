@@ -22,6 +22,8 @@ ProcessOutputs <- function(data,
 
   output <- copy(data)
 
+  ### Assign broad industry grouping to the individual sectors according to SIC-2007
+
   if (isTRUE(FAI)) {
     output[1:7   , Industry := "Agriculture and Mining"]
     output[8:51  , Industry := "Manufacturing"]
@@ -44,45 +46,21 @@ ProcessOutputs <- function(data,
     output[74:105, Industry := "Other Services"]
   }
 
-  ###############################
-  ## INDUSTRY LEVEL FIGURES #####
+  ####################################################
+  ## INDUSTRY LEVEL FIGURES - total effects only #####
 
   output[, Industry := factor(Industry, levels = c("Agriculture and Mining","Manufacturing","Utilities",
                                                    "Construction","Wholesale and Retail","Transport and Storage",
                                                    "Accommodation and Food Services","Information and Communication","Other Services"))]
 
-  output_ind <- output[, .(out_0 = sum(out_effects_t0_p),
-                           out_1 = sum(out_effects_t1_p) - sum(out_effects_t0_p)), by = "Industry"]
-  output_ind[,out_t := out_0 + out_1]
-  output_ind[,outcome := "Output"]
+  output_ind <- output[, .(out_1 = sum(out_effects_t1_p),
+                           gva_1 = sum(gva_effects_t1_p),
+                           emp_1 = sum(emp_effects_t1_p),
+                           net_1 = sum(netearn_effects_t1_p),
+                           tax_1 = sum(emptax_effects_t1_p)), by = "Industry"]
 
-  gva_ind    <- output[, .(out_0 = sum(gva_effects_t0_p),
-                           out_1 = sum(gva_effects_t1_p) - sum(gva_effects_t0_p)), by = "Industry"]
-  gva_ind[,out_t := out_0 + out_1]
-  gva_ind[,outcome := "GVA"]
-
-  empl_ind   <- output[, .(out_0 = sum(emp_effects_t0_p),
-                           out_1 = sum(emp_effects_t1_p) - sum(emp_effects_t0_p)), by = "Industry"]
-  empl_ind[,out_t := out_0 + out_1]
-  empl_ind[,outcome := "Employment"]
-
-  earn_ind   <- output[, .(out_0 = sum(netearn_effects_t0_p),
-                           out_1 = sum(netearn_effects_t1_p) - sum(netearn_effects_t0_p)), by = "Industry"]
-  earn_ind[,out_t := out_0 + out_1]
-  earn_ind[,outcome := "Net Earnings"]
-
-  inctax_ind <- output[, .(out_0 = sum(emptax_effects_t0_p),
-                           out_1 = sum(emptax_effects_t1_p) - sum(emptax_effects_t0_p)), by = "Industry"]
-  inctax_ind[,out_t := out_0 + out_1]
-  inctax_ind[,outcome := "Income Tax"]
-
-  results_ind <- rbindlist(list(output_ind,gva_ind,empl_ind,
-                                earn_ind,inctax_ind))
-
-  setnames(results_ind, names(results_ind), c("Industry","Direct Effect","Indirect Effect","Total Effect","Outcome"))
-
-  ###############################
-  ## AGGREGATE FIGURES ##########
+  ##############################################################################
+  ## AGGREGATE FIGURES - split by direct, indirect, and total effects ##########
 
   ## generate total type 0 and type 1 effects for output, GVA, employment,
   ## earnings, and income tax on earnings
@@ -123,5 +101,5 @@ ProcessOutputs <- function(data,
   ### output the results
 
   return(list(aggregate = tab,
-              industry = results_ind))
+              industry = output_ind))
 }
