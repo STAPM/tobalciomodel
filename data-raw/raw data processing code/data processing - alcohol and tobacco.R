@@ -10,4 +10,6 @@ source("data-raw/raw data processing code/data processing - tobacco duties price
 
 tob_alc_data <- rbindlist(list(alcohol_data, tobacco_data))
 
+tob_alc_data <- tob_alc_data[order(product,year),]
+
 usethis::use_data(tob_alc_data, overwrite = TRUE)
