@@ -56,17 +56,24 @@ graph [layout = dot]
 
 node [shape = rectangle, style = filled, fillcolor = Linen]
 
-a [label =  'STAPM']
+a [label =  'STAPM Output \n EconCalc()', shape = folder, fillcolor = green]
 
 subgraph cluster_0 {
 
-graph[shape = rectangle, style = rounded, bgcolor = gold]
+graph[shape = rectangle, style = rounded, bgcolor = cyan]
 label = 'tobalciomodel functions and data'
 
-data1 [label = 'MESAS Report 2021', shape = folder, fillcolor = LemonChiffon]
-data2 [label = 'HMRC Tobacco Duties', shape = folder, fillcolor = LemonChiffon]
-data3 [label = 'HMRC Alcohol Duties', shape = folder, fillcolor = LemonChiffon]
-data4 [label = 'Labour Force Survey', shape = folder, fillcolor = LemonChiffon]
+data1 [label = 'Alcohol & Tobacco \n Expenditure Data', shape = folder, fillcolor = green]
+data1a [label = 'MESAS Report 2021', shape = folder, fillcolor = LemonChiffon]
+data1b [label = 'Tobacco Bulletin', shape = folder, fillcolor = LemonChiffon]
+data1c [label = 'Alcohol Bulletin', shape = folder, fillcolor = LemonChiffon]
+data2 [label = 'Input-Output \n Table', shape = folder, fillcolor = green]
+data3 [label = 'Employment', shape = folder, fillcolor = green]
+data4 [label = 'Earnings', shape = folder, fillcolor = green]
+data5 [label = 'Income Tax / NI', shape = folder, fillcolor = green]
+
+data3a [label = 'Labour Force Survey', shape = folder, fillcolor = LemonChiffon]
+data4a [label = 'Annual Survey of \n Hours and Earnings', shape = folder, fillcolor = LemonChiffon]
 
 
 b [label =  'Read Inputs']
@@ -78,17 +85,23 @@ g [label =  'Calculate Economic Effects']
 h [label =  'Process Outputs']
 }
 
-out1 [label=   'Direct and Indirect \n Economic Impacts', shape = oval, fillcolor = cyan]
-out2 [label=   'Sector Specific \n Economic Impacts', shape = oval, fillcolor = cyan]
+out1 [label=   'Direct and Indirect \n Economic Impacts', shape = oval, fillcolor = gold]
+out2 [label=   'Sector Specific \n Economic Impacts', shape = oval, fillcolor = gold]
 
 # edge definitions with the node IDs
 {b c} -> d -> e -> f -> g -> h -> {out1 out2} 
                   a -> b
                   data1 -> c
-                  data2 -> c
-                  data3 -> c
+                  data1a -> data1
+                  data1b -> data1
+                  data1c -> data1
+                  data2 -> {d e}
+                  data3a -> data3
+                  data3 -> g
+                  data4a -> data4
                   data4 -> g
-                  
+                  data5 -> g
+
 }", width = 768, height = 500)
 
 ```
@@ -109,7 +122,7 @@ Other variables include demand from households, final demand (the sum of all dem
 
 ### Price, Consumption, and Expenditure Data
 
-Aggregate consumption, price, and expenditures data are required to provide the inputs the model. As the input-output tables report expenditures in basic prices (market prices net of tax), the inputs to the model must also be expressed in basic prices.
+Aggregate consumption, price, and expenditures data are required to provide the inputs the model. As the input-output tables report expenditures in basic prices (market prices net of tax), the inputs to the model must also be expressed in basic prices. For both tobacco and alcohol products (two tobacco and four alcohol, divided into on and off-trade) a time series of expenditures at basic prices is calculated for 2010-2020. 
 
 #### Alcohol
 
@@ -121,11 +134,11 @@ As the modelling is at the level of the UK, we adjust consumption figures accord
 
 In order to calculate expenditure in basic prices, we merge in alcohol duty receipts data by calendar year from the [May - July 2021 Alcohol Bulletin tables](https://www.gov.uk/government/statistics/alcohol-bulletin). These data are presented for the four different alcohol duty regimes administered by HMRC; beer, cider, wine, and spirits (including RTDs). The duty receipts data makes no distinction between on and trade purchases, so the MESAS consumption data are used to apportion the total duty receipts for each product into on-trade and off-trade. The adjusted duty total figures are then subtracted from the upshifted expenditure at market prices along with VAT to give expenditure at basic prices. 
 
-This expenditure at basic prices figure is used as the basis for the calculations of change in demand for alcohol which are entered into the input-output model to calculate total economic effects of changes in alcohol demand. 
-
 #### Tobacco
 
-A similar approach is taken to the construction of aggregate tobacco expenditures data, using primarily the duty and clearances data in the [July 2021 Tobacco Bulletin](https://www.gov.uk/government/statistics/tobacco-bulletin). 
+A similar approach is taken to the construction of aggregate tobacco expenditures data, using primarily the duty and clearances data in the [July 2021 Tobacco Bulletin](https://www.gov.uk/government/statistics/tobacco-bulletin). Price data are also obtained from the ONS for a 20-pack of cigarettes, and the consumer price index (CPI) for tobacco products is used to estimate the time series of roll-your-own tobacco prices (per 100g) from the estimated price in 2020 calculated from an average of prices taken from supermarket websites in December 2020. 
+
+Clearance data for factory-made (reported in millions of sticks) and roll-your-own (reported in thousands of kilograms) are converted, respectively, into packs of 20 sticks and packs of 100g. These are then multiplied by the prices to obtain estimated total expenditure at market prices. As with alcohol, VAT is calculated from this figure and subtracted, along with total duty receipts, to give total expendture at basic prices.  
 
 ### LFS Employment Data
 
@@ -243,7 +256,7 @@ So the GVA multiplier for sector $n$ is simply the GVA proportion multiplied by 
 
 A similar approach is taken to the creation of the employment multipliers. We calculate for each sector the employment/output ratio - the number of employees required to make £1 worth of output - and multiply this by the output multiplier. We therefore implicitly make the assumption that employment remains proportional to output, given any change in production.  
 
-## Implementation in R
+## Implementation of a 1% Reduction in Demand in R
 
 ### __Step (1) Produce Inputs__
 
@@ -261,9 +274,7 @@ The alternative is to apply percentage changes to total spending - in basic pric
 
 ```{r inputs, echo = FALSE}
 
-tobalciomodel::tobacco_data[year == 2020, c("product","exp_bp")]
-
-tobalciomodel::alcohol_data[year == 2020, c("product","exp_bp")]
+tobalciomodel::tob_alc_data[year == 2020, c("product","exp_bp")]
 
 ```
 
