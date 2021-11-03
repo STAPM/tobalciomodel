@@ -3,9 +3,9 @@
 \docType{data}
 \name{alcohol_data}
 \alias{alcohol_data}
-\title{Alcohol Data 2016-2020}
+\title{Alcohol Data 2010-2020}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 40 rows and 11 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 88 rows and 15 columns.
 }
 \source{
 \href{https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/}{MESAS monitoring report 2021}.

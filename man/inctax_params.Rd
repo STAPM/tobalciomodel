@@ -3,7 +3,7 @@
 \docType{data}
 \name{inctax_params}
 \alias{inctax_params}
-\title{Income Tax Parameters}
+\title{Income Tax Parameters 2010-2020}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 11 rows and 13 columns.
 }

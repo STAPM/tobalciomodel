@@ -3,7 +3,7 @@
 \docType{data}
 \name{lfs_empl_cpa}
 \alias{lfs_empl_cpa}
-\title{LFS Employment Data}
+\title{LFS Employment Data 2010-2020}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 1155 rows and 5 columns.
 }

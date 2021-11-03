@@ -3,7 +3,7 @@
 \docType{data}
 \name{ashe_earn_cpa}
 \alias{ashe_earn_cpa}
-\title{ASHE Earnings Data}
+\title{ASHE Earnings Data 2020}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 105 rows and 3 columns.
 }

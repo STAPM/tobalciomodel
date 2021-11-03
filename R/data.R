@@ -1,4 +1,4 @@
-#' Alcohol Data 2016-2020
+#' Alcohol Data 2010-2020
 #'
 #' Data on alcohol expenditures, consumption and prices. Data are constructed using price and consumption data published by MESAS - Monitoring
 #' and Evaluating Scotland's Alcohol Strategy. Expenditures at basic prices are constructed by combining with data on total duty receipts by HMRC
@@ -26,7 +26,7 @@
 #' of the Supply and Use Tables for 2018. The data can be found \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
 "coicop_cpa_mapping"
 
-#' ASHE Earnings Data
+#' ASHE Earnings Data 2020
 #'
 #' Average annual earnings published by the ONS from analysis of the Annual Survey of Hours and Earnings by 4-digit SIC-2007 industry.
 #' Data are collapsed into the 105 categories used in the ONS Supply and Use Tables using employment calculated from the Labour Force
@@ -36,7 +36,7 @@
 #' are obtained \href{https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/industry4digitsic2007ashetable16}{here}.
 "ashe_earn_cpa"
 
-#' ASHE Earnings Data
+#' ASHE Earnings Data 2020
 #'
 #' Average annual earnings published by the ONS from analysis of the Annual Survey of Hours and Earnings by 4-digit SIC-2007 industry.
 #' Data are collapsed into the 106 categories used in the Fraser of Allender Institute (FAI) alcohol disaggregated input-output
@@ -47,7 +47,7 @@
 #' are obtained \href{https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/industry4digitsic2007ashetable16}{here}.
 "ashe_earn_fai"
 
-#' LFS Employment Data
+#' LFS Employment Data 2010-2020
 #'
 #' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 #' are collapsed into the 105 CPA categories used in the ONS Supply and Use Tables and for a given year, the average total
@@ -61,7 +61,7 @@
 #'
 "lfs_empl_cpa"
 
-#' LFS Employment Data
+#' LFS Employment Data 2010-2020
 #'
 #' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 #' are collapsed into the 106 industry categories used in the FAI alcohol-disaggregated input-output table. the average total
@@ -75,7 +75,7 @@
 #'
 "lfs_empl_fai"
 
-#' Income Tax Parameters
+#' Income Tax Parameters 2010-2020
 #'
 #' Data table of income tax and national insurance parameters - thresholds and tax rates - used for calculating tax paid on employment incomes
 #' based on annual earnings. Data provided for 2010 - 2020
