@@ -4,9 +4,7 @@
 #' changes in expenditure in basic prices following assumed percentage changes in
 #' consumption.
 #'
-#' @param tobacco Data table. Tobacco expenditures
-#' @param alcohol_eng Data table. Alcohol expenditures data for England and Wales.
-#' @param alcohol_scot Data table. Alcohol expenditures data for Scotland.
+#' @param data Data table. Tobacco and alcohol expenditures
 #' @param prop_alc_on Proportionate change in alcohol expenditure.
 #' @param prop_alc_off Proportionate change in alcohol expenditure.
 #' @param prop_tob_fm Proportionate change in factory-made cigarettes expenditure.
@@ -22,8 +20,7 @@
 #' \dontrun{
 #'
 #' }
-GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
-                      alcohol = tobalciomodel::alcohol_data,
+GenInputs <- function(data = tobalciomodel::tob_alc_data,
                       prop_alc_on = -0.01,
                       prop_alc_off = -0.01,
                       prop_tob_fm = -0.01,
@@ -31,10 +28,12 @@ GenInputs <- function(tobacco = tobalciomodel::tobacco_data,
                       govt = TRUE,
                       yr = 2020) {
 
-  # restrict to year chosen
-  data_tob      <- tobacco[year == yr,]
-  data_alc      <- alcohol[year == yr]
+  # restrict to year chosen and split into alcohol and tobacco specific datasets
 
+  data_tob      <- data[year == yr & product %in% c("FM_cigs","RYO_tob"),]
+  data_alc      <- data[year == yr & !(product %in% c("FM_cigs","RYO_tob")),]
+
+  data_tob[, tot_tax := exp_mp - exp_bp]
   data_alc[, tot_tax := exp_mp - exp_bp]
 
   ##############################

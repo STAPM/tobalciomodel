@@ -5,8 +5,7 @@
 \title{Generate IO Model Inputs from Data}
 \usage{
 GenInputs(
-  tobacco = tobalciomodel::tobacco_data,
-  alcohol = tobalciomodel::alcohol_data,
+  data = tobalciomodel::tob_alc_data,
   prop_alc_on = -0.01,
   prop_alc_off = -0.01,
   prop_tob_fm = -0.01,
@@ -16,7 +15,7 @@ GenInputs(
 )
 }
 \arguments{
-\item{tobacco}{Data table. Tobacco expenditures}
+\item{data}{Data table. Tobacco and alcohol expenditures}
 
 \item{prop_alc_on}{Proportionate change in alcohol expenditure.}
 
@@ -29,10 +28,6 @@ GenInputs(
 \item{govt}{Logical. If TRUE include changes in government revenue in the analysis.}
 
 \item{yr}{year of data to use.}
-
-\item{alcohol_eng}{Data table. Alcohol expenditures data for England and Wales.}
-
-\item{alcohol_scot}{Data table. Alcohol expenditures data for Scotland.}
 }
 \value{
 
