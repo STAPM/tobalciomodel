@@ -21,14 +21,19 @@ file          <- "mesas-monitoring-report-2021-alcohol-sales"
 sheet_s       <- "Scotland data"
 sheet_ew      <- "England & Wales data"
 
-r_pop_scot    <- "C23:C27"
-r_pop_engw    <- "D23:D27"
+r_pop_scot    <- "C17:C27"
+r_pop_engw    <- "D17:D27"
 
 r_pr_on       <- "B43:AC52"
 r_pr_off      <- "AE43:BF52"
 
 r_con_on      <- "B30:AC39"
 r_con_off     <- "AE30:BF39"
+
+min_yr <- 2010
+max_yr <- 2020
+
+year_range <- as.character(min_yr:max_yr)
 
 #################################################
 ######### ENG/WALES DATA ########################
@@ -42,7 +47,7 @@ popsize   <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                 col_names = FALSE)
 setDT(popsize)
 
-year <- 2016:2020
+year <- min_yr:max_yr
 
 setnames(popsize, names(popsize), "population")
 
@@ -62,13 +67,13 @@ mesas_p  <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                range = r_pr_on)
 setDT(mesas_p)
 
-mesas_p  <- mesas_p[, c(1,24:28)]
-setnames(mesas_p, names(mesas_p), c("product","2016","2017","2018","2019","2020"))
+mesas_p  <- mesas_p[, c(1,18:28)]
+setnames(mesas_p, names(mesas_p), c("product", year_range))
 mesas_p  <- mesas_p[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_p <- melt(mesas_p, id.vars = "product",  variable.name = "year", value.name = "price_per_unit")
 
-mesas_p[, year := as.numeric(year) + 2015]
+mesas_p[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_p[, price_per_unit := as.numeric(price_per_unit)]
 
@@ -79,13 +84,13 @@ mesas_c <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                               range = r_con_on)
 setDT(mesas_c)
 
-mesas_c  <- mesas_c[, c(1,24:28)]
-setnames(mesas_c, names(mesas_c), c("product","2016","2017","2018","2019","2020"))
+mesas_c  <- mesas_c[, c(1,18:28)]
+setnames(mesas_c, names(mesas_c), c("product", year_range))
 mesas_c  <- mesas_c[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_c <- melt(mesas_c, id.vars = "product",  variable.name = "year", value.name = "units_per_adult")
 
-mesas_c[, year := as.numeric(year) + 2015]
+mesas_c[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_c[, units_per_adult := round(as.numeric(units_per_adult),3)]
 
@@ -120,20 +125,18 @@ rm(mesas, mesas_c, mesas_p, mesas_pop)
 
 ## prices
 
-## prices
-
 mesas_p  <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                sheet = sheet_ew,
                                range = r_pr_off)
 setDT(mesas_p)
 
-mesas_p  <- mesas_p[, c(1,24:28)]
-setnames(mesas_p, names(mesas_p), c("product","2016","2017","2018","2019","2020"))
+mesas_p  <- mesas_p[, c(1,18:28)]
+setnames(mesas_p, names(mesas_p), c("product", year_range))
 mesas_p  <- mesas_p[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_p <- melt(mesas_p, id.vars = "product",  variable.name = "year", value.name = "price_per_unit")
 
-mesas_p[, year := as.numeric(year) + 2015]
+mesas_p[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_p[, price_per_unit := as.numeric(price_per_unit)]
 
@@ -144,13 +147,13 @@ mesas_c <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                               range = r_con_off)
 setDT(mesas_c)
 
-mesas_c  <- mesas_c[, c(1,24:28)]
-setnames(mesas_c, names(mesas_c), c("product","2016","2017","2018","2019","2020"))
+mesas_c  <- mesas_c[, c(1,18:28)]
+setnames(mesas_c, names(mesas_c), c("product", year_range))
 mesas_c  <- mesas_c[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_c <- melt(mesas_c, id.vars = "product",  variable.name = "year", value.name = "units_per_adult")
 
-mesas_c[, year := as.numeric(year) + 2015]
+mesas_c[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_c[, units_per_adult := round(as.numeric(units_per_adult),3)]
 
@@ -199,7 +202,7 @@ popsize   <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                 col_names = FALSE)
 setDT(popsize)
 
-year <- 2016:2020
+year <- min_yr:max_yr
 
 setnames(popsize, names(popsize), "population")
 
@@ -219,13 +222,13 @@ mesas_p  <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                   range = r_pr_on)
 setDT(mesas_p)
 
-mesas_p  <- mesas_p[, c(1,24:28)]
-setnames(mesas_p, names(mesas_p), c("product","2016","2017","2018","2019","2020"))
+mesas_p  <- mesas_p[, c(1,18:28)]
+setnames(mesas_p, names(mesas_p), c("product",year_range))
 mesas_p  <- mesas_p[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_p <- melt(mesas_p, id.vars = "product",  variable.name = "year", value.name = "price_per_unit")
 
-mesas_p[, year := as.numeric(year) + 2015]
+mesas_p[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_p[, price_per_unit := as.numeric(price_per_unit)]
 
@@ -236,13 +239,13 @@ mesas_c <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                 range = r_con_on)
 setDT(mesas_c)
 
-mesas_c  <- mesas_c[, c(1,24:28)]
-setnames(mesas_c, names(mesas_c), c("product","2016","2017","2018","2019","2020"))
+mesas_c  <- mesas_c[, c(1,18:28)]
+setnames(mesas_c, names(mesas_c), c("product",year_range))
 mesas_c  <- mesas_c[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_c <- melt(mesas_c, id.vars = "product",  variable.name = "year", value.name = "units_per_adult")
 
-mesas_c[, year := as.numeric(year) + 2015]
+mesas_c[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_c[, units_per_adult := round(as.numeric(units_per_adult),3)]
 
@@ -277,20 +280,18 @@ rm(mesas, mesas_c, mesas_p, mesas_pop)
 
 ## prices
 
-## prices
-
 mesas_p  <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                                sheet = sheet_s,
                                range = r_pr_off)
 setDT(mesas_p)
 
-mesas_p  <- mesas_p[, c(1,24:28)]
-setnames(mesas_p, names(mesas_p), c("product","2016","2017","2018","2019","2020"))
+mesas_p  <- mesas_p[, c(1,18:28)]
+setnames(mesas_p, names(mesas_p), c("product", year_range))
 mesas_p  <- mesas_p[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_p <- melt(mesas_p, id.vars = "product",  variable.name = "year", value.name = "price_per_unit")
 
-mesas_p[, year := as.numeric(year) + 2015]
+mesas_p[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_p[, price_per_unit := as.numeric(price_per_unit)]
 
@@ -301,13 +302,13 @@ mesas_c <- readxl::read_excel(paste0("data-raw/",file,".xlsx"),
                               range = r_con_off)
 setDT(mesas_c)
 
-mesas_c  <- mesas_c[, c(1,24:28)]
-setnames(mesas_c, names(mesas_c), c("product","2016","2017","2018","2019","2020"))
+mesas_c  <- mesas_c[, c(1,18:28)]
+setnames(mesas_c, names(mesas_c), c("product", year_range))
 mesas_c  <- mesas_c[product %in% c("Beer","Cider","Perry","Wine","Fortified Wines","Spirits","RTDs"), ]
 
 mesas_c <- melt(mesas_c, id.vars = "product",  variable.name = "year", value.name = "units_per_adult")
 
-mesas_c[, year := as.numeric(year) + 2015]
+mesas_c[, year := as.numeric(year) + (min_yr-1)]
 
 mesas_c[, units_per_adult := round(as.numeric(units_per_adult),3)]
 
@@ -404,7 +405,7 @@ wine     <- readxl::read_excel(paste0("data-raw/","2021_Alcohol_Tables_Wine",".x
 setDT(spirits)
 spirits <- spirits[,c(1,9)]
 setnames(spirits, names(spirits), c("year","total_duty"))
-spirits <- spirits[year %in% 2016:2020,]
+spirits <- spirits[year %in% min_yr:max_yr,]
 spirits[, prod := "spirits"]
 
 ## beer
@@ -412,7 +413,7 @@ spirits[, prod := "spirits"]
 setDT(beer)
 beer <- beer[,c(1,9)]
 setnames(beer, names(beer), c("year","total_duty"))
-beer <- beer[year %in% 2016:2020,]
+beer <- beer[year %in% min_yr:max_yr,]
 beer[, prod := "beer"]
 
 ## cider
@@ -420,7 +421,7 @@ beer[, prod := "beer"]
 setDT(cider)
 cider <- cider[,c(1,3)]
 setnames(cider, names(cider), c("year","total_duty"))
-cider <- cider[year %in% 2016:2020,]
+cider <- cider[year %in% min_yr:max_yr,]
 cider[, prod := "cider"]
 
 ## wine
@@ -428,7 +429,7 @@ cider[, prod := "cider"]
 setDT(wine)
 wine <- wine[,c(1,9)]
 setnames(wine, names(wine), c("year","total_duty"))
-wine <- wine[year %in% 2016:2020,]
+wine <- wine[year %in% min_yr:max_yr,]
 wine[, prod := "wine"]
 
 #########################
@@ -465,6 +466,27 @@ setnames(data, c("total_exp","total_tax"), c("exp_mp","tax"))
 
 alcohol_data <- data[, c("year","product","units_per_adult","units","price_per_unit","basic_price_per_unit",
                          "exp_mp","exp_bp","duty","vat","tax")]
+
+#####################################################################
+### CONSTRUCT EXPENDITURES IN REAL-TERMS  -  CONSTANT 2020 PRICES ###
+
+real <- alcohol_data[year == 2020, c("price_per_unit","basic_price_per_unit")]
+
+## duplicate data table for each year
+
+real <- rbindlist(list(real, real, real, real, real, real,
+                       real, real, real, real, real))
+setnames(real,
+         c("price_per_unit","basic_price_per_unit"),
+         c("price_per_unit_2020","basic_price_per_unit_2020"))
+
+## merge and calculate real expenditures
+
+alcohol_data <- cbind(alcohol_data, real)
+
+alcohol_data[, exp_mp_2020 := (price_per_unit_2020 * units)/1000000]
+alcohol_data[, exp_bp_2020 := (basic_price_per_unit_2020 * units)/1000000]
+
 
 
 usethis::use_data(alcohol_data, overwrite = TRUE)

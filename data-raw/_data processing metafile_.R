@@ -1,7 +1,6 @@
 
 ### This code runs all of the raw data processing R scripts for updating package data
 
-
 ### MAPPING AND CATEGORISING SECTORS
 
 source("data-raw/raw data processing code/data processing - CPA categories info table.R")
@@ -24,6 +23,9 @@ source("data-raw/raw data processing code/data processing - employment data LFS 
 source("data-raw/raw data processing code/data processing - earnings data LFS fai.R")
 source("data-raw/raw data processing code/data processing - earnings data LFS cpa.R")
 source("data-raw/raw data processing code/data processing - earnings deflator.R")
+source("data-raw/raw data processing code/data processing - income tax and nics.R")
 
 ### AGGREGATE ALCOHOL AND TOBACCO DATA
 
+source("data-raw/raw data processing code/data processing - alcohol duties price and consumption.R")
+source("data-raw/raw data processing code/data processing - tobacco duties price and consumption.R")
