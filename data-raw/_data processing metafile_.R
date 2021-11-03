@@ -27,5 +27,4 @@ source("data-raw/raw data processing code/data processing - income tax and nics.
 
 ### AGGREGATE ALCOHOL AND TOBACCO DATA
 
-source("data-raw/raw data processing code/data processing - alcohol duties price and consumption.R")
-source("data-raw/raw data processing code/data processing - tobacco duties price and consumption.R")
+source("data-raw/raw data processing code/data processing - alcohol and tobacco.R")

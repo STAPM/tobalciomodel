@@ -8,10 +8,6 @@ library(data.table)
 library(readxl)
 library(plyr)
 
-rm(list = ls())
-
-prod_list <- c("off_beer","off_cider","off_wine","off_spirits","off_rtds",
-               "on_beer","on_cider","on_wine","on_spirits","on_rtds")
 
 ##################################
 ############# MESAS INPUTS
@@ -487,6 +483,16 @@ alcohol_data <- cbind(alcohol_data, real)
 alcohol_data[, exp_mp_2020 := (price_per_unit_2020 * units)/1000000]
 alcohol_data[, exp_bp_2020 := (basic_price_per_unit_2020 * units)/1000000]
 
+alcohol_data[, unit_define := "1 unit = 10ml of pure alcohol"]
 
 
-usethis::use_data(alcohol_data, overwrite = TRUE)
+### sort data
+
+alcohol_data <- alcohol_data[,c("year","product","unit_define","duty","vat","units",
+                                "price_per_unit","basic_price_per_unit","exp_mp","exp_bp",
+                                "price_per_unit_2020","basic_price_per_unit_2020","exp_mp_2020","exp_bp_2020")]
+
+rm(data, duties, real, file, min_yr, max_yr, r_con_off, r_con_on, r_pop_engw, r_pop_scot,
+   r_pr_off, r_pr_on, sheet_ew, sheet_s, year_range)
+
+#usethis::use_data(alcohol_data, overwrite = TRUE)

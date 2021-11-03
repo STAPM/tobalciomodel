@@ -1,14 +1,3 @@
-#' Alcohol Data 2010-2020
-#'
-#' Data on alcohol expenditures, consumption and prices. Data are constructed using price and consumption data published by MESAS - Monitoring
-#' and Evaluating Scotland's Alcohol Strategy. Expenditures at basic prices are constructed by combining with data on total duty receipts by HMRC
-#' published in the ONS alcohol bulletin.
-#'
-#' @source \href{https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/}{MESAS monitoring report 2021}.
-#' @source \href{https://www.gov.uk/government/statistics/alcohol-bulletin}{Alcohol Bulletin}
-#'
-"alcohol_data"
-
 #' Average Weekly Earnings (AWE) Index
 #'
 #' An index of average weekly earnings growth from 2000 to 2020. Used to deflate the package earnings data to any other year used for the
@@ -109,13 +98,23 @@
 #'
 "sic_cpa_fai_mapping"
 
-#' Tobacco Data 2016-2020
+#' Tobacco and Alcohol Data 2010-2020
 #'
-#' Data on tobacco consumption and prices obtained from the ONS and HMRC duty receipts and clearance data available in the
-#' ONS Tobacco Bulletin.
+#' Data on tobacco expenditure, consumption and prices obtained from the ONS and HMRC duty receipts and clearance data available in the
+#' ONS Tobacco Bulletin and other ONS sources. Data on alcohol expenditures, consumption and prices constructed using
+#' price and consumption data published by MESAS - Monitoring and Evaluating Scotland's Alcohol Strategy. MESAS data are combined with
+#' data on total duty receipts by HMRC published in the ONS Alcohol Bulletin.
 #'
+#' The key variables in the data are `exp_bp` and `exp_bp_2020`. These are the estimates of total expenditure in basic prices (market prices
+#' net of tax). `exp_bp_2020` applies 2020 prices throughout and is therefore a measure of real expenditures.
 #'
-"tobacco_data"
+#' @source \href{https://www.publichealthscotland.scot/publications/mesas-monitoring-report-2021/}{MESAS monitoring report 2021}.
+#' @source \href{https://www.gov.uk/government/statistics/alcohol-bulletin}{Alcohol Bulletin}
+#' @source \href{https://www.gov.uk/government/statistics/tobacco-bulletin}{Tobacco Bulletin}.
+#' @source \href{https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7cb/mm23}{ONE Consumer Price Index (RPI) time series: All Tobacco}
+#' @source \href{https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/czmp}{ONS Average Price - Cigarettes pack of 20}
+#'
+"tob_alc_data"
 
 #' Household Redistribution Vectors
 #'
