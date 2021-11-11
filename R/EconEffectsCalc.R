@@ -32,9 +32,9 @@ EconEffectsCalc <- function(leontief,
   ## vector of annual earnings by sector based on choice of IO tables
 
   if (FAI == TRUE) {
-    earnings_data <- tobalciomodel::ashe_earn_fai
+    earnings_data <- tobalciomodel::ashe_earn_fai[year == yr,]
   } else if (FAI == FALSE) {
-    earnings_data <- tobalciomodel::ashe_earn_cpa
+    earnings_data <- tobalciomodel::ashe_earn_cpa[year == yr,]
   }
 
   ## extract multipliers and final demand vectors from inputs
@@ -135,11 +135,7 @@ EconEffectsCalc <- function(leontief,
   ##############################################################################
   ### Use calculated employment effects to estimate effects on income taxes ####
 
-  ### note earnings data is 2020
-
-  deflator <- as.numeric(tobalciomodel::awe[year == yr,"awe_index"])/100
-
-  ### read in the earnings data for the IO table being used and deflate
+  ### read in the earnings data for the IO table
 
   if (FAI == TRUE) {
   earn <- merge.data.table(effects, earnings_data,
@@ -148,8 +144,6 @@ EconEffectsCalc <- function(leontief,
   earn <- merge.data.table(effects, earnings_data,
                            by = c("CPA_code","Product"), sort = FALSE)
   }
-
-  earn[, avg_salary := avg_salary*deflator]
 
   ##########################################################
   ### Extract the tax parameters for the analysis year #####
