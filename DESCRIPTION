@@ -1,12 +1,15 @@
 Package: tobalciomodel
 Type: Package
-Title: Modelling Economic Impacts of Tobacco/Alcohol Policy
+Title: Modelling Economic Impacts of Tobacco/Alcohol Demand
 Version: 0.7.1
 Author: Damon Morris
 Maintainer: Damon Morris <d.j.morris@sheffield.ac.uk>
-Description: Functions to estimate the wider economic
-    impacts of policies designed to limit the consumption of alcohol and tobacco
-    products. 
+Description: Simulates the impact on the macroeconomy of changes in the demand
+for alcohol and tobacco, producing estimates of the effect on total output, gross
+value added (GVA), employment, and earnings. Uses input-output modelling techniques 
+to estimate the impact of hypothetical percentage changes in demand or of policy effects
+estimated using the Sheffield Tobacco and Alcohol Policy Model (STAPM). Breaks down 
+estimated economic impacts by sector. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
