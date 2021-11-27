@@ -4,9 +4,11 @@
 #' across the 105 CPA sectors.
 #'
 #' @param expenditure change in consumption, measured in basic prices.
-#' @param vector character. The distribution of reallocation of spending to implement.
-#' Valid options are the column names of the \code{vectors_hhold} data. The default is to
-#' allocate spending pro-rata according to the 2018 distribution of central government spending.
+#' @param vector Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
+#' Option 1 (default) allocates pro-rata according to the distribution of total government spending,
+#' option 2 allocates according to central government spending only, option 3 allocates according
+#' to local government only. Option 4 allocates all spending to health, and option 5 allocates all spending
+#' to education.
 #' @param vector_data data table containing the redistribution vectors.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 #'            ONS ones. Defaults to FALSE.
@@ -14,34 +16,19 @@
 #'
 #' @export
 ReallocateGovt <- function(expenditure = 10,
-                           vector = "central",
+                           vector = 1,
                            vectors_data = tobalciomodel::vectors_govt,
                            FAI = FALSE
 ) {
 
   # calculate the amount of expenditure that will be reallocated
 
-  exp <- expenditure
+  exp <- copy(expenditure)
 
   # select the chosen reallocation vector
 
-  if (vector == "central") {
-    v <- as.vector(as.matrix( vectors_data[,3] ))
-  } else if (vector == "local") {
-    v <- as.vector(as.matrix( vectors_data[,4] ))
-  } else if (vector == "total") {
-    v <- as.vector(as.matrix( vectors_data[,5] ))
-  } else if (vector == "all_pubadmin") {
-    v <- as.vector(as.matrix( vectors_data[,6] ))
-  } else if (vector == "all_education") {
-    v <- as.vector(as.matrix( vectors_data[,7] ))
-  } else if (vector == "all_health") {
-    v <- as.vector(as.matrix( vectors_data[,8] ))
-  } else if (vector == "all_socialwork") {
-    v <- as.vector(as.matrix( vectors_data[,9] ))
-  } else if (vector == "all_cultural") {
-    v <- as.vector(as.matrix( vectors_data[,10] ))
-  }
+  col <- names(vectors_data)[vector+2]
+  v <- as.vector(as.matrix( vectors_data[, ..col] ))
 
   # redistribute the expenditure along the vector
 

@@ -5,7 +5,7 @@
 \alias{vectors_hhold}
 \title{Household Redistribution Vectors}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 36 rows and 13 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 36 rows and 4 columns.
 }
 \usage{
 vectors_hhold

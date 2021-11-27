@@ -41,15 +41,18 @@ totals[, local   := local/(total_local)]
 
 vectors_govt <- cbind(sectors,totals)
 
-vectors_govt[, all_pubadmin   := c(rep(0,93),1,rep(0,11)) ]
+#vectors_govt[, all_pubadmin   := c(rep(0,93),1,rep(0,11)) ]
 
 vectors_govt[, all_education  := c(rep(0,94),1,rep(0,10)) ]
 
 vectors_govt[, all_health     := c(rep(0,95),1,rep(0,9)) ]
 
-vectors_govt[, all_socialwork := c(rep(0,96),1,rep(0,8)) ]
+#vectors_govt[, all_socialwork := c(rep(0,96),1,rep(0,8)) ]
 
-vectors_govt[, all_cultural   := c(rep(0,98),1,rep(0,6)) ]
+#vectors_govt[, all_cultural   := c(rep(0,98),1,rep(0,6)) ]
+
+vectors_govt <- vectors_govt[,c("CPA_code","Product","total",
+                                "central","local","all_health","all_education")]
 
 usethis::use_data(vectors_govt, overwrite = TRUE)
 

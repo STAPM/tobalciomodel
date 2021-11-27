@@ -7,7 +7,7 @@
 ReallocateHhold(
   expenditure = c(-20, -10, -30),
   saving_rate = 0.1,
-  vector = "hhfce_noalctob",
+  vector = 3,
   vectors_data = tobalciomodel::vectors_hhold,
   mapping = tobalciomodel::coicop_cpa_mapping,
   FAI = T
@@ -19,9 +19,9 @@ on-trade alcohol, and tobacco.}
 
 \item{saving_rate}{proportion of saved expenditure that will be saved rather than redistributed.}
 
-\item{vector}{character. The distribution of reallocation of spending to implement.
-Valid options are the column names of the \code{vectors_hhold} data. The default is to allocate spending
-pro-rata according to the 2018 distribution of consumer spending with alcohol and tobacco excluded.}
+\item{vector}{Numeric (1-3). The distribution of reallocation of spending to implement from the \code{vectors_hhold} data.
+Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
+(default) further excludes health, education, rents and utilities.}
 
 \item{mapping}{data table containing the mapping algorithm from COICOP to CPA.}
 

@@ -68,6 +68,8 @@ ReallocateHhold <- function(expenditure = c(-20,-10,-30),
  x <- merge(final, tobalciomodel::CPA,
             by = "CPA_code", sort = FALSE, all = TRUE)
 
+ #x <- copy(final)
+
  H53_I55 <- as.numeric(x[CPA_code == "CPA_H53&I55","total_exp"])
 
  x[CPA_code == "CPA_H53", total_exp := H53_I55*841/(841+4722)]
@@ -93,7 +95,7 @@ ReallocateHhold <- function(expenditure = c(-20,-10,-30),
  if (FAI == FALSE) {
 
  ## add in the initial change to expenditure on tobacco and alcohol
- hhold_exp[Product == "Alcoholic beverages  & Tobacco products", hhold_exp := hhold_exp + sum(expenditure)]
+ hhold_exp[CPA_code == "CPA_C11.01-6 & C12", hhold_exp := hhold_exp + sum(expenditure)]
 
  } else if (FAI == TRUE) {
 

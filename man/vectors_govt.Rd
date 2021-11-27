@@ -5,7 +5,7 @@
 \alias{vectors_govt}
 \title{Government Redistribution Vectors}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 105 rows and 10 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 105 rows and 7 columns.
 }
 \usage{
 vectors_govt
