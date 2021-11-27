@@ -5,7 +5,7 @@
 \alias{ashe_earn_fai}
 \title{ASHE Earnings Data 2020}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 106 rows and 3 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 1166 rows and 4 columns.
 }
 \usage{
 ashe_earn_fai

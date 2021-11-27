@@ -3,8 +3,10 @@
 #' Take the output of the model and generate summary outputs
 #'
 #' @param data data table. Output of the input-output modelling
+#' @param macro data table. Time series data of output, gva, and employment by broad industry group.
 #' @param sort character. Variable on which to sort sectors by effect size. Inputs are one from
 #' c("output","empl","gva","inctaxes","earn")
+#' @param year Integer. Select the base year for the analysis.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table. If FALSE, uses the
 #'            ONS supply and use tables. Defaults to FALSE
 #'
@@ -17,7 +19,9 @@
 #'
 #' }
 ProcessOutputs <- function(data,
+                           macro = tobalciomodel::macro_data,
                            sort = NULL,
+                           year = 2019,
                            FAI = FALSE) {
 
   output <- copy(data)
@@ -25,39 +29,59 @@ ProcessOutputs <- function(data,
   ### Assign broad industry grouping to the individual sectors according to SIC-2007
 
   if (isTRUE(FAI)) {
-    output[1:7   , Industry := "Agriculture and Mining"]
-    output[8:51  , Industry := "Manufacturing"]
-    output[52:57 , Industry := "Utilities"]
+    output[1:3   , Industry := "Agriculture"]
+    output[4:57  , Industry := "Production"]
     output[58    , Industry := "Construction"]
-    output[59:61 , Industry := "Wholesale and Retail"]
-    output[62:67 , Industry := "Transport and Storage"]
-    output[68:71 , Industry := "Accommodation and Food Services"]
-    output[72:76 , Industry := "Information and Communication"]
-    output[77:106, Industry := "Other Services"]
+    output[59:71 , Industry := "Distribution, transport, hotels and restaurants"]
+    output[72:76 , Industry := "Information and communication"]
+    output[77:79 , Industry := "Finance and insurance"]
+    output[80:81 , Industry := "Real estate"]
+    output[82:95 , Industry := "Professional and support activities"]
+    output[96:99 , Industry := "Government, education and health"]
+    output[100:106 , Industry := "Other services"]
+
   } else if (!isTRUE(FAI)) {
-    output[1:7   , Industry := "Agriculture and Mining"]
-    output[8:50  , Industry := "Manufacturing"]
-    output[51:56 , Industry := "Utilities"]
+    output[1:3   , Industry := "Agriculture"]
+    output[4:56  , Industry := "Production"]
     output[57    , Industry := "Construction"]
-    output[58:60 , Industry := "Wholesale and Retail"]
-    output[61:66 , Industry := "Transport and Storage"]
-    output[67:68 , Industry := "Accommodation and Food Services"]
-    output[69:73 , Industry := "Information and Communication"]
-    output[74:105, Industry := "Other Services"]
+    output[58:69 , Industry := "Distribution, transport, hotels and restaurants"]
+    output[70:73 , Industry := "Information and communication"]
+    output[74:76 , Industry := "Finance and insurance"]
+    output[77:79 , Industry := "Real estate"]
+    output[80:93 , Industry := "Professional and support activities"]
+    output[94:97 , Industry := "Government, education and health"]
+    output[98:105 , Industry := "Other services"]
   }
 
   ####################################################
   ## INDUSTRY LEVEL FIGURES - total effects only #####
 
-  output[, Industry := factor(Industry, levels = c("Agriculture and Mining","Manufacturing","Utilities",
-                                                   "Construction","Wholesale and Retail","Transport and Storage",
-                                                   "Accommodation and Food Services","Information and Communication","Other Services"))]
+  output[, Industry := factor(Industry,
+                              levels = c("Agriculture", "Production", "Construction",
+                                         "Distribution, transport, hotels and restaurants",
+                                         "Information and communication", "Finance and insurance",
+                                         "Real estate", "Professional and support activities",
+                                         "Government, education and health", "Other services"))]
 
   output_ind <- output[, .(out_1 = sum(out_effects_t1_p),
                            gva_1 = sum(gva_effects_t1_p),
                            emp_1 = sum(emp_effects_t1_p),
                            net_1 = sum(netearn_effects_t1_p),
                            tax_1 = sum(emptax_effects_t1_p)), by = "Industry"]
+
+  ### Calculate percentage effects
+
+  y <- copy(year)
+  macro <- macro[year %in% y,]
+
+  output_ind_perc <- merge(output_ind, macro, by = "Industry", sort = F)
+
+  output_ind_perc[, output_perc := round( (out_1/output)*100, 4)]
+  output_ind_perc[, gva_perc := round( (gva_1/gva)*100, 4)]
+  output_ind_perc[, emp_perc := round( (emp_1/tot_fte)*100, 4)]
+
+  output_ind_perc <- output_ind_perc[, c("Industry","output_perc","gva_perc","emp_perc")]
+
 
   ##############################################################################
   ## AGGREGATE FIGURES - split by direct, indirect, and total effects ##########
@@ -87,19 +111,43 @@ ProcessOutputs <- function(data,
 
   ### put results into a matrix
 
-  tab <- matrix(c(out_0, out_1, out_t,
-                  gva_0, gva_1, gva_t,
-                  emp_0, emp_1, emp_t,
-                  net_0, net_1, net_t,
-                  tax_0, tax_1, tax_t),
+  output_agg <- matrix(c(out_0, out_1, out_t,
+                         gva_0, gva_1, gva_t,
+                         emp_0, emp_1, emp_t,
+                         net_0, net_1, net_t,
+                         tax_0, tax_1, tax_t),
                 ncol = 5,
                 byrow = FALSE,
                 dimnames = list(c("Direct Effect","Indirect Effect","Total Effect"),
                                 c("Output", "GVA", "Employment",
                                   "Net Earn", "Income Tax")))
 
-  ### output the results
+  ### calculate percentage effects
 
-  return(list(aggregate = tab,
-              industry = output_ind))
+  output_agg_perc <- data.table(output_agg)
+  output_agg_perc <- output_agg_perc[3,]
+  setnames(output_agg_perc,
+           names(output_agg_perc),
+           c("out_1","gva_1","emp_1","net_1","tax_1"))
+
+  macro_agg <- macro[, .(output = sum(output),
+                         gva = sum(gva),
+                         tot_emp = sum(tot_emp),
+                         tot_fte = sum(tot_fte))]
+
+  output_agg_perc <- cbind(output_agg_perc, macro_agg)
+
+  output_agg_perc[, output_perc := round( (out_1/output)*100, 4)]
+  output_agg_perc[, gva_perc := round( (gva_1/gva)*100, 4)]
+  output_agg_perc[, emp_perc := round( (emp_1/tot_fte)*100, 4)]
+
+  output_agg_perc <- output_agg_perc[, c("output_perc","gva_perc","emp_perc")]
+
+  ###########################
+  ### OUTPUT THE RESULTS
+
+  return(list(aggregate = output_agg,
+              aggregate_perc = output_agg_perc,
+              industry = output_ind,
+              industry_perc = output_ind_perc))
 }

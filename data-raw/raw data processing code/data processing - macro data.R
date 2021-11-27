@@ -3,70 +3,120 @@ library(readxl)
 library(data.table)
 library(magrittr)
 
+minyr <- 2010
+maxyr <- 2020
+
 ############################
 ### LFS employment data ####
 
-## construct 4-digit employment by industry-year from the Labour Force Survey
+## NOTE: the file:
+## data processing - employment data LFS fai.R
+##
+## must first be run to produce the data tobalciomodel::lfs_empl_fai
 
-root <- "C:/"
-file <- "Users/cm1djm/Documents/Datasets/Labour Force Survey/tab/"
+empl <- tobalciomodel::lfs_empl_fai
 
-vars <- c("year","quarter","pwt","age","gender","lmstatus","full_time","sic2007_4dig")
+for (y in minyr:maxyr) {
 
-data <- combine_years(list(
-  lfs_clean_global(lfs_read_2010(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2011(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2012(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2013(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2014(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2015(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2016(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2017(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2018(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2019(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2020(root,file),keep_vars = vars)   ))
+  temp <- empl[year %in% y,]
 
-## restrict to all employed/self-employed with complete information on
-## full time status and industry
+  temp[1:3   , Industry := "Agriculture"]
+  temp[4:57  , Industry := "Production"]
+  temp[58    , Industry := "Construction"]
+  temp[59:71 , Industry := "Distribution, transport, hotels and restaurants"]
+  temp[72:76 , Industry := "Information and communication"]
+  temp[77:79 , Industry := "Finance and insurance"]
+  temp[80:81 , Industry := "Real estate"]
+  temp[82:95 , Industry := "Professional and support activities"]
+  temp[96:99 , Industry := "Government, education and health"]
+  temp[100:106 , Industry := "Other services"]
 
-data <- data[lmstatus=="employed"|lmstatus=="self employed" ,]
-data <- data[!is.na(full_time) ,]
-data <- data[!is.na(sic2007_4dig) ,]
+  if (y == minyr) {
 
-## calculate fte employment by quarter
+    empl_data <- copy(temp)
 
-data[full_time == "full_time",fte_ := 1]
-data[full_time == "part_time",fte_ := 0.5]
+  } else {
 
-data[, fte   := sum(pwt*fte_), by = c("time")]
-data[, total := sum(pwt ),     by = c("time")]
+    empl_data <- rbindlist(list(empl_data, temp))
+  }
+}
 
-data <- unique(data[,c("time", "year", "fte", "total")])
+empl_data <- empl_data[, .(tot_emp = sum(tot_emp),
+                           tot_fte = sum(tot_fte)),
+                           by = c("year","Industry")]
 
-## now average employment across quarters within years
 
-data[, fte_   := mean(fte)  , by = c("year")]
-data[, total_ := mean(total), by = c("year")]
+###############################################
+### GVA and output data from the blue book ####
 
-data <- unique(data[,c("year", "fte_", "total_")])
+# https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetablessummarytables
 
-setnames(data,
-         c("fte_","total_"),
-         c("fte_empl","total_empl"))
+minyr <- 1997
+maxyr <- 2019
 
-empl <- copy(data)
+for (y in minyr:maxyr) {
 
-#########################
-### GROSS VALUE ADDED ###
+  yr <- as.character(y)
 
-gva <- readxl::read_excel("data-raw/series-271121-gva.xls",
-                          range = "A8:B81")
-setDT(gva)
-setnames(gva, names(gva), c("year","gva"))
+  ##### Output
 
-gva <- gva[year %in% 2010:2020,]
-gva[, year := as.numeric(year) ]
+  out <- readxl::read_excel("data-raw/bb21a10summarytables.xlsx",
+                            sheet = yr,
+                            range = "C76:L76",
+                            col_names = FALSE)
+  setDT(out)
+  setnames(out,
+           names(out),
+           c("Agriculture", "Production", "Construction",
+             "Distribution, transport, hotels and restaurants",
+             "Information and communication", "Finance and insurance",
+             "Real estate", "Professional and support activities",
+             "Government, education and health", "Other services"))
 
-macro_data <- merge(empl, gva, by = "year")
+  out <- melt(out,
+              variable.name = "Industry",
+              value.name = "output")
 
-usethis::use_data(macro_data,overwrite = TRUE)
+  out[, year := y]
+
+  ##### GVA
+
+  gva <- readxl::read_excel("data-raw/bb21a10summarytables.xlsx",
+                            sheet = yr,
+                            range = "C73:L73",
+                            col_names = FALSE)
+  setDT(gva)
+  setnames(gva,
+           names(gva),
+           c("Agriculture", "Production", "Construction",
+             "Distribution, transport, hotels and restaurants",
+             "Information and communication", "Finance and insurance",
+             "Real estate", "Professional and support activities",
+             "Government, education and health", "Other services"))
+
+  gva <- melt(gva,
+              variable.name = "Industry",
+              value.name = "gva")
+
+  gva[, year := y]
+
+  #### merge
+
+  data <- merge(out, gva, by = c("year","Industry"), sort = F)
+
+  #### stack data
+
+  if (y == minyr) {
+
+    bb_data <- copy(data)
+
+  } else {
+
+    bb_data <- rbindlist(list(bb_data, data))
+  }
+}
+rm(data, out, gva)
+
+macro_data <- merge(bb_data, empl_data, by = c("year","Industry"), sort = F)
+
+usethis::use_data(macro_data, overwrite = TRUE)

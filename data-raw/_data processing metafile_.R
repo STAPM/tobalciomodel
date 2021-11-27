@@ -28,3 +28,8 @@ source("data-raw/raw data processing code/data processing - income tax and nics.
 ### AGGREGATE ALCOHOL AND TOBACCO DATA
 
 source("data-raw/raw data processing code/data processing - alcohol and tobacco.R")
+
+### MACRO-DATA - EMPLOYMENT, GVA, OUTPUT
+
+source("data-raw/raw data processing code/data processing - macro data.R")
+

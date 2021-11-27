@@ -91,6 +91,18 @@
 #'
 "iotable_ons"
 
+#' Macroeconomic Data
+#'
+#' Employment data from the Labour Force Survey. Total gross value added (GVA) and
+#' total output in £m obtained from the supply and use summary tables.
+#'
+#' All values are totalled by broad industry grouping (10). These data are used to
+#' scale calculated economic effects to the size of the economy.
+#'
+#' @source \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetablessummarytables}{supply and use summary tables}.
+#'
+"macro_data"
+
 #' Mapping Products and Sectors
 #'
 #' Allows mapping between product CPA categories and sector IOC categories by linking both classifications
