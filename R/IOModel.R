@@ -35,11 +35,11 @@ IOModel  <- function(FAI = FALSE,
                      year_sut = 2018,
                      year = 2019,
                      fte = TRUE,
-                     hhold_exp,
-                     govt_exp,
+                     hhold_exp = c(-100,-100,-100),
+                     govt_exp = 0,
                      hhold_saving = 0,
-                     hhold_reallocate = "hhfce_noalctob",
-                     govt_reallocate = "central",
+                     hhold_reallocate = 3,
+                     govt_reallocate = 1,
                      tax_data = tobalciomodel::inctax_params) {
 
   ### 1) Prepare the changes in final demand vector
@@ -69,7 +69,7 @@ IOModel  <- function(FAI = FALSE,
 
   ### 5) Process results
 
-  results <- ProcessOutputs(data = econ_impacts,
+  results <- ProcessOutputs(data = econ_impacts$effects,
                             macro = tobalciomodel::macro_data,
                             FAI = FAI,
                             year = year)
@@ -83,6 +83,5 @@ IOModel  <- function(FAI = FALSE,
                  industry       = results$industry,
                  industry_perc  = results$industry_perc)
 
-  return(effects)
-
+  return(output)
 }
