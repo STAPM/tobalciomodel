@@ -61,11 +61,27 @@ IOModel  <- function(FAI = FALSE,
 
   ### 4) Calculate economic impacts
 
-  econ_impacts <- EconEffectsCalc(leontief, fdemand, FAI = FAI, year = year, tax_data = tax_data)
+  econ_impacts <- EconEffectsCalc(leontief,
+                                  fdemand,
+                                  FAI = FAI,
+                                  year = year,
+                                  tax_data = tax_data)
+
+  ### 5) Process results
+
+  results <- ProcessOutputs(data = econ_impacts,
+                            macro = tobalciomodel::macro_data,
+                            FAI = FAI,
+                            year = year)
 
   ### RETURN OUTPUTS
 
-  effects <- econ_impacts$effects
+  output <- list(fdemand        = fdemand,
+                 raw_impacts    = econ_impacts$effects,
+                 aggregate      = results$aggregate,
+                 aggregate_perc = results$aggregate_perc,
+                 industry       = results$industry,
+                 industry_perc  = results$industry_perc)
 
   return(effects)
 
