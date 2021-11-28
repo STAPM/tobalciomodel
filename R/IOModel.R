@@ -13,9 +13,11 @@
 #'            use total employees.
 #' @param hhold_exp Numeric vector of length 3. Change in household consumption measured in basic prices for - in order - off-trade alcohol,
 #' on-trade alcohol, and tobacco.
-#' @param govt_exp  Numeric. Change in government spending.
-#' @param govt_saving Numeric. Assumed government savings rate.
+#' @param govt_revenue Numeric. change in government revenues, measured in basic prices.
 #' @param hhold_saving Numeric. Assumed household savings rate.
+#' @param govt_passthru Numeric. Assumed government rate of passthrough - the proportion of change in revenues
+#' (positive or negative) which will be adjusted for in government expenditure. Defaults to 0 - no change to
+#' government spending as a result of changes in revenues.
 #' @param hhold_reallocate Character. Name of the vector which determines how household spending is redistributed.
 #' @param govt_reallocate Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
 #' Option 1 (default) allocates pro-rata according to the distribution of total government spending,
@@ -41,9 +43,9 @@ IOModel  <- function(FAI = FALSE,
                      year = 2019,
                      fte = TRUE,
                      hhold_exp = c(-100,-100,-100),
-                     govt_exp = 0,
+                     govt_revenue = 0,
                      hhold_saving = 0,
-                     govt_saving = 0,
+                     govt_passthru = 0,
                      hhold_reallocate = 3,
                      govt_reallocate = 1,
                      tax_data = tobalciomodel::inctax_params) {
@@ -67,8 +69,8 @@ IOModel  <- function(FAI = FALSE,
   cat(crayon::red(fai_table,"\n"))
   cat(crayon::magenta("   H'hold saving rate;  "))
   cat(crayon::red(hhold_saving*100,"%"))
-  cat(crayon::magenta("   Govt saving rate;  "))
-  cat(crayon::red(govt_saving*100,"%\n"))
+  cat(crayon::magenta("   Govt passthrough;  "))
+  cat(crayon::red(govt_passthru*100,"%\n"))
 
 
   cat(crayon::bgRed("Simulating Wider Economy Effects:\n"))
@@ -78,9 +80,9 @@ IOModel  <- function(FAI = FALSE,
   cat(crayon::yellow("\t(1/5) Constructing Final Demand Vector:"))
 
   fdemand <- tobalciomodel::PrepFinalDemand(hhold_exp = hhold_exp,
-                                            govt_exp = govt_exp,
+                                            govt_revenue = govt_revenue,
                                             hhold_saving = hhold_saving,
-                                            govt_saving = govt_saving,
+                                            govt_passthru = govt_passthru,
                                             hhold_reallocate = hhold_reallocate,
                                             govt_reallocate = govt_reallocate,
                                             FAI = FAI)
