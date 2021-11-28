@@ -8,8 +8,15 @@
 #' on-trade alcohol, and tobacco.
 #' @param govt_exp Numeric. Change in government spending.
 #' @param hhold_saving Numeric. Assumed household savings rate.
-#' @param hhold_vector Character. Name of the vector which determines how household spending is redistributed.
-#' @param govt_vector Character. Name of the vector which determines how government spending is redistributed.
+#' @param govt_saving Numeric. Assumed government savings rate.
+#' @param hhold_reallocate Numeric (1-3). The distribution of reallocation of spending to implement from the \code{vectors_hhold} data.
+#' Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
+#' (default) further excludes health, education, rents and utilities.
+#' @param govt_reallocate Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
+#' Option 1 (default) allocates pro-rata according to the distribution of total government spending,
+#' option 2 allocates according to central government spending only, option 3 allocates according
+#' to local government only. Option 4 allocates all spending to health, and option 5 allocates all spending
+#' to education.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 #'            ONS ones. Defaults to FALSE.
 #'
@@ -20,41 +27,28 @@
 #'
 #' \dontrun{
 #'
-#' ## construct a final demand vector for a fall in household spending in basic
-#' ## prices of £20m and an increase in government spending of £10m.
-#'
-#' ## Assume households and governments distribute spending pro-rata as per
-#' ## household final consumption expenditure and central government spending
-#' ## distributions measured in 2018.
-#'
-#' ## Households assumed to save 10% of freed-up spending.
-#'
-#' finaldemand <- tobalciomodel::PrepFinalDemand(hhold_exp = -20,
-#' govt_exp = 10,
-#' hhold_saving = 0.1,
-#' hhold_vector = "hhfce_noalctob",
-#' govt_vector = "central")
-#'
 #' }
 PrepFinalDemand <- function(hhold_exp,
                             govt_exp,
                             hhold_saving = 0.0,
-                            hhold_vector = "hhfce_noalctob",
-                            govt_vector = "central",
+                            govt_saving = 0.0,
+                            hhold_reallocate = 3,
+                            govt_reallocate = 1,
                             FAI = FALSE) {
 
   ### Distribute changes in household spending
 
   final_demand_hhold <- tobalciomodel::ReallocateHhold(expenditure = hhold_exp,
                                                        saving_rate = hhold_saving,
-                                                       vector = hhold_vector,
+                                                       vector = hhold_reallocate,
                                                        vectors_data = tobalciomodel::vectors_hhold,
                                                        mapping = tobalciomodel::coicop_cpa_mapping,
                                                        FAI = FAI)
 
   ### Distribute changes in government spending
   final_demand_govt  <- tobalciomodel::ReallocateGovt(expenditure = govt_exp,
-                                                      vector = govt_vector,
+                                                      saving_rate = govt_saving,
+                                                      vector = govt_reallocate,
                                                       vectors_data = tobalciomodel::vectors_govt,
                                                       FAI = FAI)
 
@@ -71,14 +65,6 @@ PrepFinalDemand <- function(hhold_exp,
     final_demand <- merge.data.table(final_demand_hhold,
                                      final_demand_govt,
                                      by = c("IOC","Sector"), sort = FALSE)
-
-    #sectors <- as.data.frame(tobalciomodel::iotable_fai[,"name"])
-    #setDT(sectors)
-   # setnames(sectors, names(sectors), "Sector")
-
-    #final_demand <- merge(sectors, final_demand, by = "Sector", sort = FALSE)
-
-
   }
 
   final_demand[, final_demand := hhold_exp + govt_exp]

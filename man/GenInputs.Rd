@@ -6,16 +6,17 @@
 \usage{
 GenInputs(
   data = tobalciomodel::tob_alc_data,
+  year = 2019,
   prop_alc_on = -0.01,
   prop_alc_off = -0.01,
   prop_tob_fm = -0.01,
-  prop_tob_ryo = -0.01,
-  govt = TRUE,
-  yr = 2020
+  prop_tob_ryo = -0.01
 )
 }
 \arguments{
 \item{data}{Data table. Tobacco and alcohol expenditures}
+
+\item{year}{year of data to use.}
 
 \item{prop_alc_on}{Proportionate change in alcohol expenditure.}
 
@@ -24,10 +25,6 @@ GenInputs(
 \item{prop_tob_fm}{Proportionate change in factory-made cigarettes expenditure.}
 
 \item{prop_tob_ryo}{Proportionate change in hand-rolled tobacco expenditure.}
-
-\item{govt}{Logical. If TRUE include changes in government revenue in the analysis.}
-
-\item{yr}{year of data to use.}
 }
 \value{
 

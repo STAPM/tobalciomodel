@@ -4,6 +4,7 @@
 #' across the 105 CPA sectors.
 #'
 #' @param expenditure change in consumption, measured in basic prices.
+#' @param govt_saving Numeric. Assumed government savings rate.
 #' @param vector Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
 #' Option 1 (default) allocates pro-rata according to the distribution of total government spending,
 #' option 2 allocates according to central government spending only, option 3 allocates according
@@ -16,14 +17,15 @@
 #'
 #' @export
 ReallocateGovt <- function(expenditure = 10,
+                           saving_rate = 0,
                            vector = 1,
                            vectors_data = tobalciomodel::vectors_govt,
-                           FAI = FALSE
-) {
+                           FAI = FALSE) {
 
-  # calculate the amount of expenditure that will be reallocated
+  # calculate the amount of government expenditure
+  # to be allocated across sectors
 
-  exp <- copy(expenditure)
+  exp <- (1 - saving_rate)*sum(expenditure)
 
   # select the chosen reallocation vector
 

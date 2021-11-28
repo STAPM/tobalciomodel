@@ -8,8 +8,9 @@ PrepFinalDemand(
   hhold_exp,
   govt_exp,
   hhold_saving = 0,
-  hhold_vector = "hhfce_noalctob",
-  govt_vector = "central",
+  govt_saving = 0,
+  hhold_reallocate = 3,
+  govt_reallocate = 1,
   FAI = FALSE
 )
 }
@@ -21,9 +22,17 @@ on-trade alcohol, and tobacco.}
 
 \item{hhold_saving}{Numeric. Assumed household savings rate.}
 
-\item{hhold_vector}{Character. Name of the vector which determines how household spending is redistributed.}
+\item{govt_saving}{Numeric. Assumed government savings rate.}
 
-\item{govt_vector}{Character. Name of the vector which determines how government spending is redistributed.}
+\item{hhold_reallocate}{Numeric (1-3). The distribution of reallocation of spending to implement from the \code{vectors_hhold} data.
+Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
+(default) further excludes health, education, rents and utilities.}
+
+\item{govt_reallocate}{Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
+Option 1 (default) allocates pro-rata according to the distribution of total government spending,
+option 2 allocates according to central government spending only, option 3 allocates according
+to local government only. Option 4 allocates all spending to health, and option 5 allocates all spending
+to education.}
 
 \item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 ONS ones. Defaults to FALSE.}
@@ -39,21 +48,6 @@ the resulting vector of changes in final demand to model.
 \examples{
 
 \dontrun{
-
-## construct a final demand vector for a fall in household spending in basic
-## prices of Â£20m and an increase in government spending of Â£10m.
-
-## Assume households and governments distribute spending pro-rata as per
-## household final consumption expenditure and central government spending
-## distributions measured in 2018.
-
-## Households assumed to save 10\% of freed-up spending.
-
-finaldemand <- tobalciomodel::PrepFinalDemand(hhold_exp = -20,
-govt_exp = 10,
-hhold_saving = 0.1,
-hhold_vector = "hhfce_noalctob",
-govt_vector = "central")
 
 }
 }

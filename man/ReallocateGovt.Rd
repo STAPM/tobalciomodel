@@ -6,6 +6,7 @@
 \usage{
 ReallocateGovt(
   expenditure = 10,
+  saving_rate = 0,
   vector = 1,
   vectors_data = tobalciomodel::vectors_govt,
   FAI = FALSE
@@ -22,6 +23,8 @@ to education.}
 
 \item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 ONS ones. Defaults to FALSE.}
+
+\item{govt_saving}{Numeric. Assumed government savings rate.}
 
 \item{vector_data}{data table containing the redistribution vectors.}
 }

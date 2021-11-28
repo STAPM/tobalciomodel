@@ -9,11 +9,12 @@ IOModel(
   year_sut = 2018,
   year = 2019,
   fte = TRUE,
-  hhold_exp,
-  govt_exp,
+  hhold_exp = c(-100, -100, -100),
+  govt_exp = 0,
   hhold_saving = 0,
-  hhold_reallocate = "hhfce_noalctob",
-  govt_reallocate = "central",
+  govt_saving = 0,
+  hhold_reallocate = 3,
+  govt_reallocate = 1,
   tax_data = tobalciomodel::inctax_params
 )
 }
@@ -35,9 +36,15 @@ on-trade alcohol, and tobacco.}
 
 \item{hhold_saving}{Numeric. Assumed household savings rate.}
 
+\item{govt_saving}{Numeric. Assumed government savings rate.}
+
 \item{hhold_reallocate}{Character. Name of the vector which determines how household spending is redistributed.}
 
-\item{govt_reallocate}{Character. Name of the vector which determines how government spending is redistributed.}
+\item{govt_reallocate}{Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
+Option 1 (default) allocates pro-rata according to the distribution of total government spending,
+option 2 allocates according to central government spending only, option 3 allocates according
+to local government only. Option 4 allocates all spending to health, and option 5 allocates all spending
+to education.}
 
 \item{tax_data}{Data table. Package data containing the necessary parameters to calculate
 income tax and national insurance contributions from annual earnings data}

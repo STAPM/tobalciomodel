@@ -9,8 +9,7 @@
 #' @param prop_alc_off Proportionate change in alcohol expenditure.
 #' @param prop_tob_fm Proportionate change in factory-made cigarettes expenditure.
 #' @param prop_tob_ryo Proportionate change in hand-rolled tobacco expenditure.
-#' @param govt Logical. If TRUE include changes in government revenue in the analysis.
-#' @param yr year of data to use.
+#' @param year year of data to use.
 #'
 #' @return
 #' @export
@@ -21,12 +20,13 @@
 #'
 #' }
 GenInputs <- function(data = tobalciomodel::tob_alc_data,
+                      year = 2019,
                       prop_alc_on = -0.01,
                       prop_alc_off = -0.01,
                       prop_tob_fm = -0.01,
-                      prop_tob_ryo = -0.01,
-                      govt = TRUE,
-                      yr = 2020) {
+                      prop_tob_ryo = -0.01) {
+
+  yr <- copy(year)
 
   # restrict to year chosen and split into alcohol and tobacco specific datasets
 
@@ -98,15 +98,9 @@ GenInputs <- function(data = tobalciomodel::tob_alc_data,
 
   exp_total_bp <- exp_alc_off_bp + exp_alc_on_bp + exp_tob_bp
 
-  if (isTRUE(govt)) {
-    net_govt_revenue <- tax_alc_off_bp + tax_alc_on_bp + tax_tob_bp
-  } else if (!isTRUE(govt)) {
-    net_govt_revenue <- 0
-  }
+  net_govt_revenue <- tax_alc_off_bp + tax_alc_on_bp + tax_tob_bp
 
   ######## Combine outputs
-
-  year = yr
 
   out <- data.table(year,
                     round(exp_alc_off_bp,3),
@@ -117,8 +111,8 @@ GenInputs <- function(data = tobalciomodel::tob_alc_data,
 
   setnames(out,
            names(out),
-           c("year","exp_alc_off_bp","exp_alc_on_bp","exp_tob_bp","exp_total_bp","net_govt_revenue"))
-
+           c("year","exp_alc_off_bp","exp_alc_on_bp","exp_tob_bp",
+             "exp_total_bp","net_govt_revenue"))
 
   return(out)
 }
