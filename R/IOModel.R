@@ -124,9 +124,7 @@ IOModel  <- function(FAI = FALSE,
   output <- list(fdemand        = fdemand,
                  raw_impacts    = econ_impacts$effects,
                  aggregate      = results$aggregate,
-                 aggregate_perc = results$aggregate_perc,
-                 industry       = results$industry,
-                 industry_perc  = results$industry_perc)
+                 industry       = results$industry)
 
   return(output)
 }

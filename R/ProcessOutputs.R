@@ -82,6 +82,19 @@ ProcessOutputs <- function(data,
 
   output_ind_perc <- output_ind_perc[, c("Industry","output_perc","gva_perc","emp_perc")]
 
+  #########
+
+  industry <- merge(output_ind, output_ind_perc, by = "Industry", sort = F)
+  industry <- industry[,c("Industry", "out_1","output_perc", "gva_1","gva_perc", "emp_1","emp_perc")]
+  industry[, out_1 := round(out_1, 3)]
+  industry[, gva_1 := round(gva_1, 3)]
+  industry[, emp_1 := round(emp_1, 0)]
+  industry[, output_perc := round(output_perc, 4)]
+  industry[, gva_perc    := round(gva_perc, 4)]
+  industry[, emp_perc    := round(emp_perc, 4)]
+
+  setnames(industry, names(industry), c("Industry", "out","out_perc", "gva","gva_perc", "emp","emp_perc"))
+
 
   ##############################################################################
   ## AGGREGATE FIGURES - split by direct, indirect, and total effects ##########
@@ -116,38 +129,43 @@ ProcessOutputs <- function(data,
                          emp_0, emp_1, emp_t,
                          net_0, net_1, net_t,
                          tax_0, tax_1, tax_t),
-                ncol = 5,
-                byrow = FALSE,
-                dimnames = list(c("Direct Effect","Indirect Effect","Total Effect"),
-                                c("Output", "GVA", "Employment",
-                                  "Net Earn", "Income Tax")))
+                       ncol = 5,
+                       byrow = FALSE,
+                       dimnames = list(NULL,
+                                       c("Output", "GVA", "Employment",
+                                         "Net Earn", "Income Tax")))
 
-  ### calculate percentage effects
+  output_agg <- data.table(output_agg)
 
-  output_agg_perc <- data.table(output_agg)
-  output_agg_perc <- output_agg_perc[3,]
-  setnames(output_agg_perc,
-           names(output_agg_perc),
-           c("out_1","gva_1","emp_1","net_1","tax_1"))
+  output_agg[, Output     := round(Output, 3)]
+  output_agg[, GVA        := round(GVA, 3)]
+  output_agg[, Employment := round(Employment, 0)]
 
   macro_agg <- macro[, .(output = sum(output),
                          gva = sum(gva),
-                         tot_emp = sum(tot_emp),
                          tot_fte = sum(tot_fte))]
 
-  output_agg_perc <- cbind(output_agg_perc, macro_agg)
+  macro_agg_exp <- rbindlist(list(macro_agg,macro_agg,macro_agg))
 
-  output_agg_perc[, output_perc := round( (out_1/output)*100, 4)]
-  output_agg_perc[, gva_perc := round( (gva_1/gva)*100, 4)]
-  output_agg_perc[, emp_perc := round( (emp_1/tot_fte)*100, 4)]
+  aggregate <- cbind(output_agg, macro_agg_exp)
 
-  output_agg_perc <- output_agg_perc[, c("output_perc","gva_perc","emp_perc")]
+  aggregate[, output_perc := round( (Output/output)*100, 4)]
+  aggregate[, gva_perc := round( (GVA/gva)*100, 4)]
+  aggregate[, emp_perc := round( (Employment/tot_fte)*100, 4)]
+
+  aggregate <- aggregate[, c("Output", "output_perc", "GVA", "gva_perc",
+                                         "Employment", "emp_perc")]
+
+  setnames(aggregate,
+           names(aggregate),
+           c("out", "out_perc", "gva", "gva_perc", "emp", "emp_perc"))
+
+  Effects <- c("Direct", "Indirect", "Total")
+  aggregate <- cbind(Effects, aggregate)
 
   ###########################
   ### OUTPUT THE RESULTS
 
-  return(list(aggregate = output_agg,
-              aggregate_perc = output_agg_perc,
-              industry = output_ind,
-              industry_perc = output_ind_perc))
+  return(list(aggregate = aggregate,
+              industry = industry))
 }
