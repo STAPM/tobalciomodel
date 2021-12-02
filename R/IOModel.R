@@ -50,34 +50,44 @@ IOModel  <- function(FAI = FALSE,
                      govt_reallocate = 1,
                      tax_data = tobalciomodel::inctax_params) {
 
+  #### vector of assumptions to summarise in the output
+
+  assumptions = matrix(c(year, hhold_saving, govt_passthru, hhold_reallocate, govt_reallocate),
+                       nrow = 1,
+                       names = list(NULL,
+                                    c("year","hhold_saving", "govt_passthru",
+                                      "hhold_reallocate", "govt_reallocate")))
+
+  #### print model inputs to the console
+
   fai_table <- ifelse(FAI == TRUE, "FAI", "ONS")
 
-  cat(crayon::bgRed("Input-Output Model Parameters:\n"))
+  cat(crayon::bgGreen("Input-Output Model Parameters:\n"))
 
-  cat(crayon::magenta("\tChange in Off-Trade Alcohol Demand:"))
-  cat(crayon::red("£",hhold_exp[1],"million\n"))
+  cat(crayon::blue("\tChange in Off-Trade Alcohol Demand:"))
+  cat(crayon::green("£",hhold_exp[1],"million\n"))
 
-  cat(crayon::magenta("\tChange in On-Trade Alcohol Demand:"))
-  cat(crayon::red("£",hhold_exp[2],"million\n"))
+  cat(crayon::blue("\tChange in On-Trade Alcohol Demand:"))
+  cat(crayon::green("£",hhold_exp[2],"million\n"))
 
-  cat(crayon::magenta("\tChange in Tobacco Demand:"))
-  cat(crayon::red("£",hhold_exp[3],"million\n"))
+  cat(crayon::blue("\tChange in Tobacco Demand:"))
+  cat(crayon::green("£",hhold_exp[3],"million\n"))
 
-  cat(crayon::magenta("\tAnalysis year;  "))
-  cat(crayon::red(year))
-  cat(crayon::magenta("   I/O Table;  "))
-  cat(crayon::red(fai_table,"\n"))
-  cat(crayon::magenta("   H'hold saving rate;  "))
-  cat(crayon::red(hhold_saving*100,"%"))
-  cat(crayon::magenta("   Govt passthrough;  "))
-  cat(crayon::red(govt_passthru*100,"%\n"))
+  cat(crayon::blue("\tAnalysis year;  "))
+  cat(crayon::green(year))
+  cat(crayon::blue("   I/O Table;  "))
+  cat(crayon::green(fai_table,"\n"))
+  cat(crayon::blue("   H'hold saving rate;  "))
+  cat(crayon::green(hhold_saving*100,"%"))
+  cat(crayon::blue("   Govt passthrough;  "))
+  cat(crayon::green(govt_passthru*100,"%\n"))
 
 
-  cat(crayon::bgRed("Simulating Wider Economy Effects:\n"))
+  cat(crayon::bgGreen("Simulating Wider Economy Effects:\n"))
 
   ### 1) Prepare the changes in final demand vector
 
-  cat(crayon::yellow("\t(1/5) Constructing Final Demand Vector:"))
+  cat(crayon::red("\t(1/5) Constructing Final Demand Vector:"))
 
   fdemand <- tobalciomodel::PrepFinalDemand(hhold_exp = hhold_exp,
                                             govt_revenue = govt_revenue,
@@ -86,42 +96,43 @@ IOModel  <- function(FAI = FALSE,
                                             hhold_reallocate = hhold_reallocate,
                                             govt_reallocate = govt_reallocate,
                                             FAI = FAI)
-  cat(crayon::white("done\n"))
+  cat("\tdone\n")
 
   ### 2) Read in the input-output tables
 
-  cat(crayon::yellow("\t(2/5) Reading Input-Output Table:"))
+  cat(crayon::red("\t(2/5) Reading Input-Output Table:"))
   sut <- ReadSUT(fte = fte, FAI = FAI, year_sut = year_sut)
-  cat(crayon::white("done\n"))
+  cat("\tdone\n")
 
   ### 3) Construct leontief inverse/multipliers
 
-  cat(crayon::yellow("\t(3/5) Calculating Leontief and Multipliers:"))
+  cat(crayon::red("\t(3/5) Calculating Leontief and Multipliers:"))
   leontief <- LeontiefCalc(sut, FAI = FAI)
-  cat(crayon::white("done\n"))
+  cat("\tdone\n")
 
   ### 4) Calculate economic impacts
 
-  cat(crayon::yellow("\t(4/5) Calculating Economic Impacts:"))
+  cat(crayon::red("\t(4/5) Calculating Economic Impacts:"))
   econ_impacts <- EconEffectsCalc(leontief,
                                   fdemand,
                                   FAI = FAI,
                                   year = year,
                                   tax_data = tax_data)
-  cat(crayon::white("done\n"))
+  cat("\tdone\n")
 
   ### 5) Process results
 
-  cat(crayon::yellow("\t(5/5) Processing Outputs:"))
+  cat(crayon::red("\t(5/5) Processing Outputs:"))
   results <- ProcessOutputs(data = econ_impacts$effects,
                             macro = tobalciomodel::macro_data,
                             FAI = FAI,
                             year = year)
-  cat(crayon::white("done\n"))
+  cat("\tdone\n")
 
   ### RETURN OUTPUTS
 
-  output <- list(fdemand        = fdemand,
+  output <- list(assumpetions   = assumptions,
+                 fdemand        = fdemand,
                  raw_impacts    = econ_impacts$effects,
                  aggregate      = results$aggregate,
                  industry       = results$industry)
