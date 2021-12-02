@@ -76,9 +76,9 @@ ProcessOutputs <- function(data,
 
   output_ind_perc <- merge(output_ind, macro, by = "Industry", sort = F)
 
-  output_ind_perc[, output_perc := round( (out_1/output), 4)]
-  output_ind_perc[, gva_perc := round( (gva_1/gva), 4)]
-  output_ind_perc[, emp_perc := round( (emp_1/tot_fte), 4)]
+  output_ind_perc[, output_perc := out_1/output]
+  output_ind_perc[, gva_perc := gva_1/gva]
+  output_ind_perc[, emp_perc := emp_1/tot_fte]
 
   output_ind_perc <- output_ind_perc[, c("Industry","output_perc","gva_perc","emp_perc")]
 
@@ -89,9 +89,9 @@ ProcessOutputs <- function(data,
   industry[, out_1 := round(out_1, 3)]
   industry[, gva_1 := round(gva_1, 3)]
   industry[, emp_1 := round(emp_1, 0)]
-  industry[, output_perc := round(output_perc, 4)]
-  industry[, gva_perc    := round(gva_perc, 4)]
-  industry[, emp_perc    := round(emp_perc, 4)]
+  industry[, output_perc := output_perc]
+  industry[, gva_perc    := gva_perc]
+  industry[, emp_perc    := emp_perc]
 
   setnames(industry, names(industry), c("Industry", "out","out_perc", "gva","gva_perc", "emp","emp_perc"))
 
@@ -149,9 +149,9 @@ ProcessOutputs <- function(data,
 
   aggregate <- cbind(output_agg, macro_agg_exp)
 
-  aggregate[, output_perc := round( (Output/output), 4)]
-  aggregate[, gva_perc := round( (GVA/gva), 4)]
-  aggregate[, emp_perc := round( (Employment/tot_fte), 4)]
+  aggregate[, output_perc := Output/output]
+  aggregate[, gva_perc := GVA/gva]
+  aggregate[, emp_perc :=  Employment/tot_fte]
 
   aggregate <- aggregate[, c("Output", "output_perc", "GVA", "gva_perc",
                                          "Employment", "emp_perc")]
