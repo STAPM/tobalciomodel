@@ -54,7 +54,7 @@ IOModel  <- function(FAI = FALSE,
 
   assumptions = matrix(c(year, hhold_saving, govt_passthru, hhold_reallocate, govt_reallocate),
                        nrow = 1,
-                       names = list(NULL,
+                       dimnames = list(NULL,
                                     c("year","hhold_saving", "govt_passthru",
                                       "hhold_reallocate", "govt_reallocate")))
 
