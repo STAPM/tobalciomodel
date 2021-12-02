@@ -5,8 +5,8 @@
 #' consumption.
 #'
 #' @param data Data table. Tobacco and alcohol expenditures
-#' @param prop_alc_on Proportionate change in alcohol expenditure.
 #' @param prop_alc_off Proportionate change in alcohol expenditure.
+#' @param prop_alc_on Proportionate change in alcohol expenditure.
 #' @param prop_tob_fm Proportionate change in factory-made cigarettes expenditure.
 #' @param prop_tob_ryo Proportionate change in hand-rolled tobacco expenditure.
 #' @param year year of data to use.
@@ -21,8 +21,8 @@
 #' }
 GenInputs <- function(data = tobalciomodel::tob_alc_data,
                       year = 2019,
-                      prop_alc_on = -0.01,
                       prop_alc_off = -0.01,
+                      prop_alc_on = -0.01,
                       prop_tob_fm = -0.01,
                       prop_tob_ryo = -0.01) {
 
