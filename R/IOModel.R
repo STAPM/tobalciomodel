@@ -54,7 +54,7 @@ IOModel  <- function(FAI = FALSE,
 
   #### vector of assumptions to summarise in the output
 
-  assumptions = matrix(c(year, hhold_saving, govt_passthru, hhold_reallocate, govt_reallocate),
+  assumptions = matrix(c(year, hhold_passthru, govt_passthru, hhold_reallocate, govt_reallocate),
                        nrow = 1,
                        dimnames = list(NULL,
                                     c("year","hhold_passthru", "govt_passthru",
