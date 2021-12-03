@@ -166,11 +166,11 @@ ProcessOutputs <- function(data,
   ###########################
   ### Convert the proportions to percentages
 
-  aggregate[, output_perc := round(output_perc*100, 4)]
+  aggregate[, out_perc := round(out_perc*100, 4)]
   aggregate[, gva_perc := round(gva_perc*100, 4)]
   aggregate[, emp_perc := round(emp_perc*100, 4)]
 
-  industry[, output_perc := round(output_perc*100, 4)]
+  industry[, out_perc := round(out_perc*100, 4)]
   industry[, gva_perc := round(gva_perc*100, 4)]
   industry[, emp_perc := round(emp_perc*100, 4)]
 
