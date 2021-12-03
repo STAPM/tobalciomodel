@@ -80,7 +80,7 @@ IOModel  <- function(FAI = FALSE,
   cat(crayon::blue("   I/O Table;  "))
   cat(crayon::green(fai_table,"\n"))
   cat(crayon::blue("   H'hold passthrough rate;  "))
-  cat(crayon::green(hhold_saving*100,"%"))
+  cat(crayon::green(hhold_passthru*100,"%"))
   cat(crayon::blue("   Govt passthrough rate;  "))
   cat(crayon::green(govt_passthru*100,"%\n"))
 
