@@ -11,7 +11,7 @@ IOModel(
   fte = TRUE,
   hhold_exp = c(-100, -100, -100),
   govt_revenue = 0,
-  hhold_saving = 0,
+  hhold_passthru = 1,
   govt_passthru = 0,
   hhold_reallocate = 3,
   govt_reallocate = 1,
@@ -34,13 +34,15 @@ on-trade alcohol, and tobacco.}
 
 \item{govt_revenue}{Numeric. change in government revenues, measured in basic prices.}
 
-\item{hhold_saving}{Numeric. Assumed household savings rate.}
+\item{hhold_passthru}{Numeric. Assumed household rate of passthrough - the proportion of change in spending which
+is compensated for in spending on other consumption categories. Defaults to 1 (full passthrough).}
 
 \item{govt_passthru}{Numeric. Assumed government rate of passthrough - the proportion of change in revenues
-(positive or negative) which will be adjusted for in government expenditure. Defaults to 0 - no change to
-government spending as a result of changes in revenues.}
+which are matched by changes in government expenditure. Defaults to 0 (no passthrough).}
 
-\item{hhold_reallocate}{Character. Name of the vector which determines how household spending is redistributed.}
+\item{hhold_reallocate}{Numeric (1-3). The distribution of reallocation of spending to implement from the \code{vectors_hhold} data.
+Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
+(default) further excludes health, education, rents and utilities.}
 
 \item{govt_reallocate}{Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
 Option 1 (default) allocates pro-rata according to the distribution of total government spending,

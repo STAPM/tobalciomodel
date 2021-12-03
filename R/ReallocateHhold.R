@@ -6,7 +6,8 @@
 #'
 #' @param expenditure Numeric vector. Change in household consumption measured in basic prices for off-trade alcohol,
 #' on-trade alcohol, and tobacco.
-#' @param saving_rate proportion of saved expenditure that will be saved rather than redistributed.
+#' @param hhold_passthru Numeric. Assumed household rate of passthrough - the proportion of change in spending which
+#' is compensated for in spending on other consumption categories. Defaults to 1 (full passthrough).
 #' @param vector Numeric (1-3). The distribution of reallocation of spending to implement from the \code{vectors_hhold} data.
 #' Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
 #' (default) further excludes health, education, rents and utilities.
@@ -18,7 +19,7 @@
 #'
 #' @export
 ReallocateHhold <- function(expenditure = c(-20,-10,-30),
-                            saving_rate = 0.1,
+                            hhold_passthru = 1,
                             vector = 3,
                             vectors_data = tobalciomodel::vectors_hhold,
                             mapping = tobalciomodel::coicop_cpa_mapping,
@@ -27,7 +28,7 @@ ReallocateHhold <- function(expenditure = c(-20,-10,-30),
 
  # calculate the amount of expenditure that will be reallocated
 
- exp <- -1*(1 - saving_rate)*sum(expenditure)
+ exp <- -1*(hhold_passthru)*sum(expenditure)
 
  # select the chosen reallocation vector
 

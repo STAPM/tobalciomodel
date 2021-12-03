@@ -14,11 +14,13 @@
 #' @param hhold_exp Numeric vector of length 3. Change in household consumption measured in basic prices for - in order - off-trade alcohol,
 #' on-trade alcohol, and tobacco.
 #' @param govt_revenue Numeric. change in government revenues, measured in basic prices.
-#' @param hhold_saving Numeric. Assumed household savings rate.
+#' @param hhold_passthru Numeric. Assumed household rate of passthrough - the proportion of change in spending which
+#' is compensated for in spending on other consumption categories. Defaults to 1 (full passthrough).
 #' @param govt_passthru Numeric. Assumed government rate of passthrough - the proportion of change in revenues
-#' (positive or negative) which will be adjusted for in government expenditure. Defaults to 0 - no change to
-#' government spending as a result of changes in revenues.
-#' @param hhold_reallocate Character. Name of the vector which determines how household spending is redistributed.
+#' which are matched by changes in government expenditure. Defaults to 0 (no passthrough).
+#' @param hhold_reallocate Numeric (1-3). The distribution of reallocation of spending to implement from the \code{vectors_hhold} data.
+#' Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
+#' (default) further excludes health, education, rents and utilities.
 #' @param govt_reallocate Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
 #' Option 1 (default) allocates pro-rata according to the distribution of total government spending,
 #' option 2 allocates according to central government spending only, option 3 allocates according
@@ -44,7 +46,7 @@ IOModel  <- function(FAI = FALSE,
                      fte = TRUE,
                      hhold_exp = c(-100,-100,-100),
                      govt_revenue = 0,
-                     hhold_saving = 0,
+                     hhold_passthru = 1,
                      govt_passthru = 0,
                      hhold_reallocate = 3,
                      govt_reallocate = 1,
@@ -55,7 +57,7 @@ IOModel  <- function(FAI = FALSE,
   assumptions = matrix(c(year, hhold_saving, govt_passthru, hhold_reallocate, govt_reallocate),
                        nrow = 1,
                        dimnames = list(NULL,
-                                    c("year","hhold_saving", "govt_passthru",
+                                    c("year","hhold_passthru", "govt_passthru",
                                       "hhold_reallocate", "govt_reallocate")))
 
   #### print model inputs to the console
@@ -77,9 +79,9 @@ IOModel  <- function(FAI = FALSE,
   cat(crayon::green(year))
   cat(crayon::blue("   I/O Table;  "))
   cat(crayon::green(fai_table,"\n"))
-  cat(crayon::blue("   H'hold saving rate;  "))
+  cat(crayon::blue("   H'hold passthrough rate;  "))
   cat(crayon::green(hhold_saving*100,"%"))
-  cat(crayon::blue("   Govt passthrough;  "))
+  cat(crayon::blue("   Govt passthrough rate;  "))
   cat(crayon::green(govt_passthru*100,"%\n"))
 
 
@@ -87,11 +89,11 @@ IOModel  <- function(FAI = FALSE,
 
   ### 1) Prepare the changes in final demand vector
 
-  cat(crayon::red("\t(1/5) Constructing Final Demand Vector:"))
+  cat(crayon::blue("\t(1/5) Constructing Final Demand Vector:"))
 
   fdemand <- tobalciomodel::PrepFinalDemand(hhold_exp = hhold_exp,
                                             govt_revenue = govt_revenue,
-                                            hhold_saving = hhold_saving,
+                                            hhold_passthru = hhold_passthru,
                                             govt_passthru = govt_passthru,
                                             hhold_reallocate = hhold_reallocate,
                                             govt_reallocate = govt_reallocate,
@@ -100,19 +102,21 @@ IOModel  <- function(FAI = FALSE,
 
   ### 2) Read in the input-output tables
 
-  cat(crayon::red("\t(2/5) Reading Input-Output Table:"))
-  sut <- ReadSUT(fte = fte, FAI = FAI, year_sut = year_sut)
+  cat(crayon::blue("\t(2/5) Reading Input-Output Table:"))
+  sut <- ReadSUT(fte = fte,
+                 FAI = FAI,
+                 year_sut = year_sut)
   cat("\tdone\n")
 
   ### 3) Construct leontief inverse/multipliers
 
-  cat(crayon::red("\t(3/5) Calculating Leontief and Multipliers:"))
+  cat(crayon::blue("\t(3/5) Calculating Leontief and Multipliers:"))
   leontief <- LeontiefCalc(sut, FAI = FAI)
   cat("\tdone\n")
 
   ### 4) Calculate economic impacts
 
-  cat(crayon::red("\t(4/5) Calculating Economic Impacts:"))
+  cat(crayon::blue("\t(4/5) Calculating Economic Impacts:"))
   econ_impacts <- EconEffectsCalc(leontief,
                                   fdemand,
                                   FAI = FAI,
@@ -122,7 +126,7 @@ IOModel  <- function(FAI = FALSE,
 
   ### 5) Process results
 
-  cat(crayon::red("\t(5/5) Processing Outputs:"))
+  cat(crayon::blue("\t(5/5) Processing Outputs:"))
   results <- ProcessOutputs(data = econ_impacts$effects,
                             macro = tobalciomodel::macro_data,
                             FAI = FAI,

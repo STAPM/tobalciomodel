@@ -5,8 +5,7 @@
 #'
 #' @param revenue Numeric. change in government revenues, measured in basic prices.
 #' @param govt_passthru Numeric. Assumed government rate of passthrough - the proportion of change in revenues
-#' (positive or negative) which will be adjusted for in government expenditure. Defaults to 0 - no change to
-#' government spending as a result of changes in revenues.
+#' which are matched by changes in government expenditure. Defaults to 0 (no passthrough).
 #' @param vector Numeric (1-5). The distribution of reallocation of spending to implement from the \code{vectors_govt} data.
 #' Option 1 (default) allocates pro-rata according to the distribution of total government spending,
 #' option 2 allocates according to central government spending only, option 3 allocates according
@@ -55,7 +54,7 @@
 #'                              FAI = FALSE)
 #'
 #' }
-ReallocateGovt <- function(revenue = 10,
+ReallocateGovt <- function(revenue,
                            govt_passthru = 0,
                            vector = 1,
                            vectors_data = tobalciomodel::vectors_govt,
