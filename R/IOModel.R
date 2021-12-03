@@ -131,7 +131,7 @@ IOModel  <- function(FAI = FALSE,
 
   ### RETURN OUTPUTS
 
-  output <- list(assumpetions   = assumptions,
+  output <- list(assumptions    = assumptions,
                  fdemand        = fdemand,
                  raw_impacts    = econ_impacts$effects,
                  aggregate      = results$aggregate,
