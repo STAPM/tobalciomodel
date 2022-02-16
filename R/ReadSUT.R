@@ -93,10 +93,18 @@ return(list(supply = supply,
   gva.wages <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"gva.wages"]))
   total.output <- as.vector(as.matrix(tobalciomodel::iotable_fai[,"total.output"]))
 
+  ### FAI table is based on 2010, so employment figures used for constructing the
+  ### employment coefficient needs to be taken from 2010.
+
+  ### Need the model years employment figures for calculating % changes later
+
   if (fte == TRUE) {
     employment <- tobalciomodel::lfs_empl_fai[year == y, "tot_fte"]
+    employment_2010 <- tobalciomodel::lfs_empl_fai[year == 2010, "tot_fte"]
+
   } else {
     employment <- tobalciomodel::lfs_empl_fai[year == y, "tot_emp"]
+    employment_2010 <- tobalciomodel::lfs_empl_fai[year == 2010, "tot_emp"]
   }
   employment <- as.vector(as.matrix(employment))
 
@@ -108,7 +116,7 @@ return(list(supply = supply,
                     gva.gos/total.output,
                     gva.wages/total.output,
                     employment,
-                    employment/total.output)
+                    employment_2010/total.output)
 
   setnames(gva, names(gva), c("IOC","Sector","output",
                               "gva_coef","tax_coef","gos_coef","coe_coef","employment","empl_coef"))
