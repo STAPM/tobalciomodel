@@ -3,6 +3,7 @@
 export(EconEffectsCalc)
 export(GenInputs)
 export(IOModel)
+export(IOModelDemo)
 export(LeontiefCalc)
 export(PrepFinalDemand)
 export(ProcessOutputs)
