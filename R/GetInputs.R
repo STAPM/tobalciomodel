@@ -19,12 +19,12 @@
 #' \dontrun{
 #'
 #' }
-GenInputs <- function(data = tobalciomodel::tob_alc_data,
-                      year = 2019,
-                      prop_alc_off = -0.01,
-                      prop_alc_on = -0.01,
-                      prop_tob_fm = -0.01,
-                      prop_tob_ryo = -0.01) {
+CalcInputs <- function(data = tobalciomodel::tob_alc_data,
+                       year = 2019,
+                       prop_alc_off = -0.01,
+                       prop_alc_on = -0.01,
+                       prop_tob_fm = -0.01,
+                       prop_tob_ryo = -0.01) {
 
   yr <- copy(year)
 
