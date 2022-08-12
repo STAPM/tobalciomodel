@@ -20,7 +20,7 @@ the policy effect year for which to extract treatment effects.}
 
 }
 \description{
-Function to read in and further process the outputs of STAPM price policy
+Function to process the outputs of STAPM price policy
 modelling economic outcomes. Produces the change in demand for tobacco, on-trade
 alcohol and off-trade alcohol measured in basic prices and also the net change
 in government revenue.

@@ -1,6 +1,6 @@
 #' Read IO Model Inputs from STAPM Output
 #'
-#' Function to read in and further process the outputs of STAPM price policy
+#' Function to process the outputs of STAPM price policy
 #' modelling economic outcomes. Produces the change in demand for tobacco, on-trade
 #' alcohol and off-trade alcohol measured in basic prices and also the net change
 #' in government revenue.

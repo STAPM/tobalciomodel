@@ -5,15 +5,16 @@
 #' inputs determined externally (e.g. from processed outputs obtained via the Sheffield Tobacco and Alcohol Policy Model
 #' - STAPM).
 #'
+#' @param input_data Data table. Output of the GenInputsSTAPM function.
+#' @param write_output Character. File path to the folder to save the IO model outputs.
+#' @param treatment_label Character vector. vector of treatment labels identifying specific STAPM model runs.
+#' @param tag Character. Additional label to identify this set of input-output models.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table. If FALSE, uses the
 #'            ONS supply and use tables. Defaults to FALSE
 #' @param year_sut Integer. Select the year (from 1997 to 2018) ONS supply and use tables to use in the analysis.
 #' @param year Integer. Select the year (from 2016 to 2020) of alcohol, tobacco, earnings and employment data to use in the analysis.
 #' @param fte Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE
 #'            use total employees.
-#' @param hhold_exp Numeric vector of length 3. Change in household consumption measured in basic prices for - in order - off-trade alcohol,
-#' on-trade alcohol, and tobacco.
-#' @param govt_revenue Numeric. change in government revenues, measured in basic prices.
 #' @param hhold_passthru Numeric. Assumed household rate of passthrough - the proportion of change in spending which
 #' is compensated for in spending on other consumption categories. Defaults to 1 (full passthrough).
 #' @param govt_passthru Numeric. Assumed government rate of passthrough - the proportion of change in revenues
@@ -40,25 +41,39 @@
 #'
 #'
 #' }
-IOModel  <- function(FAI = FALSE,
-                     year_sut = 2018,
-                     year = 2019,
-                     fte = TRUE,
-                     hhold_exp = c(-100,-100,-100),
-                     govt_revenue = 0,
-                     hhold_passthru = 1,
-                     govt_passthru = 0,
-                     hhold_reallocate = 3,
-                     govt_reallocate = 1,
-                     tax_data = tobalciomodel::inctax_params) {
+InputOutput  <- function(input_data = NULL,
+                         write_output = NULL,
+                         treatment_label = NULL,
+                         tag = NULL,
+                         FAI = FALSE,
+                         year_sut = 2018,
+                         year = 2019,
+                         fte = TRUE,
+                         hhold_passthru = 1,
+                         govt_passthru = 0,
+                         hhold_reallocate = 3,
+                         govt_reallocate = 1,
+                         tax_data = tobalciomodel::inctax_params) {
+
+  #### Loop over all models
+
+  for (i in 1:length(treatment_label)){
+
+  data <- input_data[model == treatment_label[i],]
+
+  hhold_exp <- c(as.numeric(data[,"exp_alc_off_bp"]),
+                 as.numeric(data[,"exp_alc_on_bp"]),
+                 as.numeric(data[,"exp_tob_bp"]) )
+
+  govt_revenue <- as.numeric(data[,"net_govt_revenue"])
 
   #### vector of assumptions to summarise in the output
 
   assumptions = matrix(c(year, hhold_passthru, govt_passthru, hhold_reallocate, govt_reallocate),
                        nrow = 1,
                        dimnames = list(NULL,
-                                    c("year","hhold_passthru", "govt_passthru",
-                                      "hhold_reallocate", "govt_reallocate")))
+                                       c("year","hhold_passthru", "govt_passthru",
+                                         "hhold_reallocate", "govt_reallocate")))
 
   #### print model inputs to the console
 
@@ -141,5 +156,16 @@ IOModel  <- function(FAI = FALSE,
                  aggregate      = results$aggregate,
                  industry       = results$industry)
 
-  return(output)
+  ### Save to RDS file
+
+
+  if (is.null(tag)) {
+  saveRDS(output, paste0(here::here(write_output), "/iomodel_output" , treatment_label[i],".rds"))
+
+
+  } else {
+  saveRDS(output, paste0(here::here(write_output), "/iomodel_output" , treatment_label[i], "_" , tag ,".rds"))
+
+  }
+}
 }

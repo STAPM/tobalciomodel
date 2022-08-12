@@ -9,6 +9,10 @@
 #' @export
 #'
 #' @examples
+#'
+#' \dontrun{
+#'
+#' }
 IOModelDemo  <- function(data = tobalciomodel::demo_data,
                          fdemand_vec = c(0, -1000, 0) ){
 

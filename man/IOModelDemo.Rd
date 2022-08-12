@@ -17,3 +17,9 @@ IOModelDemo(data = tobalciomodel::demo_data, fdemand_vec = c(0, -1000, 0))
 \description{
 Runs input-output analyses using a simplified 3-sector economy.
 }
+\examples{
+
+\dontrun{
+
+}
+}
