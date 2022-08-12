@@ -38,15 +38,15 @@ GenInputsAGGDATA <- function(scenario_list,
 
     ### Label and combine
 
-    inputs[, model := input_labels[i]]
+    input[, model := input_labels[i]]
 
     if (i == 1){
 
-      input_data <- copy(inputs)
+      input_data <- copy(input)
 
     } else if (i > 1) {
 
-      input_data <- rbindlist(list(input_data, inputs))
+      input_data <- rbindlist(list(input_data, input))
 
     }
   }
