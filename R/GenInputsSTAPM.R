@@ -13,6 +13,8 @@
 #' @param policy_effect_year Numeric - Year in which new price policy is implemented in STAPM.
 #' @param n_years Numeric - Number of years including the policy effect year for which to generate inputs
 #' (defaults to 1 - policy effect year only).
+#' @param write_inputs Character - file path to the folder to which the input data will be written.
+#' @param name Character - file name for the input data.
 #'
 #' @return
 #' @export
@@ -28,7 +30,9 @@ GenInputsSTAPM <- function(root = NULL,
                            min_age = NULL,
                            index_year = NULL,
                            policy_effect_year = NULL,
-                           n_years = 1){
+                           n_years = 1,
+                           write_inputs,
+                           name){
 
   ################################################
   #### Generate the population scaling factor ####
@@ -92,7 +96,7 @@ GenInputsSTAPM <- function(root = NULL,
 
   }
 
-return(input_data)
+  saveRDS(input_data, paste0(here::here(write_inputs),"/",name,".rds"))
 
 }
 

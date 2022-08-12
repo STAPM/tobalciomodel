@@ -11,7 +11,9 @@ GenInputsSTAPM(
   min_age = NULL,
   index_year = NULL,
   policy_effect_year = NULL,
-  n_years = 1
+  n_years = 1,
+  write_inputs,
+  name
 )
 }
 \arguments{
@@ -29,6 +31,10 @@ GenInputsSTAPM(
 
 \item{n_years}{Numeric - Number of years including the policy effect year for which to generate inputs
 (defaults to 1 - policy effect year only).}
+
+\item{write_inputs}{Character - file path to the folder to which the input data will be written.}
+
+\item{name}{Character - file name for the input data.}
 }
 \value{
 

@@ -2,6 +2,7 @@
 
 export(CalcInputs)
 export(EconEffectsCalc)
+export(GenInputsAGGDATA)
 export(GenInputsSTAPM)
 export(IOModel)
 export(IOModelDemo)
