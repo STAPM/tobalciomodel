@@ -127,5 +127,57 @@ lfs_empl_sic <- rbindlist(list(lfs_empl_sic.2010,
                                lfs_empl_sic.2019,
                                lfs_empl_sic.2020))
 
-usethis::use_data(lfs_empl_cpa,overwrite = TRUE)
+# usethis::use_data(lfs_empl_cpa,overwrite = TRUE)
 
+##################################################################
+### Read in Working Futures 7 estimated % change in employment ###
+
+wf <- read_excel("data-raw/UK_MainTables.Main.xlsm",
+                 sheet = "Ind T1", range = "S4:S10")
+
+sec <- c("Primary sector and utilities","Manufacturing","Construction",
+         "Trade, accomod and transport","Business and other services","Non-marketed services")
+
+perc_changes <- data.table(sec, wf)
+
+setnames(perc_changes, names(perc_changes), c("sec","change"))
+
+perc_changes[, prop_change := 1 + (change/100)]
+
+###################################################
+##### Loop over the years and each year adjust employment for the WF forecaste
+##### annual proportionate change
+
+data <- copy(lfs_empl_cpa)
+
+start_year <- max(data$year) + 1
+
+for (y in start_year:2027){
+
+  t <- y - 1
+
+  curr_year <- data[year == t,]
+
+  curr_year[c(1:7,51:56), sec := "Primary sector and utilities"]
+  curr_year[8:50, sec := "Manufacturing"]
+  curr_year[57, sec := "Construction"]
+  curr_year[58:68, sec := "Trade, accomod and transport"]
+  curr_year[c(69:93,98:105), sec := "Business and other services"]
+  curr_year[94:97, sec := "Non-marketed services"]
+
+  update <- merge(curr_year, perc_changes, by = "sec", sort = FALSE, all = TRUE)
+
+  update[, tot_emp := tot_emp * prop_change]
+  update[, tot_fte := tot_fte * prop_change]
+
+  update[, year := year + 1]
+
+  update[, c("sec","change","prop_change") := NULL]
+
+  data <- rbindlist(list(data, update))
+
+}
+
+lfs_empl_cpa <- copy(data)
+
+usethis::use_data(lfs_empl_cpa,overwrite = TRUE)

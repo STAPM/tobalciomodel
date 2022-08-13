@@ -42,11 +42,13 @@
 #'
 "demo_data"
 
-#' LFS Employment Data 2010-2020
+#' LFS Employment Data 2010-2027
 #'
 #' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 #' are collapsed into the 105 CPA categories used in the ONS Supply and Use Tables and for a given year, the average total
-#' employment across the four quarters is taken.
+#' employment across the four quarters is taken. For 2021 to 2027, employment is estimated based on
+#' \href{https://warwick.ac.uk/fac/soc/ier/researchthemesoverview/wf7downloads/}{Working Futures 7} forecasts
+#' of the annual percentage change in employment for the UK produced by Warwick Institute for Employment Research
 #'
 #' Figures are available for total employment and total full-time equivalent (FTE)
 #' employment (employees categorised in the LFS as part-time are considered 0.5 FTE).
@@ -56,11 +58,13 @@
 #'
 "lfs_empl_cpa"
 
-#' LFS Employment Data 2010-2020
+#' LFS Employment Data 2010-2027
 #'
 #' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 #' are collapsed into the 106 industry categories used in the FAI alcohol-disaggregated input-output table. the average total
-#' employment across the four quarters is taken.
+#' employment across the four quarters is taken. For 2021 to 2027, employment is estimated based on
+#' \href{https://warwick.ac.uk/fac/soc/ier/researchthemesoverview/wf7downloads/}{Working Futures 7} forecasts
+#' of the annual percentage change in employment for the UK produced by Warwick Institute for Employment Research
 #'
 #' Figures are available for total employment and total full-time equivalent (FTE)
 #' employment (employees categorised in the LFS as part-time are considered 0.5 FTE).

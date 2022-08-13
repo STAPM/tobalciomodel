@@ -160,4 +160,66 @@ lfs_empl_fai <- rbindlist(list(lfs_empl_fai.2010,
                                lfs_empl_fai.2019,
                                lfs_empl_fai.2020))
 
+#########################################
+### 13/08/2022 - update this code to project employment beyond 2020
+### based on working futures
+###
+### https://warwick.ac.uk/fac/soc/ier/researchthemesoverview/wf7downloads/
+
+##usethis::use_data(lfs_empl_fai,overwrite = TRUE)
+
+##################################################################
+### Read in Working Futures 7 estimated % change in employment ###
+
+wf <- read_excel("data-raw/UK_MainTables.Main.xlsm",
+                 sheet = "Ind T1", range = "S4:S10")
+
+sec <- c("Primary sector and utilities","Manufacturing","Construction",
+         "Trade, accomod and transport","Business and other services","Non-marketed services")
+
+perc_changes <- data.table(sec, wf)
+
+setnames(perc_changes, names(perc_changes), c("sec","change"))
+
+perc_changes[, prop_change := 1 + (change/100)]
+
+###################################################
+##### Loop over the years and each year adjust employment for the WF forecaste
+##### annual proportionate change
+
+data <- copy(lfs_empl_fai)
+
+start_year <- max(data$year) + 1
+
+for (y in start_year:2027){
+
+  t <- y - 1
+
+curr_year <- data[year == t,]
+
+curr_year[c(1:7,52:57), sec := "Primary sector and utilities"]
+curr_year[8:51, sec := "Manufacturing"]
+curr_year[58, sec := "Construction"]
+curr_year[59:71, sec := "Trade, accomod and transport"]
+curr_year[c(72:95,100:106), sec := "Business and other services"]
+curr_year[96:99, sec := "Non-marketed services"]
+
+update <- merge(curr_year, perc_changes, by = "sec", sort = FALSE, all = TRUE)
+
+update[, tot_emp := tot_emp * prop_change]
+update[, tot_fte := tot_fte * prop_change]
+
+update[, year := year + 1]
+
+update[, c("sec","change","prop_change") := NULL]
+
+data <- rbindlist(list(data, update))
+
+}
+
+lfs_empl_fai <- copy(data)
+
 usethis::use_data(lfs_empl_fai,overwrite = TRUE)
+
+
+

@@ -3,9 +3,9 @@
 \docType{data}
 \name{lfs_empl_fai}
 \alias{lfs_empl_fai}
-\title{LFS Employment Data 2010-2020}
+\title{LFS Employment Data 2010-2027}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 1166 rows and 5 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 1908 rows and 5 columns.
 }
 \usage{
 lfs_empl_fai
@@ -13,7 +13,9 @@ lfs_empl_fai
 \description{
 Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
 are collapsed into the 106 industry categories used in the FAI alcohol-disaggregated input-output table. the average total
-employment across the four quarters is taken.
+employment across the four quarters is taken. For 2021 to 2027, employment is estimated based on
+\href{https://warwick.ac.uk/fac/soc/ier/researchthemesoverview/wf7downloads/}{Working Futures 7} forecasts
+of the annual percentage change in employment for the UK produced by Warwick Institute for Employment Research
 }
 \details{
 Figures are available for total employment and total full-time equivalent (FTE)
