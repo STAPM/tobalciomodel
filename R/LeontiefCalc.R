@@ -24,6 +24,9 @@ LeontiefCalc <- function(list,
 
   total.output <- as.vector(as.matrix(coefs[,"output"]))
 
+  ##############################
+  ### Leontief Type 1 ##########
+
   ## A matrix
 
   A <- iotable %*% ((total.output )^-1 * diag(length(total.output)))
@@ -31,6 +34,35 @@ LeontiefCalc <- function(list,
   ## Leontief Inverse L = (I - A)^-1
 
   L1 <- solve(diag(length(total.output)) - A)
+
+  ##############################
+  ### Leontief Type 2 ##########
+
+  ## Internalise househholds within the IO table
+
+  if (FAI == TRUE) {
+  data <- tobalciomodel::iotable_fai
+  }
+
+  cons <- as.vector(as.matrix(data[,"hhold.demand"]))
+
+  coe <- as.vector(as.matrix(data[,"hhold.output"]))
+  coe <- c(coe , 0)
+
+
+  iotable2 <- cbind(rbind(iotable,cons) , coe)
+
+  total.output2 <- c(total.output, sum(coe))
+
+  rm(coe, cons, data)
+
+  ## A matrix
+
+  A2 <- iotable2 %*% ((total.output2 )^-1 * diag(length(total.output2)))
+
+  ## Leontief Inverse L = (I - A)^-1
+
+  L2 <- solve(diag(length(total.output2)) - A2)
 
   ######################################
   ###### Calculate Multipliers #########
@@ -88,7 +120,8 @@ LeontiefCalc <- function(list,
                             gos.type0,gos.type1)
 
   return(list(multipliers = multipliers,
-              leontief1 = L1))
+              leontief1 = L1,
+              leontief2 = L2))
 
 
 }
