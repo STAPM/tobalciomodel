@@ -2,7 +2,7 @@
 #'
 #' Take the processed Input-Output and Supply and Use Tables and derive the Leontief inverse matrix and
 #' multipliers required for the economic impact analysis. The function produces multipliers and Leontief
-#' matrices for type 0 (direct), type 1 (indirect), and type 2 (induced) effects on output, GVA, and employment/
+#' matrices for type 0 (direct), type 1 (indirect), and type 2 (induced) effects on output, GVA, and employment.
 #'
 #' @param list List. The output of the ReadSUT() function containing the IO table, supply table, and
 #' technical coefficients.

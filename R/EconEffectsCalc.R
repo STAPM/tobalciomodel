@@ -1,8 +1,8 @@
 #' Calculate Economic Impacts
 #'
-#' Apply the model parameters to the change in final demand vector in order to
-#' model the impact of changes in demand on output, gross value added, and
-#' employment.
+#' Apply the multipliers and Leontief inverse parameters to the change in final demand vector in order to
+#' model the impact of changes in demand on output, gross value added, and employment. Currently this function
+#' produces type 0 (direct), type 1 (indirect), and type 2 (induced) effects on output, GVA, and employment.
 #'
 #' @param leontief List object. The output of \code{LeonfiefCalc} containing multipliers and leontief matrices.
 #' @param fdemand Data table. The output of \code{PrepFinalDemand}.
@@ -23,7 +23,7 @@
 #' }
 EconEffectsCalc <- function(leontief,
                             fdemand,
-                            FAI = FALSE,
+                            FAI = TRUE,
                             year = 2019,
                             tax_data = tobalciomodel::inctax_params) {
 
@@ -42,7 +42,7 @@ EconEffectsCalc <- function(leontief,
   multipliers <- leontief$multipliers
   L2 <- leontief$leontief2
   L1 <- leontief$leontief1
-  L0 <- diag(nrow(L1))
+  L0 <- leontief$leontief0
   f  <- as.vector(as.matrix(fdemand[,"final_demand"]))
   f2 <- c(f, 0)
 
@@ -71,6 +71,7 @@ EconEffectsCalc <- function(leontief,
 
   out_effects_t0_m <- f*multipliers$output.type0
   out_effects_t1_m <- f*multipliers$output.type1
+  out_effects_t2_m <- f2*multipliers$output.type2
 
   # test that M and P methods give the same answer
 
@@ -80,19 +81,28 @@ EconEffectsCalc <- function(leontief,
   testthat::expect_equal(sum(out_effects_t1_m),
                          sum(out_effects_t1_p))
 
+  testthat::expect_equal(sum(out_effects_t2_m),
+                         sum(out_effects_t2_p))
+
   #################################
   ### -------GVA effects------- ###
   #################################
 
   # P-method
+  #(trim household sector from P-method output effects first. won't make a difference
+  # to the total GVA effect because the multiplier for the household sector is zero)
+  out_effects_t2_p_c <- out_effects_t2_p[1:length(out_effects_t1_p)]
+
 
   gva_effects_t0_p <- multipliers$gva.type0 * out_effects_t0_p
   gva_effects_t1_p <- multipliers$gva.type0 * out_effects_t1_p
+  gva_effects_t2_p <- multipliers$gva.type0 * out_effects_t2_p_c
 
   # M-method
 
   gva_effects_t0_m <- f*multipliers$gva.type0
   gva_effects_t1_m <- f*multipliers$gva.type1
+  gva_effects_t2_m <- f*multipliers$gva.type2
 
   # build in test to show M and P methods give the same answer
 
@@ -102,6 +112,10 @@ EconEffectsCalc <- function(leontief,
   testthat::expect_equal(sum(gva_effects_t1_m),
                          sum(gva_effects_t1_p))
 
+
+  testthat::expect_equal(sum(gva_effects_t2_m),
+                         sum(gva_effects_t2_p))
+
   ########################################
   ### -------Employment effects------- ###
   ########################################
@@ -110,11 +124,13 @@ EconEffectsCalc <- function(leontief,
 
   emp_effects_t0_p <- multipliers$emp.type0 * out_effects_t0_p
   emp_effects_t1_p <- multipliers$emp.type0 * out_effects_t1_p
+  emp_effects_t2_p <- multipliers$emp.type0 * out_effects_t2_p_c
 
   # M-method
 
   emp_effects_t0_m <- f*multipliers$emp.type0
   emp_effects_t1_m <- f*multipliers$emp.type1
+  emp_effects_t2_m <- f*multipliers$emp.type2
 
   # build in test to show M and P methods give the same answer
 
@@ -124,16 +140,19 @@ EconEffectsCalc <- function(leontief,
   testthat::expect_equal(sum(emp_effects_t1_m),
                          sum(emp_effects_t1_p))
 
+  testthat::expect_equal(sum(emp_effects_t2_m),
+                         sum(emp_effects_t2_p))
+
 
   ## construct data table of outputs
 
   effects <- cbind(fdemand[,-c("hhold_exp","govt_exp","final_demand")],
-                     out_effects_t0_m,out_effects_t1_m,
-                     gva_effects_t0_m,gva_effects_t1_m,
-                     emp_effects_t0_m,emp_effects_t1_m,
-                   out_effects_t0_p,out_effects_t1_p,
-                   gva_effects_t0_p,gva_effects_t1_p,
-                   emp_effects_t0_p,emp_effects_t1_p)
+                     out_effects_t0_m, out_effects_t1_m, out_effects_t2_m,
+                     gva_effects_t0_m, gva_effects_t1_m, gva_effects_t2_m,
+                     emp_effects_t0_m, emp_effects_t1_m, emp_effects_t2_m,
+                   out_effects_t0_p, out_effects_t1_p, out_effects_t2_p,
+                   gva_effects_t0_p, gva_effects_t1_p, gva_effects_t2_p,
+                   emp_effects_t0_p, emp_effects_t1_p, emp_effects_t2_p)
 
   ##############################################################################
   ### Use calculated employment effects to estimate effects on income taxes ####
@@ -235,9 +254,11 @@ EconEffectsCalc <- function(leontief,
 
   earn[, emptax_effects_t0_p := total_tax*emp_effects_t0_p/1000000]
   earn[, emptax_effects_t1_p := total_tax*emp_effects_t1_p/1000000]
+  earn[, emptax_effects_t2_p := total_tax*emp_effects_t2_p/1000000]
 
   earn[, netearn_effects_t0_p := (avg_salary - income_tax - employee_nic)*emp_effects_t0_p/1000000]
   earn[, netearn_effects_t1_p := (avg_salary - income_tax - employee_nic)*emp_effects_t1_p/1000000]
+  earn[, netearn_effects_t2_p := (avg_salary - income_tax - employee_nic)*emp_effects_t2_p/1000000]
 
   ## replace the name of the sector variable
 

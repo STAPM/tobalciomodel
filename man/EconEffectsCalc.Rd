@@ -7,7 +7,7 @@
 EconEffectsCalc(
   leontief,
   fdemand,
-  FAI = FALSE,
+  FAI = TRUE,
   year = 2019,
   tax_data = tobalciomodel::inctax_params
 )
@@ -29,9 +29,9 @@ income tax and national insurance contributions from annual earnings data}
 A data table of economic impacts by sector
 }
 \description{
-Apply the model parameters to the change in final demand vector in order to
-model the impact of changes in demand on output, gross value added, and
-employment.
+Apply the multipliers and Leontief inverse parameters to the change in final demand vector in order to
+model the impact of changes in demand on output, gross value added, and employment. Currently this function
+produces type 0 (direct), type 1 (indirect), and type 2 (induced) effects on output, GVA, and employment.
 }
 \examples{
 
