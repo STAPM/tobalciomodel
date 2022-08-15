@@ -40,9 +40,11 @@ EconEffectsCalc <- function(leontief,
   ## extract multipliers and final demand vectors from inputs
 
   multipliers <- leontief$multipliers
+  L2 <- leontief$leontief2
   L1 <- leontief$leontief1
   L0 <- diag(nrow(L1))
   f  <- as.vector(as.matrix(fdemand[,"final_demand"]))
+  f2 <- c(f, 0)
 
   #### Calculate economic effects here - using both the "p" and "m" methods
   #### p -> "product" method - matrix multiplication.
@@ -63,6 +65,7 @@ EconEffectsCalc <- function(leontief,
 
   out_effects_t0_p <- as.vector(as.matrix(L0 %*% f))
   out_effects_t1_p <- as.vector(as.matrix(L1 %*% f))
+  out_effects_t2_p <- as.vector(as.matrix(L2 %*% f2))
 
   # M-method
 
