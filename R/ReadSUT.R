@@ -16,7 +16,7 @@
 #' @export
 ReadSUT <- function(year_sut = 2018,
                     fte = TRUE,
-                    FAI = FALSE) {
+                    FAI = TRUE) {
 
   y <- copy(year_sut)
 

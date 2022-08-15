@@ -4,7 +4,7 @@
 \alias{ReadSUT}
 \title{Read in Supply and Use Tables}
 \usage{
-ReadSUT(year_sut = 2018, fte = TRUE, FAI = FALSE)
+ReadSUT(year_sut = 2018, fte = TRUE, FAI = TRUE)
 }
 \arguments{
 \item{year_sut}{Integer. Select the year (from 1997 to 2018) ONS supply and use tables to use in the analysis.}
