@@ -15,7 +15,7 @@
 #' of the Supply and Use Tables for 2018. The data can be found \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
 "coicop_cpa_mapping"
 
-#' ASHE Earnings Data 2020
+#' ASHE Earnings Data 2021
 #'
 #' Average annual earnings published by the ONS from analysis of the Annual Survey of Hours and Earnings by 4-digit SIC-2007 industry.
 #' Data are collapsed into the 105 categories used in the ONS Supply and Use Tables using employment calculated from the Labour Force
