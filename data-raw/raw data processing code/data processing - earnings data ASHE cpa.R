@@ -85,7 +85,6 @@ merge_mapping[CPA_code == "CPA_E39", avg_salary := 37168]
 merge_mapping[CPA_code == "CPA_B09", avg_salary := 55519]
 
 
-ashe_earn_cpa <- copy(merge_mapping)
 
 ## rename some categories
 merge_mapping[CPA_code == "CPA_B06 & B07", Product := "Crude Petroleum And Natural Gas & Metal Ores"]
@@ -95,6 +94,7 @@ merge_mapping[CPA_code == "CPA_L68BXL683", Product := "Real estate services, exc
 merge_mapping[CPA_code == "CPA_L683"     , Product := "Real estate activities on a fee or contract basis"]
 
 
+ashe_earn_cpa <- copy(merge_mapping)
 
 
 

@@ -3,6 +3,12 @@ library(data.table)
 library(lfsclean)
 library(magrittr)
 
+root <- "C:/"
+file <- "Users/damon/OneDrive/Documents/Datasets/Labour Force Survey/tab/" ### LFS data
+
+filepath <- "C:/Users/damon/OneDrive/Documents/Datasets/Annual Survey of Hours and Earnings/by industry/"
+
+
 ###################################################
 ## read in the SIC - FAI sectors mapping sheet ####
 
@@ -20,10 +26,8 @@ map[, SIC_code := as.numeric(SIC_code)]
 
 ## construct 4-digit employment by industry-year from the Labour Force Survey
 
-root <- "D:/"
-file <- "Datasets/Labour Force Survey/raw data/"
 
-vars <- c("year","quarter","pwt","age","gender","lmstatus","full_time","sic2007_4dig")
+vars <- c("year","quarter","pwt","age","sex","lmstatus","full_time","sic2007_4dig")
 
 data <- combine_years(list(
   lfs_clean_global(lfs_read_2010(root,file),keep_vars = vars),
@@ -36,7 +40,9 @@ data <- combine_years(list(
   lfs_clean_global(lfs_read_2017(root,file),keep_vars = vars),
   lfs_clean_global(lfs_read_2018(root,file),keep_vars = vars),
   lfs_clean_global(lfs_read_2019(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2020(root,file),keep_vars = vars)
+  lfs_clean_global(lfs_read_2020(root,file),keep_vars = vars),
+  lfs_clean_global(lfs_read_2021(root,file),keep_vars = vars)
+
 )
 )
 
@@ -80,14 +86,9 @@ rm(data, file, root, vars)
 ###############################################
 ### read in the ASHE earnings data ############
 
-filepath <- "D:/Datasets/Annual Survey of Hours and Earnings/by industry/"
-
-y <- 2010
-
-
 ### read in and clean
-for (y in 2010:2020) {
-earn <- readxl::read_excel(paste0(filepath,y,"/SIC2007 Table 16.7a   Annual pay - Gross ",y,".xls"),
+for (y in 2010:2021) {
+earn <- readxl::read_excel(paste0(filepath,"SIC07 Industry (4) SIC2007 Table 16.7a   Annual pay - Gross ",y,".xls"),
                            sheet = "All",
                            range = "A5:S997",
                            col_names = TRUE)
@@ -213,12 +214,15 @@ ashe_earn_fai[71, avg_salary := sec3]
 ### save out the dataset
 ashe_earn_fai[, year := y]
 
-assign(paste0("a",y),ashe_earn_fai)
-rm(ashe_earn_fai)
+if (y == 2010) {
+  out_data <- copy(ashe_earn_fai)
+} else {
+  out_data <- rbindlist(list(out_data, ashe_earn_fai))
 }
 
-ashe_earn_fai <- rbindlist(list(a2010,a2011,a2012,a2013,a2014,a2015,
-                                a2016,a2017,a2018,a2019,a2020))
+}
+
+ashe_earn_fai <- copy(out_data)
 
 usethis::use_data(ashe_earn_fai, overwrite = TRUE)
 
