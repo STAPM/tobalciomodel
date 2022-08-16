@@ -146,6 +146,8 @@ EconEffectsCalc <- function(leontief,
 
   ## construct data table of outputs
 
+  out_effects_t2_p <- out_effects_t2_p_c
+
   effects <- cbind(fdemand[,-c("hhold_exp","govt_exp","final_demand")],
                      out_effects_t0_m, out_effects_t1_m, out_effects_t2_m,
                      gva_effects_t0_m, gva_effects_t1_m, gva_effects_t2_m,
