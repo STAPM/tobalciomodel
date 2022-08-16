@@ -52,13 +52,11 @@ WriteResultsTab <- function(path,
 
     data <- copy(results$aggregate)
 
-    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"out"])) , startCol = col, startRow = 3)
-    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"gva"])) , startCol = col, startRow = 7)
-    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"emp"])) , startCol = col, startRow = 11)
-
-    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"out_perc"]/100)) , startCol = col, startRow = 16)
-    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"gva_perc"]/100)) , startCol = col, startRow = 20)
-    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"emp_perc"]/100)) , startCol = col, startRow = 24)
+    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"output"]))     , startCol = col, startRow = 3)
+    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"gva"]))        , startCol = col, startRow = 9)
+    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"employment"])) , startCol = col, startRow = 15)
+    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"net_earn"]))   , startCol = col, startRow = 21)
+    openxlsx::writeData(wb, sheet = "T2 - Aggregate Economic Impacts", x = as.vector(as.matrix(data[,"inc_tax"]))    , startCol = col, startRow = 27)
 
   }
 

@@ -93,40 +93,49 @@ ProcessOutputs <- function(data,
   out_1 <- sum(output$out_effects_t1_p) - out_0
   out_2 <- sum(output$out_effects_t2_p) - out_1 - out_0
 
-  out_t <- out_0 + out_1 + out_2
+  out_t1 <- out_0 + out_1
+  out_t2 <- out_0 + out_1 + out_2
 
   gva_0 <- sum(output$gva_effects_t0_p)
   gva_1 <- sum(output$gva_effects_t1_p) - gva_0
   gva_2 <- sum(output$gva_effects_t2_p) - gva_1 - gva_0
-  gva_t <- gva_0 + gva_1 + gva_2
+
+  gva_t1 <- gva_0 + gva_1
+  gva_t2 <- gva_0 + gva_1 + gva_2
 
   emp_0 <- round(sum(output$emp_effects_t0_p))
   emp_1 <- round(sum(output$emp_effects_t1_p)) - emp_0
   emp_2 <- round(sum(output$emp_effects_t2_p)) - emp_1 - emp_0
-  emp_t <- round(emp_0 + emp_1 + emp_2)
+
+  emp_t1 <- round(emp_0 + emp_1)
+  emp_t2 <- round(emp_0 + emp_1 + emp_2)
 
   net_0 <- sum(output$netearn_effects_t0_p)
   net_1 <- sum(output$netearn_effects_t1_p) - net_0
   net_2 <- sum(output$netearn_effects_t2_p) - net_1 - net_0
-  net_t <- net_0 + net_1 + net_2
+
+  net_t1 <- net_0 + net_1
+  net_t2 <- net_0 + net_1 + net_2
 
   tax_0 <- sum(output$emptax_effects_t0_p)
   tax_1 <- sum(output$emptax_effects_t1_p) - tax_0
   tax_2 <- sum(output$emptax_effects_t2_p) - tax_1 - tax_0
 
-  tax_t <- tax_0 + tax_1 + tax_2
+  tax_t1 <- tax_0 + tax_1
+  tax_t2 <- tax_0 + tax_1 + tax_2
 
 
-  output_agg <- matrix(c(out_0, out_1, out_2, out_t,
-                         gva_0, gva_1, gva_2, gva_t,
-                         emp_0, emp_1, emp_2, emp_t,
-                         net_0, net_1, net_2, net_t,
-                         tax_0, tax_1, tax_2, tax_t),
+  output_agg <- matrix(c(out_0, out_1, out_2, out_t1, out_t2,
+                         gva_0, gva_1, gva_2, gva_t1, gva_t2,
+                         emp_0, emp_1, emp_2, emp_t1, emp_t2,
+                         net_0, net_1, net_2, net_t1, net_t2,
+                         tax_0, tax_1, tax_2, tax_t1, tax_t2),
                        ncol = 5,
                        byrow = FALSE,
-                       dimnames = list(c("Direct Effect", "Indirect Effect","Induced Effect", "Total"),
-                                       c("Output", "GVA", "Employment",
-                                         "Net Earn", "Income Tax")))
+                       dimnames = list(c("Direct Effect", "Indirect Effect","Induced Effect",
+                                         "Total Type 1","Total Type 2"),
+                                       c("output", "gva", "employment",
+                                         "net_earn", "inc_tax")))
 
   aggregate <- data.table(output_agg)
 

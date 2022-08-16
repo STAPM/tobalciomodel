@@ -152,7 +152,7 @@ EconEffectsCalc <- function(leontief,
                      out_effects_t0_m, out_effects_t1_m, out_effects_t2_m,
                      gva_effects_t0_m, gva_effects_t1_m, gva_effects_t2_m,
                      emp_effects_t0_m, emp_effects_t1_m, emp_effects_t2_m,
-                   out_effects_t0_p, out_effects_t1_p, out_effects_t2_p_c,
+                   out_effects_t0_p, out_effects_t1_p, out_effects_t2_p,
                    gva_effects_t0_p, gva_effects_t1_p, gva_effects_t2_p,
                    emp_effects_t0_p, emp_effects_t1_p, emp_effects_t2_p)
 
