@@ -25,7 +25,7 @@
 #' are obtained \href{https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/industry4digitsic2007ashetable16}{here}.
 "ashe_earn_cpa"
 
-#' ASHE Earnings Data 2020
+#' ASHE Earnings Data 2010-2021
 #'
 #' Average annual earnings published by the ONS from analysis of the Annual Survey of Hours and Earnings by 4-digit SIC-2007 industry.
 #' Data are collapsed into the 106 categories used in the Fraser of Allender Institute (FAI) alcohol disaggregated input-output

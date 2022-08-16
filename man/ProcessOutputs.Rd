@@ -9,7 +9,7 @@ ProcessOutputs(
   macro = tobalciomodel::macro_data,
   sort = NULL,
   year = 2019,
-  FAI = FALSE
+  FAI = TRUE
 )
 }
 \arguments{
