@@ -22,7 +22,7 @@ ProcessOutputs <- function(data,
                            macro = tobalciomodel::macro_data,
                            sort = NULL,
                            year = 2019,
-                           FAI = FALSE) {
+                           FAI = TRUE) {
 
   output <- copy(data)
 
@@ -63,37 +63,24 @@ ProcessOutputs <- function(data,
                                          "Real estate", "Professional and support activities",
                                          "Government, education and health", "Other services"))]
 
-  output_ind <- output[, .(out_1 = sum(out_effects_t1_p),
-                           gva_1 = sum(gva_effects_t1_p),
-                           emp_1 = sum(emp_effects_t1_p),
-                           net_1 = sum(netearn_effects_t1_p),
-                           tax_1 = sum(emptax_effects_t1_p)), by = "Industry"]
+  output_ind <- output[, .(out_2 = sum(out_effects_t2_p),
+                           gva_2 = sum(gva_effects_t2_p),
+                           emp_2 = sum(emp_effects_t2_p),
+                           net_2 = sum(netearn_effects_t2_p),
+                           tax_2 = sum(emptax_effects_t2_p)), by = "Industry"]
 
-  ### Calculate percentage effects
+  ######################################
+  ### Obtain the distribution of economic outcomes across industries based on
+  ### the most recent year
 
-  y <- copy(year)
-  macro <- macro[year %in% y,]
+  macro <- macro[year == max(year),]
+  macro[, output_prop := output/sum(output)]
+  macro[, gva_prop := gva/sum(gva)]
+  macro[, tot_fte_prop := tot_fte/sum(output)]
 
-  output_ind_perc <- merge(output_ind, macro, by = "Industry", sort = F)
+  macro[, c("year","output","gva","tot_emp","tot_fte") := NULL]
 
-  output_ind_perc[, output_perc := out_1/output]
-  output_ind_perc[, gva_perc := gva_1/gva]
-  output_ind_perc[, emp_perc := emp_1/tot_fte]
-
-  output_ind_perc <- output_ind_perc[, c("Industry","output_perc","gva_perc","emp_perc")]
-
-  #########
-
-  industry <- merge(output_ind, output_ind_perc, by = "Industry", sort = F)
-  industry <- industry[,c("Industry", "out_1","output_perc", "gva_1","gva_perc", "emp_1","emp_perc")]
-  industry[, out_1 := round(out_1, 3)]
-  industry[, gva_1 := round(gva_1, 3)]
-  industry[, emp_1 := round(emp_1, 0)]
-  industry[, output_perc := output_perc]
-  industry[, gva_perc    := gva_perc]
-  industry[, emp_perc    := emp_perc]
-
-  setnames(industry, names(industry), c("Industry", "out","out_perc", "gva","gva_perc", "emp","emp_perc"))
+  industry <- merge(output_ind, macro, by = "Industry", sort = F)
 
 
   ##############################################################################
@@ -104,75 +91,44 @@ ProcessOutputs <- function(data,
 
   out_0 <- sum(output$out_effects_t0_p)
   out_1 <- sum(output$out_effects_t1_p) - out_0
-  out_t <- out_0 + out_1
+  out_2 <- sum(output$out_effects_t2_p) - out_1 - out_0
+
+  out_t <- out_0 + out_1 + out_2
 
   gva_0 <- sum(output$gva_effects_t0_p)
   gva_1 <- sum(output$gva_effects_t1_p) - gva_0
-  gva_t <- gva_0 + gva_1
+  gva_2 <- sum(output$gva_effects_t2_p) - gva_1 - gva_0
+  gva_t <- gva_0 + gva_1 + gva_2
 
   emp_0 <- round(sum(output$emp_effects_t0_p))
   emp_1 <- round(sum(output$emp_effects_t1_p)) - emp_0
-  emp_t <- round(emp_0 + emp_1)
+  emp_2 <- round(sum(output$emp_effects_t2_p)) - emp_1 - emp_0
+  emp_t <- round(emp_0 + emp_1 + emp_2)
 
   net_0 <- sum(output$netearn_effects_t0_p)
   net_1 <- sum(output$netearn_effects_t1_p) - net_0
-  net_t <- net_0 + net_1
+  net_2 <- sum(output$netearn_effects_t2_p) - net_1 - net_0
+  net_t <- net_0 + net_1 + net_2
 
   tax_0 <- sum(output$emptax_effects_t0_p)
   tax_1 <- sum(output$emptax_effects_t1_p) - tax_0
-  tax_t <- tax_0 + tax_1
+  tax_2 <- sum(output$emptax_effects_t2_p) - tax_1 - tax_0
 
-  ### put results into a matrix
+  tax_t <- tax_0 + tax_1 + tax_2
 
-  output_agg <- matrix(c(out_0, out_1, out_t,
-                         gva_0, gva_1, gva_t,
-                         emp_0, emp_1, emp_t,
-                         net_0, net_1, net_t,
-                         tax_0, tax_1, tax_t),
+
+  output_agg <- matrix(c(out_0, out_1, out_2, out_t,
+                         gva_0, gva_1, gva_2, gva_t,
+                         emp_0, emp_1, emp_2, emp_t,
+                         net_0, net_1, net_2, net_t,
+                         tax_0, tax_1, tax_2, tax_t),
                        ncol = 5,
                        byrow = FALSE,
-                       dimnames = list(NULL,
+                       dimnames = list(c("Direct Effect", "Indirect Effect","Induced Effect", "Total"),
                                        c("Output", "GVA", "Employment",
                                          "Net Earn", "Income Tax")))
 
-  output_agg <- data.table(output_agg)
-
-  output_agg[, Output     := round(Output, 3)]
-  output_agg[, GVA        := round(GVA, 3)]
-  output_agg[, Employment := round(Employment, 0)]
-
-  macro_agg <- macro[, .(output = sum(output),
-                         gva = sum(gva),
-                         tot_fte = sum(tot_fte))]
-
-  macro_agg_exp <- rbindlist(list(macro_agg,macro_agg,macro_agg))
-
-  aggregate <- cbind(output_agg, macro_agg_exp)
-
-  aggregate[, output_perc := Output/output]
-  aggregate[, gva_perc := GVA/gva]
-  aggregate[, emp_perc :=  Employment/tot_fte]
-
-  aggregate <- aggregate[, c("Output", "output_perc", "GVA", "gva_perc",
-                                         "Employment", "emp_perc")]
-
-  setnames(aggregate,
-           names(aggregate),
-           c("out", "out_perc", "gva", "gva_perc", "emp", "emp_perc"))
-
-  Effects <- c("Direct", "Indirect", "Total")
-  aggregate <- cbind(Effects, aggregate)
-
-  ###########################
-  ### Convert the proportions to percentages
-
-  aggregate[, out_perc := round(out_perc*100, 4)]
-  aggregate[, gva_perc := round(gva_perc*100, 4)]
-  aggregate[, emp_perc := round(emp_perc*100, 4)]
-
-  industry[, out_perc := round(out_perc*100, 4)]
-  industry[, gva_perc := round(gva_perc*100, 4)]
-  industry[, emp_perc := round(emp_perc*100, 4)]
+  aggregate <- data.table(output_agg)
 
   ###########################
   ### OUTPUT THE RESULTS
