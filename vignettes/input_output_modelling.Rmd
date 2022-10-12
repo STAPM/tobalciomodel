@@ -280,17 +280,17 @@ tobalciomodel::tob_alc_data[year == 2020, c("product","exp_bp")]
 
 ```{r inputs_agg, eval = TRUE}
 
-  inputs <- GenInputs(prop_alc_on  = -0.01,
-                      prop_alc_off = -0.01,
-                      prop_tob_fm  = 0,
-                      prop_tob_ryo = 0,
-                      year = 2020)
+  #inputs <- GenInputs(prop_alc_on  = -0.01,
+  #                    prop_alc_off = -0.01,
+  #                    prop_tob_fm  = 0,
+  #                    prop_tob_ryo = 0,
+  #                    year = 2020)
 ```
 
 Whether using `GenInputs` or `ReadInputs`, the output produced is a vector with the following figures - changes in off-trade alcohol expenditure, changes in on-trade alcohol expenditure, changes in tobacco expenditure (all in basic prices and millions of pounds), total change in tobacco and alcohol expenditure, and the net change in government revenue which results from changing consumption. 
 
 ```{r show_inputs, echo = FALSE}
-  inputs
+  #inputs
 
 ```
 
