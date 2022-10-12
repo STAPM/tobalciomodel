@@ -1,9 +1,10 @@
-pandoc: 2.7.2
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  data: data.html
-  introduction: introduction.html
-  ontrade: ontrade.html
-last_built: 2020-09-16T11:32Z
+  input_output_modelling: input_output_modelling.html
+last_built: 2022-10-12T10:49Z
+urls:
+  reference: https://stapm.gitlab.io/r-packages/pricepol/reference
+  article: https://stapm.gitlab.io/r-packages/pricepol/articles
 

@@ -1,0 +1,53 @@
+destination: public
+home:
+  title: Modelling macroeconomic impacts of tobacco and alcohol demand
+  links:
+  - text: STAPM webpage
+    href: https://stapm.gitlab.io/
+url: https://stapm.gitlab.io/r-packages/pricepol
+template:
+  params:
+    bootswatch: flatly
+authors:
+  Damon Morris:
+    href: https://www.sheffield.ac.uk/scharr/people/staff/damon-morris
+  Duncan Gillespie:
+    href: https://www.sheffield.ac.uk/scharr/sections/heds/staff/gillespie_d
+  Alan Brennan:
+    href: https://www.sheffield.ac.uk/scharr/sections/heds/staff/brennan_a
+
+navbar:
+  structure:
+    left:  [home, intro, reference, articles]
+    right: [gitlab, software]
+  components:
+    home: ~
+    reference:
+     text: Functions
+     href: reference/index.html
+    articles:
+     text: Technical documentation
+     href: articles/index.html
+    gitlab:
+      icon: fab fa-gitlab fa-lg
+      href: https://gitlab.com/stapm/r-packages/tobalciomodel
+    software:
+      icon: fa-code
+      href: https://stapm.gitlab.io/software.html
+
+
+reference:
+
+articles:
+- title: Modelling economic impacts
+  contents:
+  - input_output_modelling
+
+
+
+
+
+
+
+
+

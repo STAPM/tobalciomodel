@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -71,42 +71,32 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tobalciomodel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/index.html">Technical documentation</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://gitlab.com/stapm/r-packages/tobalciomodel">
+    <span class="fab fa-gitlab fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+  <a href="https://stapm.gitlab.io/software.html">
+    <span class="fa fa-code"></span>
      
-    <span class="caret"></span>
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/data.html">Description of `tobalciomodel` Data</a>
-    </li>
-    <li>
-      <a href="../articles/introduction.html">Using `tobalciomodel` to Calculate Economic Impacts</a>
-    </li>
-    <li>
-      <a href="../articles/ontrade.html">Sensitivity to Distribution Across On-Trade Sectors</a>
-    </li>
-  </ul>
 </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -146,105 +136,183 @@
       <tr>
         
         <td>
-          <p><code><a href="alcohol_data.html">alcohol_data</a></code> </p>
+          <p><code><a href="iotable_ons.html">iotable_ons</a></code> </p>
         </td>
-        <td><p>Alcohol Consumption Data for England, Wales, and Scotland 2000-2019.</p></td>
+        <td><p>Input-Output Table</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="elasticities_alc.html">elasticities_alc</a></code> </p>
+          <p><code><a href="iotable_fai.html">iotable_fai</a></code> </p>
         </td>
-        <td><p>Price elasticities for Alcohol</p></td>
+        <td><p>Input-Output Table</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="elasticities_tob.html">elasticities_tob</a></code> </p>
+          <p><code><a href="ashe_earn_cpa.html">ashe_earn_cpa</a></code> </p>
         </td>
-        <td><p>Price elasticities for Tobacco</p></td>
+        <td><p>ASHE Earnings Data 2021</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="employment.html">employment</a></code> </p>
+          <p><code><a href="coicop_cpa_mapping.html">coicop_cpa_mapping</a></code> </p>
         </td>
-        <td><p>LFS Employment Data for 106 Sectors.</p></td>
+        <td><p>Map COICOP to CPA</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="final_demand_inputs_alc.html">final_demand_inputs_alc()</a></code> </p>
+          <p><code><a href="inctax_params.html">inctax_params</a></code> </p>
         </td>
-        <td><p>Preparation to Model Change in Alcohol Final Demand</p></td>
+        <td><p>Income Tax Parameters 2010-2020</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="final_demand_inputs_tob.html">final_demand_inputs_tob()</a></code> </p>
+          <p><code><a href="IOModelDemo.html">IOModelDemo()</a></code> </p>
         </td>
-        <td><p>Preparation to Model Change in Tobacco Final Demand</p></td>
+        <td><p>Input-Output Model Example</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hhold_reallocate.html">hhold_reallocate()</a></code> </p>
-        </td>
-        <td><p>Allow Households to Adjust Expenditure</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="impact_calculate.html">impact_calculate()</a></code> </p>
+          <p><code><a href="EconEffectsCalc.html">EconEffectsCalc()</a></code> </p>
         </td>
         <td><p>Calculate Economic Impacts</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="io.analysis.html">io.analysis()</a></code> </p>
+          <p><code><a href="awe.html">awe</a></code> </p>
         </td>
-        <td><p>Wrapper Function to Produce a Full IO Analysis</p></td>
+        <td><p>Average Weekly Earnings (AWE) Index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="iotable.html">iotable</a></code> </p>
+          <p><code><a href="ashe_earn_fai.html">ashe_earn_fai</a></code> </p>
         </td>
-        <td><p>Input-Output Table.</p></td>
+        <td><p>ASHE Earnings Data 2010-2021</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="macro.html">macro</a></code> </p>
+          <p><code><a href="demo_data.html">demo_data</a></code> </p>
         </td>
-        <td><p>Macroeconomic Data.</p></td>
+        <td><p>Demo Data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="multipliers.html">multipliers()</a></code> </p>
+          <p><code><a href="IOModel.html">IOModel()</a></code> </p>
         </td>
-        <td><p>Produce Sectoral Output Multipliers</p></td>
+        <td><p>Input-Output Wrapper Function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="scenarios.html">scenarios</a></code> </p>
+          <p><code><a href="macro_data.html">macro_data</a></code> </p>
         </td>
-        <td><p>Analysis Scenarios</p></td>
+        <td><p>Macroeconomic Data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="sectors.html">sectors()</a></code> </p>
+          <p><code><a href="LeontiefCalc.html">LeontiefCalc()</a></code> </p>
         </td>
-        <td><p>Print List of Sectors in the IO Model</p></td>
+        <td><p>Calculate L Matrices and Multipliers</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="select_scenario.html">select_scenario()</a></code> </p>
+          <p><code><a href="vectors_govt.html">vectors_govt</a></code> </p>
         </td>
-        <td><p>Select Scenario Parameters</p></td>
+        <td><p>Government Redistribution Vectors</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="simulate_alcohol_policy.html">simulate_alcohol_policy()</a></code> </p>
+          <p><code><a href="tob_alc_data.html">tob_alc_data</a></code> </p>
         </td>
-        <td><p>Model Change in Final Demand due to Alcohol Policy</p></td>
+        <td><p>Tobacco and Alcohol Data 2010-2020</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="simulate_tobacco_policy.html">simulate_tobacco_policy()</a></code> </p>
+          <p><code><a href="ReallocateHhold.html">ReallocateHhold()</a></code> </p>
         </td>
-        <td><p>Model Change in Final Demand due to Tobacco Policy</p></td>
+        <td><p>Reallocate Household Expenditure</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ReallocateGovt.html">ReallocateGovt()</a></code> </p>
+        </td>
+        <td><p>Reallocate Government Expenditure</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ProcessOutputs.html">ProcessOutputs()</a></code> </p>
+        </td>
+        <td><p>Generate Model Outputs</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sic_cpa_fai_mapping.html">sic_cpa_fai_mapping</a></code> </p>
+        </td>
+        <td><p>Mapping Products and Sectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="PrepFinalDemand.html">PrepFinalDemand()</a></code> </p>
+        </td>
+        <td><p>Setup Final Demand Vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lfs_empl_cpa.html">lfs_empl_cpa</a></code> </p>
+        </td>
+        <td><p>LFS Employment Data 2010-2027</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ReadSUT.html">ReadSUT()</a></code> </p>
+        </td>
+        <td><p>Read in Supply and Use Tables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ReadInputs.html">ReadInputs()</a></code> </p>
+        </td>
+        <td><p>Read IO Model Inputs from STAPM Output</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lfs_empl_fai.html">lfs_empl_fai</a></code> </p>
+        </td>
+        <td><p>LFS Employment Data 2010-2027</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vectors_hhold.html">vectors_hhold</a></code> </p>
+        </td>
+        <td><p>Household Redistribution Vectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GenInputsSTAPM.html">GenInputsSTAPM()</a></code> </p>
+        </td>
+        <td><p>Generate IO Inputs from STAPM Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="InputOutput.html">InputOutput()</a></code> </p>
+        </td>
+        <td><p>Input-Output Wrapper Function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="WriteResultsTab.html">WriteResultsTab()</a></code> </p>
+        </td>
+        <td><p>Write Results</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="CalcInputs.html">CalcInputs()</a></code> </p>
+        </td>
+        <td><p>Generate IO Model Inputs from Data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="GenInputsAGGDATA.html">GenInputsAGGDATA()</a></code> </p>
+        </td>
+        <td><p>Generate IO Inputs from Aggregate Data</p></td>
       </tr>
     </tbody>
     </table>
@@ -260,7 +328,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Damon Morris.</p>
+  <p>Developed by <a href='https://www.sheffield.ac.uk/scharr/people/staff/damon-morris'>Damon Morris</a>.</p>
 </div>
 
 <div class="pkgdown">

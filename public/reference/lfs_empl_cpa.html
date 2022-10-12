@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Page not found (404) • tobalciomodel</title>
+<title>LFS Employment Data 2010-2027 — lfs_empl_cpa • tobalciomodel</title>
 
 
 <!-- jquery -->
@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="https://stapm.gitlab.io/r-packages/pricepol/bootstrap-toc.css">
-<script src="https://stapm.gitlab.io/r-packages/pricepol/bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,13 +33,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="https://stapm.gitlab.io/r-packages/pricepol/pkgdown.css" rel="stylesheet">
-<script src="https://stapm.gitlab.io/r-packages/pricepol/pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="Page not found (404)" />
+<meta property="og:title" content="LFS Employment Data 2010-2027 — lfs_empl_cpa" />
+<meta property="og:description" content="Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
+are collapsed into the 105 CPA categories used in the ONS Supply and Use Tables and for a given year, the average total
+employment across the four quarters is taken. For 2021 to 2027, employment is estimated based on
+Working Futures 7 forecasts
+of the annual percentage change in employment for the UK produced by Warwick Institute for Employment Research" />
 
 
 
@@ -58,7 +63,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-title-body">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +75,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="https://stapm.gitlab.io/r-packages/pricepol/index.html">tobalciomodel</a>
+        <a class="navbar-link" href="../index.html">tobalciomodel</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
@@ -78,10 +83,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="reference/index.html">Functions</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="articles/index.html">Technical documentation</a>
+  <a href="../articles/index.html">Technical documentation</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -108,23 +113,41 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Page not found (404)</h1>
+    <h1>LFS Employment Data 2010-2027</h1>
+    
+    <div class="hidden name"><code>lfs_empl_cpa.Rd</code></div>
     </div>
 
-Content not found. Please use links in the navbar.
+    <div class="ref-description">
+    <p>Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
+are collapsed into the 105 CPA categories used in the ONS Supply and Use Tables and for a given year, the average total
+employment across the four quarters is taken. For 2021 to 2027, employment is estimated based on
+<a href='https://warwick.ac.uk/fac/soc/ier/researchthemesoverview/wf7downloads/'>Working Futures 7</a> forecasts
+of the annual percentage change in employment for the UK produced by Warwick Institute for Employment Research</p>
+    </div>
+
+    <pre class="usage"><span class='va'>lfs_empl_cpa</span></pre>
+
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>data.table</code> (inherits from <code>data.frame</code>) with 1890 rows and 5 columns.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Figures are available for total employment and total full-time equivalent (FTE)
+employment (employees categorised in the LFS as part-time are considered 0.5 FTE).</p>
+<p>The employment figures are constructed from the LFS micro-data obtained from the UK Data Service
+and processed using the `lfsclean` package v0.9.0.</p>
 
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
-
 
 
       <footer>

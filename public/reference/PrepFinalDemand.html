@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Page not found (404) • tobalciomodel</title>
+<title>Setup Final Demand Vector — PrepFinalDemand • tobalciomodel</title>
 
 
 <!-- jquery -->
@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="https://stapm.gitlab.io/r-packages/pricepol/bootstrap-toc.css">
-<script src="https://stapm.gitlab.io/r-packages/pricepol/bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,13 +33,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="https://stapm.gitlab.io/r-packages/pricepol/pkgdown.css" rel="stylesheet">
-<script src="https://stapm.gitlab.io/r-packages/pricepol/pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="Page not found (404)" />
+<meta property="og:title" content="Setup Final Demand Vector — PrepFinalDemand" />
+<meta property="og:description" content="Input changes in household and government expenditures, specify assumptions
+about the distributions of spending and the household saving rate, and produce
+the resulting vector of changes in final demand to model." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-title-body">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +73,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="https://stapm.gitlab.io/r-packages/pricepol/index.html">tobalciomodel</a>
+        <a class="navbar-link" href="../index.html">tobalciomodel</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
@@ -78,10 +81,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="reference/index.html">Functions</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="articles/index.html">Technical documentation</a>
+  <a href="../articles/index.html">Technical documentation</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -108,23 +111,91 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Page not found (404)</h1>
+    <h1>Setup Final Demand Vector</h1>
+    
+    <div class="hidden name"><code>PrepFinalDemand.Rd</code></div>
     </div>
 
-Content not found. Please use links in the navbar.
+    <div class="ref-description">
+    <p>Input changes in household and government expenditures, specify assumptions
+about the distributions of spending and the household saving rate, and produce
+the resulting vector of changes in final demand to model.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>PrepFinalDemand</span><span class='op'>(</span>
+  <span class='va'>hhold_exp</span>,
+  <span class='va'>govt_revenue</span>,
+  hhold_passthru <span class='op'>=</span> <span class='fl'>1</span>,
+  govt_passthru <span class='op'>=</span> <span class='fl'>0</span>,
+  hhold_reallocate <span class='op'>=</span> <span class='fl'>3</span>,
+  govt_reallocate <span class='op'>=</span> <span class='fl'>1</span>,
+  FAI <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>hhold_exp</th>
+      <td><p>Numeric vector of length 3. Change in household consumption measured in basic prices for off-trade alcohol,
+on-trade alcohol, and tobacco.</p></td>
+    </tr>
+    <tr>
+      <th>govt_revenue</th>
+      <td><p>Numeric. change in government revenues, measured in basic prices.</p></td>
+    </tr>
+    <tr>
+      <th>hhold_passthru</th>
+      <td><p>Numeric. Assumed household rate of passthrough - the proportion of change in spending which
+is compensated for in spending on other consumption categories. Defaults to 1 (full passthrough).</p></td>
+    </tr>
+    <tr>
+      <th>govt_passthru</th>
+      <td><p>Numeric. Assumed government rate of passthrough - the proportion of change in revenues
+which are matched by changes in government expenditure. Defaults to 0 (no passthrough).</p></td>
+    </tr>
+    <tr>
+      <th>hhold_reallocate</th>
+      <td><p>Numeric (1-3). The distribution of reallocation of spending to implement from the <code>vectors_hhold</code> data.
+Option 1 allocates pro-rata across all consumption categories, option 2 excludes alcohol and tobacco consumption, option 3
+(default) further excludes health, education, rents and utilities.</p></td>
+    </tr>
+    <tr>
+      <th>govt_reallocate</th>
+      <td><p>Numeric (1-5). The distribution of reallocation of spending to implement from the <code>vectors_govt</code> data.
+Option 1 (default) allocates pro-rata according to the distribution of total government spending,
+option 2 allocates according to central government spending only, option 3 allocates according
+to local government only. Option 4 allocates all spending to health, and option 5 allocates all spending
+to education.</p></td>
+    </tr>
+    <tr>
+      <th>FAI</th>
+      <td><p>Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
+ONS ones. Defaults to FALSE.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='op'>}</span>
+</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
-
 
 
       <footer>
