@@ -20,8 +20,6 @@ Imports:
     dplyr,
     data.table,
     readxl,
-    stapmr,
-    econcalc,
     openxlsx
 Suggests: 
     knitr,
