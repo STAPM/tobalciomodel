@@ -5,7 +5,7 @@
 \alias{iotable_scot}
 \title{Input-Output Tables - Scotland}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 98 rows and 110 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 392 rows and 111 columns.
 }
 \usage{
 iotable_scot

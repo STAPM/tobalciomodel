@@ -82,10 +82,12 @@
 #' @source \href{https://www.gov.uk/government/collections/tax-structure-and-parameters-statistics}{Tax structure and parameters statistics}
 "inctax_params"
 
-#' Input-Output Table
+#' Input-Output Table - UK
 #'
 #' Input-output flow-table as well as demand and output vectors from the alcohol-disaggregated
-#' input-output table constructed by Fraser of Allender Institute (FAI).
+#' input-output table constructed by Fraser of Allender Institute (FAI) for the report
+#' \href{https://fraserofallander.org/publications/the-economic-impact-of-changes-in-alcohol-consumption-in-the-uk/}{"The economic impact of changes in alcohol consumption in the UK"}. Data originally downloaded from
+#' \href{https://pureportal.strath.ac.uk/en/datasets/2010-uk-alcohol-consumption-disaggregated-ixi-table}{here}
 #'
 "iotable_fai"
 

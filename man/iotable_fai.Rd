@@ -3,15 +3,17 @@
 \docType{data}
 \name{iotable_fai}
 \alias{iotable_fai}
-\title{Input-Output Table}
+\title{Input-Output Table - UK}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 106 rows and 118 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 106 rows and 119 columns.
 }
 \usage{
 iotable_fai
 }
 \description{
 Input-output flow-table as well as demand and output vectors from the alcohol-disaggregated
-input-output table constructed by Fraser of Allender Institute (FAI).
+input-output table constructed by Fraser of Allender Institute (FAI) for the report
+\href{https://fraserofallander.org/publications/the-economic-impact-of-changes-in-alcohol-consumption-in-the-uk/}{"The economic impact of changes in alcohol consumption in the UK"}. Data originally downloaded from
+\href{https://pureportal.strath.ac.uk/en/datasets/2010-uk-alcohol-consumption-disaggregated-ixi-table}{here}
 }
 \keyword{datasets}
