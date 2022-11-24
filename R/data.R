@@ -89,6 +89,15 @@
 #'
 "iotable_fai"
 
+#' Input-Output Tables - Northern Ireland
+#'
+#' Input-output flow-table as well as demand and output vectors derived from data tables provided by the
+#' \href{https://www.gov.scot/publications/input-output-latest/}{Northern Ireland Statistics and Research Authority
+#' (NISRA)} for the years 2016 and 2017. More information about the
+#' tables is available \href{https://www.nisra.gov.uk/statistics/economic-accounts-project/analytical-input-output-tables}{here}.
+#'
+"iotable_nire"
+
 #' Input-Output Table
 #'
 #' Input-output flow-table as well as demand and output vectors derived from the ONS supply and use tables
@@ -100,6 +109,15 @@
 #' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
 #'
 "iotable_ons"
+
+#' Input-Output Tables - Scotland
+#'
+#' Input-output flow-table as well as demand and output vectors derived from data tables provided by the
+#' \href{https://www.gov.scot/publications/input-output-latest/}{Scottish Government} for the years
+#' 1998, 2010 2015, and 2019. More information about the tables is available
+#' \href{https://www.gov.scot/publications/about-supply-use-input-output-tables/pages/user-guide-symmetric-tables/}{here}.
+#'
+"iotable_scot"
 
 #' Macroeconomic Data
 #'

@@ -38,7 +38,7 @@ across the 105 CPA sectors.
 \dontrun{
 
 ### generate a vector of government final demand changes for a fall in
-### revenues of Â£100m. With passthrough = 0, this will produce a vector
+### revenues of £100m. With passthrough = 0, this will produce a vector
 ### of 0s.
 
 govt_spend <- ReallocateGovt(revenue = -100,
@@ -48,8 +48,8 @@ govt_spend <- ReallocateGovt(revenue = -100,
                              FAI = FALSE)
 
 ### generate a vector of government final demand changes for a fall in
-### revenues of Â£100m. With passthrough = 1, with vector = 1, this will
-### impose a total cut in government spending of Â£100m, allocated
+### revenues of £100m. With passthrough = 1, with vector = 1, this will
+### impose a total cut in government spending of £100m, allocated
 ### pro-rata across the distribution of total govt spending.
 
 govt_spend <- ReallocateGovt(revenue = -100,
@@ -58,7 +58,7 @@ govt_spend <- ReallocateGovt(revenue = -100,
                              vectors_data = tobalciomodel::vectors_govt,
                              FAI = FALSE)
 
-### Passthrough = 0.5 - for a Â£100m fall in revenues, a cut in spending of $50m,
+### Passthrough = 0.5 - for a £100m fall in revenues, a cut in spending of $50m,
 ### vector = 2 - spending cuts allocated across the distribution of central
 ###              government spending
 

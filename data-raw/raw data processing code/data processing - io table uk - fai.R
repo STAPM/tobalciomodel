@@ -1,14 +1,20 @@
-### read in the flow table and other IO table elements into an R data file
+library(curl)
+library(magrittr)
 library(readxl)
 library(data.table)
+library(ggplot2)
+library(htmltools)
 
-path  <- "data-raw/"
-file  <- "2010_UK_Alcohol_consumption_disaggregated_IxI.xlsx"
 sheet <- "Sheet1"
 
-#path  <- "data-raw/"
-#file  <- "tobalciomodel.xlsx"
-#sheet <- "Input Output Table"
+###################################################
+### Download the excel sheet from Strathclyde #####
+
+url <- "https://pureportal.strath.ac.uk/files/86400329/2010_UK_Alcohol_consumption_disaggregated_IxI.xlsx"
+temp <- tempfile()
+temp <- curl_download(url = url, destfile = temp, quiet = FALSE, mode = "wb")
+
+
 
 ### Read in the sector names
 sector <- read_excel(path = paste0(path,file),
@@ -114,5 +120,7 @@ setnames(iotable_fai, old = names(iotable_fai), new = c("IOC","Sector", paste0("
                                                                   "hhold.demand","govt.demand","final.demand",
                                                                   "hhold.output","total.output","total.demand",
                                                                   "gva.taxes","gva.wages","gva.gos","gva.total"))
+
+iotable_fai[, year := 2010]
 
 usethis::use_data(iotable_fai,overwrite=TRUE)
