@@ -26,12 +26,6 @@
 #' are obtained \href{https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/industry4digitsic2007ashetable16}{here}.
 "ashe_earn_fai"
 
-#' Demo Data
-#'
-#' Synthetic data used to represent a simplified 3-sector economy for demonstration of the methodology used in this package.
-#'
-"demo_data"
-
 #' Gross Disposable Household Income
 #'
 #' Stores GDHI data from 1997 - 2020 for the UK and the four constituent nations. Figures are presented in £millions
