@@ -42,6 +42,16 @@
 #'
 "demo_data"
 
+#' Gross Disposable Household Income
+#'
+#' Stores GDHI data from 1997 - 2020 for the UK and the four constituent nations. Figures are presented in £millions
+#' and in basic prices. These data are used for the denominator for household expenditure in type 2 technical
+#' coefficient matrices
+#'
+#' \source \href{https://www.ons.gov.uk/economy/regionalaccounts/grossdisposablehouseholdincome/datasets/regionalgrossdisposablehouseholdincomegdhi}{Office for National Statistics}.
+#'
+"gdhi"
+
 #' LFS Employment Data 2010-2027
 #'
 #' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
