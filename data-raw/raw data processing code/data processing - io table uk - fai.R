@@ -17,7 +17,7 @@ temp <- curl_download(url = url, destfile = temp, quiet = FALSE, mode = "wb")
 
 
 ### Read in the sector names
-sector <- read_excel(path = paste0(path,file),
+sector <- read_excel(temp,
                      sheet = sheet,
                      range = "B6:C111",
                      col_names = FALSE)
@@ -27,7 +27,7 @@ setDT(sector)
 setnames(sector, names(sector), c("IOC","Sector"))
 
 ### Read in the flowtable
-flowtable <- read_excel(path = paste0(path,file),
+flowtable <- read_excel(temp,
                         sheet = sheet,
                         range = "D6:DE111",
                         col_names = FALSE)
@@ -35,14 +35,14 @@ setDT(flowtable)
 
 
 ### Read in the household consumption/demand and output rows
-hhold.output <- read_excel(path = paste0(path,file),
+hhold.output <- read_excel(temp,
                            sheet = sheet,
                            range = "D117:DE117",
                            col_names = FALSE)
 setDT(hhold.output)
 
 
-hhold.demand <- read_excel(path = paste0(path,file),
+hhold.demand <- read_excel(temp,
                            sheet = sheet,
                            range = "DG6:DG111",
                            col_names = FALSE)
@@ -50,50 +50,50 @@ setDT(hhold.demand)
 
 ### Read in the final demand and total output
 
-total.output <- read_excel(path = paste0(path,file),
+total.output <- read_excel(temp,
                            sheet = sheet,
                            range = "D120:DE120",
                            col_names = FALSE)
 setDT(total.output)
 
 
-final.demand <- read_excel(path = paste0(path,file),
+final.demand <- read_excel(temp,
                            sheet = sheet,
                            range = "DS6:DS111",
                            col_names = FALSE)
 setDT(final.demand)
 
-total.demand <- read_excel(path = paste0(path,file),
+total.demand <- read_excel(temp,
                            sheet = sheet,
                            range = "DT6:DT111",
                            col_names = FALSE)
 setDT(total.demand)
 
-govt.demand <- read_excel(path = paste0(path,file),
+govt.demand <- read_excel(temp,
                           sheet = sheet,
                           range = "DI6:DI111",
                           col_names = FALSE)
 setDT(govt.demand)
 
-gva.taxes <- read_excel(path = paste0(path,file),
+gva.taxes <- read_excel(temp,
                         sheet = sheet,
                         range = "D116:DE116",
                         col_names = FALSE)
 setDT(gva.taxes)
 
-gva.wages <- read_excel(path = paste0(path,file),
+gva.wages <- read_excel(temp,
                         sheet = sheet,
                         range = "D117:DE117",
                         col_names = FALSE)
 setDT(gva.wages)
 
-gva.gos <- read_excel(path = paste0(path,file),
+gva.gos <- read_excel(temp,
                       sheet = sheet,
                       range = "D118:DE118",
                       col_names = FALSE)
 setDT(gva.gos)
 
-gva.total <- read_excel(path = paste0(path,file),
+gva.total <- read_excel(temp,
                         sheet = sheet,
                         range = "D119:DE119",
                         col_names = FALSE)
