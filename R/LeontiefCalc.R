@@ -4,27 +4,19 @@
 #' multipliers required for the economic impact analysis. The function produces multipliers and Leontief
 #' matrices for type 0 (direct), type 1 (indirect), and type 2 (induced) effects on output, GVA, and employment.
 #'
-#' @param list List. The output of the ReadSUT() function containing the IO table and
+#' @param list List. The output of the ReadIOAT() function containing the IO table and
 #' technical coefficients.
 #' @param country Character. Country of analysis. Options are c("UK","scotland","nireland").
 #' @param year_ioat Numeric. Year of the input-output analytical tables used.
-#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
-#'            ONS tables for the UK. Defaults to FALSE.
 #'
 #' @export
 LeontiefCalc <- function(list,
                          country,
-                         year_ioat,
-                         FAI = TRUE) {
+                         year_ioat) {
 
   ## extract objects from list
   iotable <- list$iotable
   coefs   <- list$coefs
-
-  if (FAI == TRUE) {
-    supply <- tobalciomodel::iotable_fai[,c("IOC","Sector")]
-    #setnames
-  }
 
   total.output <- as.vector(as.matrix(coefs[,"output"]))
 
@@ -53,12 +45,12 @@ LeontiefCalc <- function(list,
   data <- tobalciomodel::iotable_fai
   totinc <- as.numeric(tobalciomodel::gdhi[country == "United Kingdom" & year == year_ioat, "gdhi"])
 
-  } else if (country == "scotland") {
+  } else if (country == "Scotland") {
 
   data <- tobalciomodel::iotable_scot
   totinc <- as.numeric(tobalciomodel::gdhi[country == "Scotland" & year == year_ioat, "gdhi"])
 
-  } else if (country == "nireland") {
+  } else if (country == "N_ireland") {
 
   data <- tobalciomodel::iotable_nire
   totinc <- as.numeric(tobalciomodel::gdhi[country == "Northern Ireland" & year == year_ioat, "gdhi"])

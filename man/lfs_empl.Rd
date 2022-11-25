@@ -5,7 +5,7 @@
 \alias{lfs_empl}
 \title{LFS Employment Data 2010-2020}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 2937 rows and 6 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 2935 rows and 6 columns.
 }
 \usage{
 lfs_empl

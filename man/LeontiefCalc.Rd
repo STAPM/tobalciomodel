@@ -4,18 +4,15 @@
 \alias{LeontiefCalc}
 \title{Calculate L Matrices and Multipliers}
 \usage{
-LeontiefCalc(list, country, year_ioat, FAI = TRUE)
+LeontiefCalc(list, country, year_ioat)
 }
 \arguments{
-\item{list}{List. The output of the ReadSUT() function containing the IO table and
+\item{list}{List. The output of the ReadIOAT() function containing the IO table and
 technical coefficients.}
 
 \item{country}{Character. Country of analysis. Options are c("UK","scotland","nireland").}
 
 \item{year_ioat}{Numeric. Year of the input-output analytical tables used.}
-
-\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
-ONS tables for the UK. Defaults to FALSE.}
 }
 \description{
 Take the processed Input-Output and Supply and Use Tables and derive the Leontief inverse matrix and
