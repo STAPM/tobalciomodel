@@ -4,18 +4,15 @@
 \alias{ReadIOAT}
 \title{Read in Input-Output Tables}
 \usage{
-ReadIOAT(country, year_ioat = 2010, fte = TRUE, FAI = TRUE)
+ReadIOAT(country, year_ioat = 2010, fte = TRUE)
 }
 \arguments{
-\item{country}{Character. Country of analysis. Options are c("UK","scotland","nireland").}
+\item{country}{Character. Country of analysis. Options are c("UK","Scotland","N_Ireland").}
 
 \item{year_ioat}{Numeric. Year of the input-output analytical tables used.}
 
 \item{fte}{Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE
 use total employees.}
-
-\item{FAI}{Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
-ONS ones. Defaults to FALSE.}
 }
 \description{
 Read and process the input-output analytical table (IOAT) for the UK economy.

@@ -20,6 +20,7 @@ setnames(map, c("IOC_scot","Sector_scot"), c("IOC","Sector"))
 
 map[, SIC_code := as.numeric(SIC_code)]
 
+
 ###########################################
 ## loop over years - match LFS employment to the lookup table, collapse to
 ## Scottish IO table layout
@@ -31,7 +32,7 @@ for (y in 2010:2020) {
   ##############################################
   ## Map employment onto the IO table sectors
 
-  merge <- merge.data.table(map, empl, by = "SIC_code", all.x = TRUE)
+  merge <- merge.data.table(map, empl, by = "SIC_code", all = TRUE)
 
   merge[is.na(total_), total_ := 0]
   merge[is.na(fte_), fte_ := 0]
@@ -39,7 +40,7 @@ for (y in 2010:2020) {
   merge <- merge[, .(tot_emp = sum(total_, na.rm = TRUE),
                      tot_fte = sum(fte_,   na.rm = TRUE) ), by = c("IOC","Sector")]
 
-  ### This will have 99 sectors.
+  ### This will have 98 sectors.
 
   scot_empl <- copy(merge)
 

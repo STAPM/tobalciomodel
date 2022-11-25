@@ -6,35 +6,33 @@
 #' function is designed to use are downloaded from
 #' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{this ONS page}.
 #'
-#' @param country Character. Country of analysis. Options are c("UK","scotland","nireland").
+#' @param country Character. Country of analysis. Options are c("UK","Scotland","N_Ireland").
 #' @param year_ioat Numeric. Year of the input-output analytical tables used.
 #' @param fte Logical. If TRUE (default) use full-time equivalent (FTE) employment, if FALSE
 #'            use total employees.
-#' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
-#'            ONS ones. Defaults to FALSE.
 #'
 #'
 #' @export
 ReadIOAT <- function(country,
                      year_ioat = 2010,
-                     fte = TRUE,
-                     FAI = TRUE) {
+                     fte = TRUE) {
 
   y <- copy(year_ioat)
+  c <- copy(country)
 
   #################################
   ### Grab the selected IO tables
 
   if (country == "UK") {
-    data <- tobalciomodel::iotable_fai
+    data <- tobalciomodel::iotable_fai[year == y,]
 
-  } else if (country == "scotland") {
+  } else if (country == "Scotland") {
 
-    data <- tobalciomodel::iotable_scot
+    data <- tobalciomodel::iotable_scot[year == y,]
 
-  } else if (country == "nireland") {
+  } else if (country == "N_Ireland") {
 
-    data <- tobalciomodel::iotable_nire
+    data <- tobalciomodel::iotable_nire[year == y,]
   }
 
   ### flow table (keep only columns of data with "sec" in the name)
@@ -53,11 +51,11 @@ ReadIOAT <- function(country,
   ### Match in employment data
 
   if (fte == TRUE) {
-    employment <- tobalciomodel::lfs_empl_fai[year == year_ioat, "tot_fte"]
+    employment <- tobalciomodel::lfs_empl[year == y & country == c, "tot_fte"]
 
   } else {
 
-    employment <- tobalciomodel::lfs_empl_fai[year == year_ioat, "tot_emp"]
+    employment <- tobalciomodel::lfs_empl[year == y & country == c, "tot_emp"]
   }
 
   employment <- as.vector(as.matrix(employment))

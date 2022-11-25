@@ -31,7 +31,7 @@ for (y in 2010:2020) {
   ##############################################
   ## Map employment onto the IO table sectors
 
-  merge <- merge.data.table(map, empl, by = "SIC_code", all.x = TRUE)
+  merge <- merge.data.table(map, empl, by = "SIC_code", all = TRUE)
 
   merge[is.na(total_), total_ := 0]
   merge[is.na(fte_), fte_ := 0]
@@ -39,7 +39,7 @@ for (y in 2010:2020) {
   merge <- merge[, .(tot_emp = sum(total_, na.rm = TRUE),
                      tot_fte = sum(fte_,   na.rm = TRUE) ), by = c("IOC","Sector")]
 
-  ### This will have 62 sectors.
+  ### This will have 63 sectors.
 
   ni_empl <- copy(merge)
 
