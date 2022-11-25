@@ -7,6 +7,9 @@
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 120 rows and 3 columns.
 }
+\source{
+\href{https://www.ons.gov.uk/economy/regionalaccounts/grossdisposablehouseholdincome/datasets/regionalgrossdisposablehouseholdincomegdhi}{Office for National Statistics}.
+}
 \usage{
 gdhi
 }
@@ -14,8 +17,5 @@ gdhi
 Stores GDHI data from 1997 - 2020 for the UK and the four constituent nations. Figures are presented in £millions
 and in basic prices. These data are used for the denominator for household expenditure in type 2 technical
 coefficient matrices
-}
-\details{
-\source \href{https://www.ons.gov.uk/economy/regionalaccounts/grossdisposablehouseholdincome/datasets/regionalgrossdisposablehouseholdincomegdhi}{Office for National Statistics}.
 }
 \keyword{datasets}

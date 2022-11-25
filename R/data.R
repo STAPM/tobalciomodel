@@ -32,26 +32,24 @@
 #' and in basic prices. These data are used for the denominator for household expenditure in type 2 technical
 #' coefficient matrices
 #'
-#' \source \href{https://www.ons.gov.uk/economy/regionalaccounts/grossdisposablehouseholdincome/datasets/regionalgrossdisposablehouseholdincomegdhi}{Office for National Statistics}.
+#' @source \href{https://www.ons.gov.uk/economy/regionalaccounts/grossdisposablehouseholdincome/datasets/regionalgrossdisposablehouseholdincomegdhi}{Office for National Statistics}.
 #'
 "gdhi"
 
 
-#' LFS Employment Data 2010-2027
+#' LFS Employment Data 2010-2020
 #'
 #' Total employment is calculated from the quarterly Labour Force Survey (LFS) by 4-digit SIC-2007 industry. Data
-#' are collapsed into the 106 industry categories used in the FAI alcohol-disaggregated input-output table. the average total
-#' employment across the four quarters is taken. For 2021 to 2027, employment is estimated based on
-#' \href{https://warwick.ac.uk/fac/soc/ier/researchthemesoverview/wf7downloads/}{Working Futures 7} forecasts
-#' of the annual percentage change in employment for the UK produced by Warwick Institute for Employment Research
+#' are currently available for years 2010-2020 and in the formats required for the UK (Fraser of Allender Institute),
+#' Scotland (Scottish government), and Northern Ireland (Northern Ireland Statistics and Research Agency) input-output tables.
 #'
 #' Figures are available for total employment and total full-time equivalent (FTE)
-#' employment (employees categorised in the LFS as part-time are considered 0.5 FTE).
+#' employment (employees who report being part-time in the LFS are treated as 0.5 FTE).
 #'
 #' The employment figures are constructed from the LFS micro-data obtained from the UK Data Service
-#' and processed using the `lfsclean` package v0.9.0.
+#' and processed using the \href{https://stapm.gitlab.io/r-packages/lfsclean/}{`lfsclean` package v1.0.0}.
 #'
-"lfs_empl_fai"
+"lfs_empl"
 
 #' Income Tax Parameters 2010-2020
 #'
