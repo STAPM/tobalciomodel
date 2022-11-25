@@ -7,55 +7,50 @@ library(magrittr)
 
 ## construct 4-digit employment by industry-year from the Labour Force Survey
 
-root <- "D:/"
-file <- "Datasets/Labour Force Survey/raw data/"
+root <- "C:/"
+file <- "Users/damon/OneDrive/Documents/Datasets/Labour Force Survey/tab/"
+keep_vars <- c("year","quarter","pwt","d_age","d_sex","l_lmstatus","l_full_time","l_sic2007_4dig")
 
-vars <- c("year","quarter","pwt","age","gender","lmstatus","full_time","sic2007_4dig")
+data <- lfsclean::lfsclean(root = root,
+                           file = file,
+                           year = 2010:2012,
+                           ages = 16:89,
+                           keep_vars = keep_vars,
+                           complete_vars = NULL,
+                           deflator = "cpih")
 
-data <- combine_years(list(
-  lfs_clean_global(lfs_read_2010(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2011(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2012(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2013(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2014(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2015(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2016(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2017(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2018(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2019(root,file),keep_vars = vars),
-  lfs_clean_global(lfs_read_2020(root,file),keep_vars = vars)
-)
-)
 
 ## restrict to all employed/self-employed with complete information on
 ## full time status and industry
 
-data <- data[lmstatus=="employed"|lmstatus=="self employed" ,]
-data <- data[!is.na(full_time) ,]
-data <- data[!is.na(sic2007_4dig) ,]
+data <- data[l_lmstatus=="employed" | l_lmstatus=="self employed" ,]
+data <- data[!is.na(l_full_time) ,]
+data <- data[!is.na(l_sic2007_4dig) ,]
 
 ## calculate fte employment by industry and quarter
 
-data[full_time == "full_time",fte_ := 1]
-data[full_time == "part_time",fte_ := 0.5]
+data[l_full_time == "full_time",fte_ := 1]
+data[l_full_time == "part_time",fte_ := 0.5]
 
-data[, fte   := sum(pwt*fte_), by = c("time","sic2007_4dig")]
-data[, total := sum(pwt ),     by = c("time","sic2007_4dig")]
+data[, fte   := sum(pwt*fte_), by = c("time","l_sic2007_4dig")]
+data[, total := sum(pwt ),     by = c("time","l_sic2007_4dig")]
 
-data <- unique(data[,c("time","year","sic2007_4dig","fte","total")])
+data <- unique(data[,c("time","year","l_sic2007_4dig","fte","total")])
 
 ## now average employment across quarters within years
 
-data[, fte_   := mean(fte)  , by = c("year","sic2007_4dig")]
-data[, total_ := mean(total), by = c("year","sic2007_4dig")]
+data[, fte_   := mean(fte)  , by = c("year","l_sic2007_4dig")]
+data[, total_ := mean(total), by = c("year","l_sic2007_4dig")]
 
-data <- unique(data[,c("year","sic2007_4dig","fte_","total_")])
+data <- unique(data[,c("year","l_sic2007_4dig","fte_","total_")])
 
 setnames(data,
-         c("sic2007_4dig","fte_","total_"),
+         c("l_sic2007_4dig","fte_","total_"),
          c("SIC_code","fte","total"))
 
 data[, SIC_code := as.numeric(as.character(SIC_code))]
+
+data <- data[order(year,SIC_code),]
 
 ########################################################################################
 ##### Map SIC Employment onto the FAI categories for the alcohol-disaggregated table ###

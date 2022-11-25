@@ -4,19 +4,22 @@
 #' multipliers required for the economic impact analysis. The function produces multipliers and Leontief
 #' matrices for type 0 (direct), type 1 (indirect), and type 2 (induced) effects on output, GVA, and employment.
 #'
-#' @param list List. The output of the ReadSUT() function containing the IO table, supply table, and
+#' @param list List. The output of the ReadSUT() function containing the IO table and
 #' technical coefficients.
+#' @param country Character. Country of analysis. Options are c("UK","scotland","nireland").
+#' @param year_ioat Numeric. Year of the input-output analytical tables used.
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
-#'            ONS ones. Defaults to FALSE.
+#'            ONS tables for the UK. Defaults to FALSE.
 #'
 #' @export
 LeontiefCalc <- function(list,
+                         country,
+                         year_ioat,
                          FAI = TRUE) {
 
   ## extract objects from list
   iotable <- list$iotable
   coefs   <- list$coefs
-  supply  <- list$supply
 
   if (FAI == TRUE) {
     supply <- tobalciomodel::iotable_fai[,c("IOC","Sector")]
@@ -46,29 +49,48 @@ LeontiefCalc <- function(list,
 
   ## Internalise househholds within the IO table
 
-  if (FAI == TRUE) {
+  if (country == "UK") {
   data <- tobalciomodel::iotable_fai
+  totinc <- as.numeric(tobalciomodel::gdhi[country == "United Kingdom" & year == year_ioat, "gdhi"])
+
+  } else if (country == "scotland") {
+
+  data <- tobalciomodel::iotable_scot
+  totinc <- as.numeric(tobalciomodel::gdhi[country == "Scotland" & year == year_ioat, "gdhi"])
+
+  } else if (country == "nireland") {
+
+  data <- tobalciomodel::iotable_nire
+  totinc <- as.numeric(tobalciomodel::gdhi[country == "Northern Ireland" & year == year_ioat, "gdhi"])
   }
+
+  ### additional row to A matrix - household income (Comp of employees) per unit of output
+
+  coe <- as.vector(as.matrix(data[,"hhold.output"]))
+  out <- as.vector(as.matrix(data[,"total.output"]))
+
+  row_A <- coe/out
+
+  A2 <- rbind(A, row_A)
+
+  ### additional column to A matrix - household expenditure per unit of total household income
+  ### from all sources (COE is earned income only, so use GDHI to include all income). Divide
+  ### the household demand column by the totinc scalar obtained above
 
   cons <- as.vector(as.matrix(data[,"hhold.demand"]))
 
-  coe <- as.vector(as.matrix(data[,"hhold.output"]))
-  coe <- c(coe , 0)
+  col_A <- cons/totinc
 
+  ### Also need to fill in the bottom right corner by extending col_A - this is household
+  ### expenditure per unit of exogenous household income (Set to 0)
 
-  iotable2 <- cbind(rbind(iotable,cons) , coe)
+  col_A <- c(col_A, 0)
 
-  total.output2 <- c(total.output, sum(coe))
-
-  rm(coe, cons, data)
-
-  ## A matrix
-
-  A2 <- iotable2 %*% ((total.output2 )^-1 * diag(length(total.output2)))
+  A2 <- cbind(A2, col_A)
 
   ## Leontief Inverse L = (I - A)^-1
 
-  L2 <- solve(diag(length(total.output2)) - A2)
+  L2 <- solve(diag(length(total.output) + 1) - A2)
 
   ######################################
   ###### Calculate Multipliers #########
