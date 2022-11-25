@@ -22,37 +22,6 @@
 #'
 #' \dontrun{
 #'
-#' ### generate a vector of government final demand changes for a fall in
-#' ### revenues of £100m. With passthrough = 0, this will produce a vector
-#' ### of 0s.
-#'
-#' govt_spend <- ReallocateGovt(revenue = -100,
-#'                              govt_passthru = 0,
-#'                              vector = 1,
-#'                              vectors_data = tobalciomodel::vectors_govt,
-#'                              FAI = FALSE)
-#'
-#' ### generate a vector of government final demand changes for a fall in
-#' ### revenues of £100m. With passthrough = 1, with vector = 1, this will
-#' ### impose a total cut in government spending of £100m, allocated
-#' ### pro-rata across the distribution of total govt spending.
-#'
-#' govt_spend <- ReallocateGovt(revenue = -100,
-#'                              govt_passthru = 1,
-#'                              vector = 1,
-#'                              vectors_data = tobalciomodel::vectors_govt,
-#'                              FAI = FALSE)
-#'
-#' ### Passthrough = 0.5 - for a £100m fall in revenues, a cut in spending of $50m,
-#' ### vector = 2 - spending cuts allocated across the distribution of central
-#' ###              government spending
-#'
-#' govt_spend <- ReallocateGovt(revenue = -100,
-#'                              govt_passthru = 0.5,
-#'                              vector = 2,
-#'                              vectors_data = tobalciomodel::vectors_govt,
-#'                              FAI = FALSE)
-#'
 #' }
 ReallocateGovt <- function(revenue,
                            govt_passthru = 0,
