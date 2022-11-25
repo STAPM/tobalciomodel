@@ -100,18 +100,6 @@
 #'
 "iotable_nire"
 
-#' Input-Output Table
-#'
-#' Input-output flow-table as well as demand and output vectors derived from the ONS supply and use tables
-#' 1997 - 2018. In addition to the same variables obtained from the FAI input-output table, additional information
-#' is available on purchaser prices, tax as a proportion of the purchaser price, and industry profit margins.
-#'
-#' Supply and Use Tables are published by the Office for National Statistics. The raw data tables from which this
-#' dataset is derived can be found
-#' \href{https://www.ons.gov.uk/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables}{here}.
-#'
-"iotable_ons"
-
 #' Input-Output Tables - Scotland
 #'
 #' Input-output flow-table as well as demand and output vectors derived from data tables provided by the
