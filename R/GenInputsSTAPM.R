@@ -16,7 +16,7 @@
 #' @param write_inputs Character - file path to the folder to which the input data will be written.
 #' @param name Character - file name for the input data.
 #'
-#' @return
+#' @return Data
 #' @export
 #'
 #' @examples

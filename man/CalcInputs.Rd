@@ -27,7 +27,7 @@ CalcInputs(
 \item{prop_tob_ryo}{Proportionate change in hand-rolled tobacco expenditure.}
 }
 \value{
-
+Data
 }
 \description{
 Function to use aggregate data on expenditures included in the package to estimate

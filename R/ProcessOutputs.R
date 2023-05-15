@@ -10,7 +10,7 @@
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table. If FALSE, uses the
 #'            ONS supply and use tables. Defaults to FALSE
 #'
-#' @return
+#' @return Data
 #' @export
 #'
 #' @examples

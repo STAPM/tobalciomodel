@@ -21,7 +21,7 @@ to write to the columns of the spreadsheet.}
 \item{write_output}{Character. File path to the folder in which to save the spreadsheet.}
 }
 \value{
-
+Excel table of results
 }
 \description{
 Pass a set of results from InputOutput to this function to write out a comparison spreadsheet of results

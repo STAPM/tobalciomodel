@@ -11,7 +11,7 @@
 #' to write to the columns of the spreadsheet.
 #' @param write_output Character. File path to the folder in which to save the spreadsheet.
 #'
-#' @return
+#' @return Excel table of results
 #' @export
 #'
 #' @examples

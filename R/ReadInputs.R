@@ -11,7 +11,7 @@
 #' the policy effect year for which to extract treatment effects.
 #' @param govt Logical. If TRUE include changes in government revenue in the analysis.
 #'
-#' @return
+#' @return Data
 #' @export
 #'
 #' @examples

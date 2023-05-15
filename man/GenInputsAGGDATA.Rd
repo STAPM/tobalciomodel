@@ -19,7 +19,7 @@ off-trade alcohol, on-trade alcohol, factory-made cigarettes, and hand-rolled to
 \item{name}{Character - file name for the input data.}
 }
 \value{
-
+Data
 }
 \description{
 Calculate changes in demand based on aggregate spending data for alcohol and tobacco for

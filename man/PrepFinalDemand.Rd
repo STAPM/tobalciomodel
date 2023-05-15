@@ -40,7 +40,7 @@ to education.}
 ONS ones. Defaults to FALSE.}
 }
 \value{
-
+Data
 }
 \description{
 Input changes in household and government expenditures, specify assumptions

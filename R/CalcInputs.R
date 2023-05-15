@@ -11,7 +11,7 @@
 #' @param prop_tob_ryo Proportionate change in hand-rolled tobacco expenditure.
 #' @param year year of data to use.
 #'
-#' @return
+#' @return Data
 #' @export
 #'
 #' @examples

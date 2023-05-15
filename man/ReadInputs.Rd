@@ -17,7 +17,7 @@ the policy effect year for which to extract treatment effects.}
 \item{govt}{Logical. If TRUE include changes in government revenue in the analysis.}
 }
 \value{
-
+Data
 }
 \description{
 Function to process the outputs of STAPM price policy

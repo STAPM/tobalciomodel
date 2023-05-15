@@ -9,7 +9,15 @@
 #' @param country Character. Country of analysis. Options are c("UK","scotland","nireland").
 #' @param year_ioat Numeric. Year of the input-output analytical tables used.
 #'
+#' @return Data
 #' @export
+#'
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#'}
 LeontiefCalc <- function(list,
                          country,
                          year_ioat) {

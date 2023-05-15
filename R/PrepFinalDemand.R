@@ -22,7 +22,7 @@
 #' @param FAI Logical. If TRUE, uses the Fraser of Allender Institute (FAI) table instead of the
 #'            ONS ones. Defaults to FALSE.
 #'
-#' @return
+#' @return Data
 #' @export
 #'
 #' @examples

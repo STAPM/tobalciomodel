@@ -26,7 +26,7 @@ c("output","empl","gva","inctaxes","earn")}
 ONS supply and use tables. Defaults to FALSE}
 }
 \value{
-
+Data
 }
 \description{
 Take the output of the model and generate summary outputs

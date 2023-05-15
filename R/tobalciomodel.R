@@ -31,7 +31,7 @@
 #'
 #' @author Damon Morris
 #'
-#' @return
+#' @return Excel table of results
 #' @export
 #'
 #' @examples

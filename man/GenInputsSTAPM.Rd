@@ -37,7 +37,7 @@ GenInputsSTAPM(
 \item{name}{Character - file name for the input data.}
 }
 \value{
-
+Data
 }
 \description{
 Function to read in and further process the outputs of STAPM price policy
